@@ -34,7 +34,7 @@
 					<version>${maven-war-plugin.version}</version>
 					<configuration>
 						<failOnMissingWebXml>false</failOnMissingWebXml>
-						<outputDirectory>../Server/apache-tomcat-8.5.34-artic/webapps</outputDirectory>
+						<outputDirectory>deployment</outputDirectory>
 					</configuration>
 				</plugin>
 

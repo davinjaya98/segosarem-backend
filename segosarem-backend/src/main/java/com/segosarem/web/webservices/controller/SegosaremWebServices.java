@@ -24,16 +24,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 //Services
-import com.segosarem.web.webservices.db.service.ItemCategoryService;
+import com.segosarem.web.webservices.db.service.OutletService;
 import com.segosarem.web.webservices.db.service.ItemSubCategoryService;
 import com.segosarem.web.webservices.db.service.ItemService;
 
 //Beans
 import com.segosarem.web.webservices.bean.ItemCategoryBean;
 import com.segosarem.web.webservices.bean.GeneralWsResponseBean;
-import com.segosarem.web.webservices.bean.webservices.AddItemCategoryReqBean;
+
+import com.segosarem.web.webservices.bean.outlet.ListOutletResBean;
+import com.segosarem.web.webservices.bean.outlet.AddOutletReqBean;
+
 import com.segosarem.web.webservices.bean.webservices.DeleteEntityReqBean;
-import com.segosarem.web.webservices.bean.webservices.ListItemCategoryResBean;
 import com.segosarem.web.webservices.bean.webservices.ListItemSubCategoryResBean;
 import com.segosarem.web.webservices.bean.webservices.AddItemSubCategoryReqBean;
 import com.segosarem.web.webservices.bean.webservices.AddItemReqBean;
@@ -52,39 +54,40 @@ public class SegosaremWebServices {
 
 	// Services
 	@Autowired
-	ItemCategoryService itemCategoryService;
+	OutletService outletService;
 	@Autowired
 	ItemSubCategoryService itemSubCategoryService;
 	@Autowired
 	ItemService itemService;
 	// Services
 
+	//Outlets
 	@ResponseBody
-	@RequestMapping(method = RequestMethod.POST, value = "/getItemCategoryList")
-	public ListItemCategoryResBean getItemCategoryList(HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(method = RequestMethod.POST, value = "/getOutletList")
+	public ListOutletResBean getOutletList(HttpServletRequest request, HttpServletResponse response) {
 
-		ListItemCategoryResBean responseBean = new ListItemCategoryResBean();
-
-		return (ListItemCategoryResBean) itemCategoryService.getItemCategoryList();
+		return (ListOutletResBean) outletService.getOutletList();
 	}
 
 	//Supposed to be for secure access only
 	@ResponseBody
-	@RequestMapping(method = RequestMethod.POST, value = "/addItemCategory", consumes = { "application/json" }, produces = {
+	@RequestMapping(method = RequestMethod.POST, value = "/addOutlet", consumes = { "application/json" }, produces = {
 			"application/json" })
-	public GeneralWsResponseBean addItemCategory(HttpServletRequest request, HttpServletResponse response,
-			@RequestBody AddItemCategoryReqBean requestBean) {
+	public GeneralWsResponseBean addOutlet(HttpServletRequest request, HttpServletResponse response,
+			@RequestBody AddOutletReqBean requestBean) {
 
-		return (GeneralWsResponseBean) itemCategoryService.save(requestBean);
+		return (GeneralWsResponseBean) outletService.save(requestBean);
 	}
 
 	@ResponseBody
-	@RequestMapping(method = RequestMethod.POST, value = "/deleteItemCategory", consumes = { "application/json" }, produces = {
+	@RequestMapping(method = RequestMethod.POST, value = "/deleteOutlet", consumes = { "application/json" }, produces = {
 			"application/json" })
-	public GeneralWsResponseBean deleteItemCategory(HttpServletRequest request, HttpServletResponse response,
+	public GeneralWsResponseBean deleteOutlet(HttpServletRequest request, HttpServletResponse response,
 			@RequestBody DeleteEntityReqBean requestBean) {
 
-		return (GeneralWsResponseBean) itemCategoryService.deactive(requestBean);
+		Integer outletId = requestBean.getEntityId();
+
+		return (GeneralWsResponseBean) outletService.deactive(outletId);
 	}
 	//subcategory
 	@ResponseBody

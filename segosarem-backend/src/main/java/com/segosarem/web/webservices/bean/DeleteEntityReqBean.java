@@ -1,6 +1,6 @@
-package com.segosarem.web.webservices.bean.webservices;
+package com.segosarem.web.webservices.bean;
 
-public class GetEntityReqBean {
+public class DeleteEntityReqBean {
     
     private Integer entityId;
     

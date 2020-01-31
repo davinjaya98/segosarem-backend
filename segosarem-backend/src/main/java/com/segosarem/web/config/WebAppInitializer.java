@@ -1,4 +1,4 @@
-package com.paparadaminteractive.artic.config;
+package com.segosarem.web.config;
 
 import org.springframework.core.annotation.Order;
 import org.springframework.web.filter.CharacterEncodingFilter;

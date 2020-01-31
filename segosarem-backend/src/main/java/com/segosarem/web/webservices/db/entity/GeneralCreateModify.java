@@ -1,4 +1,4 @@
-package com.paparadaminteractive.artic.webservices.db.entity;
+package com.segosarem.web.webservices.db.entity;
 
 import java.util.Date;
 import javax.persistence.Column;

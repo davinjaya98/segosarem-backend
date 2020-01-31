@@ -1,4 +1,4 @@
-package com.paparadaminteractive.artic.webservices.bean;
+package com.segosarem.web.webservices.bean;
 
 public class ItemSubCategoryBean {
     

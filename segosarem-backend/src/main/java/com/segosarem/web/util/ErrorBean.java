@@ -1,4 +1,4 @@
-package com.paparadaminteractive.artic.util;
+package com.segosarem.web.util;
 
 public class ErrorBean {
 

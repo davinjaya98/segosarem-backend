@@ -1,9 +1,9 @@
-package com.paparadaminteractive.artic.webservices.db.service;
+package com.segosarem.web.webservices.db.service;
 
-import com.paparadaminteractive.artic.webservices.bean.GeneralWsResponseBean;
-import com.paparadaminteractive.artic.webservices.bean.webservices.AddItemSubCategoryReqBean;
-import com.paparadaminteractive.artic.webservices.bean.webservices.ListItemSubCategoryResBean;
-import com.paparadaminteractive.artic.webservices.bean.webservices.DeleteEntityReqBean;
+import com.segosarem.web.webservices.bean.GeneralWsResponseBean;
+import com.segosarem.web.webservices.bean.webservices.AddItemSubCategoryReqBean;
+import com.segosarem.web.webservices.bean.webservices.ListItemSubCategoryResBean;
+import com.segosarem.web.webservices.bean.webservices.DeleteEntityReqBean;
 import java.util.List;
 
 public interface ItemSubCategoryService {

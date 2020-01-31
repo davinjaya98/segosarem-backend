@@ -1,4 +1,4 @@
-package com.paparadaminteractive.artic.webservices.db.service.impl;
+package com.segosarem.web.webservices.db.service.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,24 +13,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 //Constant
-import com.paparadaminteractive.artic.constant.SystemConstant;
+import com.segosarem.web.constant.SystemConstant;
 
 //DB
-import com.paparadaminteractive.artic.webservices.db.dao.ItemCategoryDAO;
-import com.paparadaminteractive.artic.webservices.db.dao.ItemSubCategoryDAO;
-import com.paparadaminteractive.artic.webservices.db.dao.ItemDAO;
-import com.paparadaminteractive.artic.webservices.db.entity.ItemCategory;
-import com.paparadaminteractive.artic.webservices.db.entity.ItemSubCategory;
-import com.paparadaminteractive.artic.webservices.db.entity.Item;
-import com.paparadaminteractive.artic.webservices.db.service.ItemService;
+import com.segosarem.web.webservices.db.dao.ItemCategoryDAO;
+import com.segosarem.web.webservices.db.dao.ItemSubCategoryDAO;
+import com.segosarem.web.webservices.db.dao.ItemDAO;
+import com.segosarem.web.webservices.db.entity.ItemCategory;
+import com.segosarem.web.webservices.db.entity.ItemSubCategory;
+import com.segosarem.web.webservices.db.entity.Item;
+import com.segosarem.web.webservices.db.service.ItemService;
 
 //Bean
-import com.paparadaminteractive.artic.webservices.bean.ItemBean;
-import com.paparadaminteractive.artic.webservices.bean.GeneralWsResponseBean;
-import com.paparadaminteractive.artic.webservices.bean.webservices.AddItemReqBean;
-import com.paparadaminteractive.artic.webservices.bean.webservices.DeleteEntityReqBean;
-import com.paparadaminteractive.artic.webservices.bean.webservices.ListItemResBean;
-import com.paparadaminteractive.artic.webservices.bean.webservices.ListItemReqBean;
+import com.segosarem.web.webservices.bean.ItemBean;
+import com.segosarem.web.webservices.bean.GeneralWsResponseBean;
+import com.segosarem.web.webservices.bean.webservices.AddItemReqBean;
+import com.segosarem.web.webservices.bean.webservices.DeleteEntityReqBean;
+import com.segosarem.web.webservices.bean.webservices.ListItemResBean;
+import com.segosarem.web.webservices.bean.webservices.ListItemReqBean;
 
 @Transactional
 @Service("ItemService")

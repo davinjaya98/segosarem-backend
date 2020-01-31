@@ -1,4 +1,4 @@
-package com.paparadaminteractive.artic.util;
+package com.segosarem.web.util;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -3,8 +3,8 @@ package com.segosarem.web.webservices.db.dao.impl;
 import java.util.List;
 
 import com.segosarem.web.constant.SystemConstant;
-import com.segosarem.web.webservices.db.dao.ItemCategoryDAO;
-import com.segosarem.web.webservices.db.entity.ItemCategory;
+import com.segosarem.web.webservices.db.dao.OutletDAO;
+import com.segosarem.web.webservices.db.entity.Outlet;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -13,7 +13,7 @@ import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ItemCategoryDAOImpl implements ItemCategoryDAO {
+public class OutletDAOImpl implements OutletDAO {
 
 	@Autowired
 	private SessionFactory _sessionFactory;
@@ -28,33 +28,33 @@ public class ItemCategoryDAOImpl implements ItemCategoryDAO {
 	}
 
 	@Override
-	public void save(ItemCategory entity) {
+	public void save(Outlet entity) {
 
 		getHibernateTemplate().persist(entity);
 	}
 
 	@Override
-	public void delete(ItemCategory entity) {
+	public void delete(Outlet entity) {
 
 		getHibernateTemplate().delete(entity);
 	}
 
 	@Override
-	public void update(ItemCategory entity) {
+	public void update(Outlet entity) {
 
 		getHibernateTemplate().update(entity);
 	}
 
 	@Override
-	public List<ItemCategory> getItemCategoryList() {
+	public List<Outlet> getOutletList() {
 
-		return (List<ItemCategory>) getSession().createQuery("from ItemCategory ic where ic.status= '"+SystemConstant.ACTIVE+"' ").list();
+		return (List<Outlet>) getSession().createQuery("from Outlet o where o.status= '"+SystemConstant.ACTIVE+"' ").list();
 	}
 
 	@Override
-	public ItemCategory getItemCategoryById(Integer itemCategoryId) {
+	public Outlet getOutletById(Integer outletId) {
 
-		List<ItemCategory> entityList = getSession().createQuery("from ItemCategory ic where ic.itemCategoryId = " + itemCategoryId+" AND ic.status='"+SystemConstant.ACTIVE+"'").list();
+		List<Outlet> entityList = getSession().createQuery("from Outlet o where o.outletId = " + outletId+" AND o.status='"+SystemConstant.ACTIVE+"'").list();
 
 		if(entityList != null && !entityList.isEmpty()) {
 			return entityList.get(0);

@@ -1,9 +1,9 @@
-package com.paparadaminteractive.artic.webservices.bean.webservices;
+package com.segosarem.web.webservices.bean.webservices;
 
 import java.util.List;
 
-import com.paparadaminteractive.artic.webservices.bean.ItemSubCategoryBean;
-import com.paparadaminteractive.artic.webservices.bean.GeneralWsResponseBean;
+import com.segosarem.web.webservices.bean.ItemSubCategoryBean;
+import com.segosarem.web.webservices.bean.GeneralWsResponseBean;
 
 import java.util.List;
 

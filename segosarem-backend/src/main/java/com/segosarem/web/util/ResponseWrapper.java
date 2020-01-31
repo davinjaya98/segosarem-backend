@@ -1,4 +1,4 @@
-package com.paparadaminteractive.artic.util;
+package com.segosarem.web.util;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

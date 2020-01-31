@@ -1,4 +1,4 @@
-package com.paparadaminteractive.artic.config;
+package com.segosarem.web.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,10 +1,10 @@
-package com.paparadaminteractive.artic.webservices.db.dao.impl;
+package com.segosarem.web.webservices.db.dao.impl;
 
 import java.util.List;
 
-import com.paparadaminteractive.artic.webservices.db.dao.ItemDAO;
-import com.paparadaminteractive.artic.webservices.db.entity.Item;
-import com.paparadaminteractive.artic.constant.SystemConstant;
+import com.segosarem.web.webservices.db.dao.ItemDAO;
+import com.segosarem.web.webservices.db.entity.Item;
+import com.segosarem.web.constant.SystemConstant;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;

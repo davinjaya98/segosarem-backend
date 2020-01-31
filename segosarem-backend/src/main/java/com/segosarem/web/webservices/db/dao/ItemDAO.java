@@ -1,8 +1,8 @@
-package com.paparadaminteractive.artic.webservices.db.dao;
+package com.segosarem.web.webservices.db.dao;
 
 import java.util.List;
 
-import com.paparadaminteractive.artic.webservices.db.entity.Item;
+import com.segosarem.web.webservices.db.entity.Item;
 
 public interface ItemDAO {
 	

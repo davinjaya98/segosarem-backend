@@ -1,6 +1,6 @@
-package com.paparadaminteractive.artic.webservices.bean.webservices;
+package com.segosarem.web.webservices.bean.webservices;
 
-import com.paparadaminteractive.artic.webservices.bean.ItemCategoryBean;
+import com.segosarem.web.webservices.bean.ItemCategoryBean;
 
 public class AddItemCategoryReqBean {
     

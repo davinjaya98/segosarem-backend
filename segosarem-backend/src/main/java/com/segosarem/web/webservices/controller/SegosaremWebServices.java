@@ -1,4 +1,4 @@
-package com.paparadaminteractive.artic.webservices.controller;
+package com.segosarem.web.webservices.controller;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,27 +24,27 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 //Services
-import com.paparadaminteractive.artic.webservices.db.service.ItemCategoryService;
-import com.paparadaminteractive.artic.webservices.db.service.ItemSubCategoryService;
-import com.paparadaminteractive.artic.webservices.db.service.ItemService;
+import com.segosarem.web.webservices.db.service.ItemCategoryService;
+import com.segosarem.web.webservices.db.service.ItemSubCategoryService;
+import com.segosarem.web.webservices.db.service.ItemService;
 
 //Beans
-import com.paparadaminteractive.artic.webservices.bean.ItemCategoryBean;
-import com.paparadaminteractive.artic.webservices.bean.GeneralWsResponseBean;
-import com.paparadaminteractive.artic.webservices.bean.webservices.AddItemCategoryReqBean;
-import com.paparadaminteractive.artic.webservices.bean.webservices.DeleteEntityReqBean;
-import com.paparadaminteractive.artic.webservices.bean.webservices.ListItemCategoryResBean;
-import com.paparadaminteractive.artic.webservices.bean.webservices.ListItemSubCategoryResBean;
-import com.paparadaminteractive.artic.webservices.bean.webservices.AddItemSubCategoryReqBean;
-import com.paparadaminteractive.artic.webservices.bean.webservices.AddItemReqBean;
-import com.paparadaminteractive.artic.webservices.bean.webservices.ListItemReqBean;
-import com.paparadaminteractive.artic.webservices.bean.webservices.ListItemResBean;
-import com.paparadaminteractive.artic.webservices.bean.webservices.GetEntityReqBean;
+import com.segosarem.web.webservices.bean.ItemCategoryBean;
+import com.segosarem.web.webservices.bean.GeneralWsResponseBean;
+import com.segosarem.web.webservices.bean.webservices.AddItemCategoryReqBean;
+import com.segosarem.web.webservices.bean.webservices.DeleteEntityReqBean;
+import com.segosarem.web.webservices.bean.webservices.ListItemCategoryResBean;
+import com.segosarem.web.webservices.bean.webservices.ListItemSubCategoryResBean;
+import com.segosarem.web.webservices.bean.webservices.AddItemSubCategoryReqBean;
+import com.segosarem.web.webservices.bean.webservices.AddItemReqBean;
+import com.segosarem.web.webservices.bean.webservices.ListItemReqBean;
+import com.segosarem.web.webservices.bean.webservices.ListItemResBean;
+import com.segosarem.web.webservices.bean.webservices.GetEntityReqBean;
 
-import com.paparadaminteractive.artic.constant.SystemConstant;
+import com.segosarem.web.constant.SystemConstant;
 
 @RestController
-public class ArticWSController {
+public class SegosaremWebServices {
 
 	private final Logger logger = Logger.getLogger(this.getClass());
 	private ResourceBundle labels = ResourceBundle.getBundle("messages");

@@ -1,4 +1,4 @@
-package com.paparadaminteractive.artic.webservices.bean.webservices;
+package com.segosarem.web.webservices.bean.webservices;
 
 public class GetEntityReqBean {
     

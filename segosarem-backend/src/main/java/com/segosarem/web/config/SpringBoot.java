@@ -1,4 +1,4 @@
-package com.paparadaminteractive.artic.config;
+package com.segosarem.web.config;
 
 import java.io.File;
 import java.util.Properties;

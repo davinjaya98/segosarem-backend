@@ -1,4 +1,4 @@
-package com.paparadaminteractive.artic.constant;
+package com.segosarem.web.constant;
 
 public class SystemConstant {
     

@@ -1,11 +1,11 @@
-package com.paparadaminteractive.artic.webservices.db.service;
+package com.segosarem.web.webservices.db.service;
 
-import com.paparadaminteractive.artic.webservices.bean.GeneralWsResponseBean;
-import com.paparadaminteractive.artic.webservices.bean.ItemBean;
-import com.paparadaminteractive.artic.webservices.bean.webservices.AddItemReqBean;
-import com.paparadaminteractive.artic.webservices.bean.webservices.DeleteEntityReqBean;
-import com.paparadaminteractive.artic.webservices.bean.webservices.ListItemResBean;
-import com.paparadaminteractive.artic.webservices.bean.webservices.ListItemReqBean;
+import com.segosarem.web.webservices.bean.GeneralWsResponseBean;
+import com.segosarem.web.webservices.bean.ItemBean;
+import com.segosarem.web.webservices.bean.webservices.AddItemReqBean;
+import com.segosarem.web.webservices.bean.webservices.DeleteEntityReqBean;
+import com.segosarem.web.webservices.bean.webservices.ListItemResBean;
+import com.segosarem.web.webservices.bean.webservices.ListItemReqBean;
 import java.util.List;
 
 public interface ItemService{

@@ -1,4 +1,4 @@
-package com.paparadaminteractive.artic.webservices.db.entity;
+package com.segosarem.web.webservices.db.entity;
 
 import static javax.persistence.GenerationType.IDENTITY;
 

@@ -111,12 +111,13 @@ public class OutletServiceImpl implements OutletService{
         List<Outlet> outletList = outletDAO.getOutletList();
         List<OutletBean> outletBeanList = new ArrayList<OutletBean>();
 
-        if(outletBeanList != null && !outletBeanList.isEmpty()) {
+        if(outletList != null && !outletList.isEmpty()) {
             for(Outlet entity : outletList) {
                 OutletBean outletBean = new OutletBean();
                 outletBean.setOutletId(entity.getOutletId());
                 outletBean.setOutletName(entity.getOutletName());
                 outletBean.setOutletDescription(entity.getOutletDescription());
+                outletBean.setOutletSequence(entity.getOutletSequence());
                 outletBeanList.add(outletBean);
             }
             

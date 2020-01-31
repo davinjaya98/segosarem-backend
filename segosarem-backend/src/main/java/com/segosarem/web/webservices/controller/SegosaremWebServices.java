@@ -45,7 +45,13 @@ import com.segosarem.web.webservices.bean.webservices.GetEntityReqBean;
 
 import com.segosarem.web.constant.SystemConstant;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 @RestController
+@Api(value="Segosarem Web Services", description="Operations for segosarem business logic")
 public class SegosaremWebServices {
 
 	private final Logger logger = Logger.getLogger(this.getClass());
@@ -62,6 +68,13 @@ public class SegosaremWebServices {
 	// Services
 
 	//Outlets
+    @ApiOperation(value = "Get a list of outlets", response = ListOutletResBean.class)
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "Successfully retrieved list"),
+        @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+        @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+        @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+    })
 	@ResponseBody
 	@RequestMapping(method = RequestMethod.POST, value = "/getOutletList")
 	public ListOutletResBean getOutletList(HttpServletRequest request, HttpServletResponse response) {
@@ -70,6 +83,13 @@ public class SegosaremWebServices {
 	}
 
 	//Supposed to be for secure access only
+    @ApiOperation(value = "Add outlet", response = GeneralWsResponseBean.class)
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "Successfully Add"),
+        @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+        @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+        @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+    })
 	@ResponseBody
 	@RequestMapping(method = RequestMethod.POST, value = "/addOutlet", consumes = { "application/json" }, produces = {
 			"application/json" })
@@ -79,6 +99,13 @@ public class SegosaremWebServices {
 		return (GeneralWsResponseBean) outletService.save(requestBean);
 	}
 
+    @ApiOperation(value = "Delete outlet", response = GeneralWsResponseBean.class)
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "Successfully Delete"),
+        @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+        @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+        @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+    })
 	@ResponseBody
 	@RequestMapping(method = RequestMethod.POST, value = "/deleteOutlet", consumes = { "application/json" }, produces = {
 			"application/json" })

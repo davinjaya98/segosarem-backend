@@ -23,8 +23,10 @@ public class CustomField extends GeneralCreateModify implements Serializable {
     private String cfName;
     //This is in long text
 	private String cfValue;
+    //These 2 might not be needed
     private Integer cfType;
     private String cfSequence;
+    //These 2 might not be needed
 	private CustomFieldGroup customFieldGroup;
 
     public CustomField() {

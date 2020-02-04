@@ -31,7 +31,7 @@ import org.thymeleaf.templateresolver.UrlTemplateResolver;
 @EnableSwagger2
 @EnableWebMvc
 @EnableTransactionManagement
-@ComponentScan(basePackages={"com.segosarem.web.webservices.controller", "com.segosarem.web.webservices.db"})
+@ComponentScan(basePackages={"com.segosarem.web.webservices.api", "com.segosarem.web.webservices.db"})
 public class WebConfig extends WebMvcConfigurerAdapter {
 
     private static final String MESSAGE_SOURCE	= 	"/WEB-INF/i18n/messages";
@@ -90,7 +90,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2).select()
             .apis(RequestHandlerSelectors
-                .basePackage("com.segosarem.web.webservices.controller"))
+                .basePackage("com.segosarem.web.webservices.api"))
             .paths(PathSelectors.regex("/.*"))
             .build().apiInfo(apiEndPointsInfo());
     }

@@ -3,7 +3,7 @@ package com.segosarem.web.webservices.bean.outlet;
 public class OutletBean {
     
 	//For Response
-	private int outletId;
+	private Integer outletId;
 	
 	private String outletName;
 	private String outletDescription;
@@ -12,11 +12,11 @@ public class OutletBean {
 	//For Response
 	private String outletImageUrl;
 
-	public int getOutletId() {
+	public Integer getOutletId() {
 		return this.outletId;
 	}
 
-	public void setOutletId(int outletId) {
+	public void setOutletId(Integer outletId) {
 		this.outletId = outletId;
 	}
 

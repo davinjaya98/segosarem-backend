@@ -17,8 +17,6 @@ import javax.persistence.Table;
 import javax.persistence.OneToMany;
 import javax.persistence.ManyToOne;
 
-import org.hibernate.annotations.Type;
-
 @Entity
 @Table(name = "custom_data", catalog = "segosarem_db")
 public class CustomData extends GeneralCreateModify implements Serializable {
@@ -29,27 +27,22 @@ public class CustomData extends GeneralCreateModify implements Serializable {
     private Set<CustomDataValue> cdValueList = new LinkedHashSet<CustomDataValue>();
     //This is for type
     //Can be implemented this way
-    //1 - Text field
-    //2 - Picture
+    //1 - Single
+    //2 - Array
+    //3 - Multifield
     private Integer cdType;
-    //This is for flag
-    //0 - false
-    //1 - true
-    private Boolean cdFlag;
     //This is for data presentation sequence
     private String cdSequence;
     private CustomDataGroup customDataGroup;
     
-
     public CustomData() {
     }
 
-    public CustomData(int cdId, String cdName, Set<CustomDataValue> cdValueList, Integer cdType, Boolean cdFlag, String cdSequence, CustomDataGroup customDataGroup) {
+    public CustomData(int cdId, String cdName, Set<CustomDataValue> cdValueList, Integer cdType, String cdSequence, CustomDataGroup customDataGroup) {
         this.cdId = cdId;
         this.cdName = cdName;
         this.cdValueList = cdValueList;
         this.cdType = cdType;
-        this.cdFlag = cdFlag;
         this.cdSequence = cdSequence;
         this.customDataGroup = customDataGroup;
     }
@@ -90,16 +83,6 @@ public class CustomData extends GeneralCreateModify implements Serializable {
 
     public void setCdType(Integer cdType) {
         this.cdType = cdType;
-    }
-
-	@Column(name = "cd_flag")
-    @Type(type = "org.hibernate.type.NumericBooleanType")
-    public Boolean getCdFlag() {
-        return this.cdFlag;
-    }
-
-    public void setCdFlag(Boolean cdFlag) {
-        this.cdFlag = cdFlag;
     }
 
 	@Column(name = "cd_sequence")

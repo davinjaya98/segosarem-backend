@@ -2,6 +2,9 @@ package com.segosarem.web.webservices.db.entity;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 import java.io.Serializable;
 
 import javax.persistence.Column;
@@ -10,21 +13,22 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.OneToMany;
 
 @Entity
-@Table(name = "website_setting", catalog = "segosarem_db")
-public class WebsiteSetting extends GeneralCreateModify implements Serializable {
+@Table(name = "page_setting", catalog = "segosarem_db")
+public class PageSetting extends GeneralCreateModify implements Serializable {
 
 	private int settingId;
     private String pageTitle;
 	private String pageSeoKeywords;
     private String pageKey; 
+    private Set<CustomDataGroup> customDataGroupList = new LinkedHashSet<CustomDataGroup>();
 
-
-    public WebsiteSetting() {
+    public PageSetting() {
     }
 
-    public WebsiteSetting(int settingId, String pageTitle, String pageSeoKeywords, String pageKey) {
+    public PageSetting(int settingId, String pageTitle, String pageSeoKeywords, String pageKey) {
         this.settingId = settingId;
         this.pageTitle = pageTitle;
         this.pageSeoKeywords = pageSeoKeywords;
@@ -67,6 +71,15 @@ public class WebsiteSetting extends GeneralCreateModify implements Serializable 
 
     public void setPageKey(String pageKey) {
         this.pageKey = pageKey;
+    }
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pageSetting")
+    public Set<CustomDataGroup> getCustomDataGroupList() {
+        return this.customDataGroupList;
+    }
+
+    public void setCustomDataGroupList(Set<CustomDataGroup> customDataGroupList) {
+        this.customDataGroupList = customDataGroupList;
     }
 
 }

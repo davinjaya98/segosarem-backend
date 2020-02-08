@@ -12,8 +12,10 @@ import javax.persistence.FetchType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 
 @Entity
 @Table(name = "custom_data_group", catalog = "segosarem_db")
@@ -22,18 +24,18 @@ public class CustomDataGroup extends GeneralCreateModify implements Serializable
 	private int cdGroupId;
 	private String cdGroupName;
 	private String cdGroupDescription;
-    private String cdGroupKey;
     private Set<CustomData> customDataList = new LinkedHashSet<CustomData>();
+    private PageSetting pageSetting;
     
     public CustomDataGroup() {
     }
 
-    public CustomDataGroup(int cdGroupId, String cdGroupName, String cdGroupDescription, String cdGroupKey, Set<CustomData> customDataList) {
+    public CustomDataGroup(int cdGroupId, String cdGroupName, String cdGroupDescription, Set<CustomData> customDataList, PageSetting pageSetting) {
         this.cdGroupId = cdGroupId;
         this.cdGroupName = cdGroupName;
         this.cdGroupDescription = cdGroupDescription;
-        this.cdGroupKey = cdGroupKey;
         this.customDataList = customDataList;
+        this.pageSetting = pageSetting;
     }
 
 	@Id
@@ -65,15 +67,6 @@ public class CustomDataGroup extends GeneralCreateModify implements Serializable
         this.cdGroupDescription = cdGroupDescription;
     }
 
-	@Column(name = "cd_group_key")
-    public String getCdGroupKey() {
-        return this.cdGroupKey;
-    }
-
-    public void setCdGroupKey(String cdGroupKey) {
-        this.cdGroupKey = cdGroupKey;
-    }
-
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "customDataGroup")
     public Set<CustomData> getCustomDataList() {
         return this.customDataList;
@@ -81,5 +74,15 @@ public class CustomDataGroup extends GeneralCreateModify implements Serializable
 
     public void setCustomDataList(Set<CustomData> customDataList) {
         this.customDataList = customDataList;
+    }
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "setting_id")
+    public PageSetting getPageSetting() {
+        return this.pageSetting;
+    }
+
+    public void setPageSetting(PageSetting pageSetting) {
+        this.pageSetting = pageSetting;
     }
 }

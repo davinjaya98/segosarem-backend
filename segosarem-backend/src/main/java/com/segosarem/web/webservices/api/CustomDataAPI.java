@@ -29,8 +29,8 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 @RestController
-@Api(value="Custom Field API", description="API Operations for custom fields logic")
-public class CustomFieldAPI {
+@Api(value="Custom Data API", description="API Operations for custom data logic")
+public class CustomDataAPI {
 
 	private final Logger logger = Logger.getLogger(this.getClass());
 	private ResourceBundle labels = ResourceBundle.getBundle("messages");
@@ -50,8 +50,8 @@ public class CustomFieldAPI {
         @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
     })
 	@ResponseBody
-	@RequestMapping(method = RequestMethod.POST, value = "/getCustomFieldList")
-	public ListOutletResBean getCustomFieldList(HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(method = RequestMethod.POST, value = "/getCustomDataList")
+	public ListOutletResBean getCustomDataList(HttpServletRequest request, HttpServletResponse response) {
 
 		return (ListOutletResBean) outletService.getOutletList();
 	}
@@ -65,9 +65,9 @@ public class CustomFieldAPI {
         @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
     })
 	@ResponseBody
-	@RequestMapping(method = RequestMethod.POST, value = "/addCustomField", consumes = { "application/json" }, produces = {
+	@RequestMapping(method = RequestMethod.POST, value = "/addCustomData", consumes = { "application/json" }, produces = {
 			"application/json" })
-	public GeneralWsResponseBean addCustomField(HttpServletRequest request, HttpServletResponse response,
+	public GeneralWsResponseBean addCustomData(HttpServletRequest request, HttpServletResponse response,
 			@RequestBody AddOutletReqBean requestBean) {
 
 		return (GeneralWsResponseBean) outletService.save(requestBean);
@@ -81,9 +81,9 @@ public class CustomFieldAPI {
         @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
     })
 	@ResponseBody
-	@RequestMapping(method = RequestMethod.POST, value = "/deleteCustomField", consumes = { "application/json" }, produces = {
+	@RequestMapping(method = RequestMethod.POST, value = "/deleteCustomData", consumes = { "application/json" }, produces = {
 			"application/json" })
-	public GeneralWsResponseBean deleteCustomField(HttpServletRequest request, HttpServletResponse response,
+	public GeneralWsResponseBean deleteCustomData(HttpServletRequest request, HttpServletResponse response,
 			@RequestBody DeleteEntityReqBean requestBean) {
 
 		Integer outletId = requestBean.getEntityId();

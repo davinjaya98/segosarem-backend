@@ -64,23 +64,7 @@ public class QuotationAPI {
 	public GeneralWsResponseBean getQuotationById(HttpServletRequest request, HttpServletResponse response,
 			@RequestBody QuotationBean requestBean) {
 
-		return (GeneralWsResponseBean) quotationService.getQuotationById(requestBean.getSettingId());
-	}
-
-    @ApiOperation(value = "Get quotation by key", response = GeneralWsResponseBean.class)
-    @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "Successfully Get the details"),
-        @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
-        @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
-        @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
-    })
-	@ResponseBody
-	@RequestMapping(method = RequestMethod.POST, value = "/getQuotationByKey", consumes = { "application/json" }, produces = {
-			"application/json" })
-	public GeneralWsResponseBean getQuotation(HttpServletRequest request, HttpServletResponse response,
-			@RequestBody QuotationBean requestBean) {
-
-		return (GeneralWsResponseBean) quotationService.getQuotationByKey(requestBean.getPageKey());
+		return (GeneralWsResponseBean) quotationService.getQuotationById(requestBean.getQuotationId());
 	}
 
     @ApiOperation(value = "Add new quotation", response = GeneralWsResponseBean.class)

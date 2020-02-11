@@ -10,10 +10,4 @@ public interface QuotationDAO {
 
 	public List<Quotation> getAllQuotation();
 	public Quotation getQuotationById(Integer id, Boolean searchActive);
-	public Quotation getQuotationByKey(String key, Boolean searchActive);
-
-    //This can be used to update status to active, deactivated, or deleted
-	//public void update(Quotation entity);
-    //This one effectively removed it from db
-	//public void delete(Quotation entity);
 }

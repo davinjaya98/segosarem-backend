@@ -33,18 +33,6 @@ public class QuotationDAOImpl implements QuotationDAO {
 		getHibernateTemplate().persist(entity);
 	}
 
-	/*@Override
-	public void delete(Quotation entity) {
-
-		getHibernateTemplate().delete(entity);
-	}*/
-
-	/*@Override
-	public void update(Quotation entity) {
-
-		getHibernateTemplate().update(entity);
-	}*/
-
 	@Override
 	public List<Quotation> getAllQuotation() {
 
@@ -67,22 +55,4 @@ public class QuotationDAOImpl implements QuotationDAO {
 
 		return null;
 	}
-
-	@Override
-	public Quotation getQuotationByKey(String key, Boolean searchActive) {
-		String query = "from Quotation qt where qt.pageKey = '" + key +"'";
-
-		if(searchActive) {
-			query += " AND qt.status='"+SystemConstant.ACTIVE+"'";
-		}
-
-		List<Quotation> entityList = getSession().createQuery(query).list();
-
-		if(entityList != null && !entityList.isEmpty()) {
-			return entityList.get(0);
-		}
-
-		return null;
-	}
-
 }

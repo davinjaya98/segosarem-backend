@@ -80,26 +80,6 @@ public class QuotationServiceImpl implements QuotationService {
     }
 
     @Override
-    public GeneralWsResponseBean getQuotationByKey(String key) {
-        GeneralWsResponseBean responseBean = generateResponseBean();
-        try{
-            Quotation entity = quotationDAO.getQuotationByKey(key, true);
-
-            if(entity != null) {
-                QuotationBean bean = new DozerBeanMapper().map(entity, QuotationBean.class);
-
-                responseBean.setResponseObject(bean);
-                responseBean = setResponseToSuccess(responseBean);
-            }
-
-        }catch(Exception e) {
-            responseBean.setResponseObject(e.getMessage());
-        }
-        
-        return responseBean;
-    }
-
-    @Override
     public GeneralWsResponseBean addQuotation(QuotationBean requestBean) {
         GeneralWsResponseBean responseBean = generateResponseBean();
         try{
@@ -114,6 +94,19 @@ public class QuotationServiceImpl implements QuotationService {
             responseBean.setResponseObject(e.getMessage());
         }
         
+        return responseBean;
+    }
+
+    private GeneralWsResponseBean generateResponseBean() {
+        GeneralWsResponseBean obj = new GeneralWsResponseBean();
+        obj.setReturnCode(SystemConstant.FAILED);
+
+        return obj;
+    }
+
+    private GeneralWsResponseBean setResponseToSuccess(GeneralWsResponseBean responseBean) {
+        responseBean.setReturnCode(SystemConstant.SUCCESS);
+
         return responseBean;
     }
 }

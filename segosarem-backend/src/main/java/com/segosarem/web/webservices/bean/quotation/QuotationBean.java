@@ -25,27 +25,27 @@ public class QuotationBean {
         this.quotationId = quotationId;
     }
 
-    public Integer getCustName(){
+    public String getCustName(){
         return this.custName;
     }
 
-    public void setCustName(Integer custName){
+    public void setCustName(String custName){
         this.custName = custName;
     }
 
-    public Integer getCustEmail(){
+    public String getCustEmail(){
         return this.custEmail;
     }
 
-    public void setCustEmail(Integer custEmail){
+    public void setCustEmail(String custEmail){
         this.custEmail = custEmail;
     }
 
-    public Integer getCustPhoneNumber(){
+    public String getCustPhoneNumber(){
         return this.custPhoneNumber;
     }
 
-    public void setCustPhoneNumber(Integer custPhoneNumber){
+    public void setCustPhoneNumber(String custPhoneNumber){
         this.custPhoneNumber = custPhoneNumber;
     }
 }

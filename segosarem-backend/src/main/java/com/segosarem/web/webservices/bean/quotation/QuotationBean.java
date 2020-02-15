@@ -13,7 +13,7 @@ public class QuotationBean {
     public QuotationBean(Integer quotationId, String custName, String CustEmail, String custPhoneNumber){
         this.quotationId = quotationId;
         this.custName = custName;
-	    this.custEmail = custEmail;
+	    this.custEmail = CustEmail;
         this.custPhoneNumber = custPhoneNumber;
     }
 

@@ -13,13 +13,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 //Services
-import com.segosarem.web.webservices.db.service.OutletService;
+import com.segosarem.web.webservices.db.service.CustomDataService;
 
 //Beans
 import com.segosarem.web.webservices.bean.GeneralWsResponseBean;
 
-import com.segosarem.web.webservices.bean.outlet.ListOutletResBean;
-import com.segosarem.web.webservices.bean.outlet.AddOutletReqBean;
+import com.segosarem.web.webservices.bean.customdata.CustomDataBean;
 
 import com.segosarem.web.webservices.bean.DeleteEntityReqBean;
 
@@ -38,11 +37,11 @@ public class CustomDataAPI {
 
 	// Services
 	@Autowired
-	OutletService outletService;
+	CustomDataService customDataService;
 	// Services
 
-	//Outlets
-    @ApiOperation(value = "Get a list of outlets", response = ListOutletResBean.class)
+	//Custom Data List
+    @ApiOperation(value = "Get list of custom data", response = GeneralWsResponseBean.class)
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Successfully retrieved list"),
         @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
@@ -51,15 +50,32 @@ public class CustomDataAPI {
     })
 	@ResponseBody
 	@RequestMapping(method = RequestMethod.POST, value = "/getCustomDataList")
-	public ListOutletResBean getCustomDataList(HttpServletRequest request, HttpServletResponse response) {
+	public GeneralWsResponseBean getCustomDataList(HttpServletRequest request, HttpServletResponse response) {
 
-		return (ListOutletResBean) outletService.getOutletList();
+		return (GeneralWsResponseBean) customDataService.getAllCustomData();
+	}
+
+	// get custom data by id
+	@ApiOperation(value = "Get custom data by id", response = GeneralWsResponseBean.class)
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "Successfully Get the details"),
+        @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+        @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+        @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+    })
+	@ResponseBody
+	@RequestMapping(method = RequestMethod.POST, value = "/getCustomDataById", consumes = { "application/json" }, produces = {
+			"application/json" })
+	public GeneralWsResponseBean getCustomDataById(HttpServletRequest request, HttpServletResponse response,
+			@RequestBody CustomDataBean requestBean) {
+
+		return (GeneralWsResponseBean) customDataService.getCustomDataById(requestBean.getCdId());
 	}
 
 	//Supposed to be for secure access only
-    @ApiOperation(value = "Add outlet", response = GeneralWsResponseBean.class)
+    @ApiOperation(value = "Add new custom data", response = GeneralWsResponseBean.class)
     @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "Successfully Add"),
+        @ApiResponse(code = 200, message = "Successfully Added"),
         @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
         @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
         @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
@@ -68,12 +84,28 @@ public class CustomDataAPI {
 	@RequestMapping(method = RequestMethod.POST, value = "/addCustomData", consumes = { "application/json" }, produces = {
 			"application/json" })
 	public GeneralWsResponseBean addCustomData(HttpServletRequest request, HttpServletResponse response,
-			@RequestBody AddOutletReqBean requestBean) {
+			@RequestBody CustomDataBean requestBean) {
 
-		return (GeneralWsResponseBean) outletService.save(requestBean);
+		return (GeneralWsResponseBean) customDataService.addCustomData(requestBean);
 	}
 
-    @ApiOperation(value = "Delete outlet", response = GeneralWsResponseBean.class)
+    @ApiOperation(value = "Update custom data", response = GeneralWsResponseBean.class)
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "Successfully Updated"),
+        @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+        @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+        @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+    })
+	@ResponseBody
+	@RequestMapping(method = RequestMethod.POST, value = "/updateCustomData", consumes = { "application/json" }, produces = {
+			"application/json" })
+	public GeneralWsResponseBean updateCustomData(HttpServletRequest request, HttpServletResponse response,
+			@RequestBody CustomDataBean requestBean) {
+
+		return (GeneralWsResponseBean) customDataService.updateCustomData(requestBean);
+	}
+
+    @ApiOperation(value = "Delete custom data / Effectively removed it from db", response = GeneralWsResponseBean.class)
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Successfully Delete"),
         @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
@@ -86,8 +118,6 @@ public class CustomDataAPI {
 	public GeneralWsResponseBean deleteCustomData(HttpServletRequest request, HttpServletResponse response,
 			@RequestBody DeleteEntityReqBean requestBean) {
 
-		Integer outletId = requestBean.getEntityId();
-
-		return (GeneralWsResponseBean) outletService.deactive(outletId);
+		return (GeneralWsResponseBean) customDataService.deleteCustomData(requestBean);
 	}
 }

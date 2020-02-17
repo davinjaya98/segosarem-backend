@@ -1,34 +1,34 @@
 package com.segosarem.web.webservices.bean.customdatagroup;
 
 import com.segosarem.web.webservices.bean.customdata.CustomDataBean;
-import com.segosarem.web.webservices.bean.pagesetting.PageSettingBean;
 import java.util.List;
 import java.util.ArrayList;
 
 public class CustomDataGroupBean {
 
-	private int cdGroupId;
+	private Integer cdGroupId;
 	private String cdGroupName;
 	private String cdGroupDescription;
-    private List<CustomDataBean> customDataList = new ArrayList<CustomDataBean>();
-    private PageSettingBean pageSetting;
+    private List<CustomDataBean> customDataBeanList = new ArrayList<CustomDataBean>();
+
+    private int pageSettingId;
     
     public CustomDataGroupBean() {
     }
 
-    public CustomDataGroupBean(int cdGroupId, String cdGroupName, String cdGroupDescription, List<CustomDataBean> customDataList, PageSettingBean pageSetting) {
+    public CustomDataGroupBean(Integer cdGroupId, String cdGroupName, String cdGroupDescription, List<CustomDataBean> customDataBeanList, int pageSettingId) {
         this.cdGroupId = cdGroupId;
         this.cdGroupName = cdGroupName;
         this.cdGroupDescription = cdGroupDescription;
-        this.customDataList = customDataList;
-        this.pageSetting = pageSetting;
+        this.customDataBeanList = customDataBeanList;
+        this.pageSettingId = pageSettingId;
     }
 
-    public int getCdGroupId() {
+    public Integer getCdGroupId() {
         return this.cdGroupId;
     }
 
-    public void setCdGroupId(int cdGroupId) {
+    public void setCdGroupId(Integer cdGroupId) {
         this.cdGroupId = cdGroupId;
     }
 
@@ -48,19 +48,19 @@ public class CustomDataGroupBean {
         this.cdGroupDescription = cdGroupDescription;
     }
 
-    public List<CustomDataBean> getCustomDataList() {
-        return this.customDataList;
+    public List<CustomDataBean> getCustomDataBeanList() {
+        return this.customDataBeanList;
     }
 
-    public void setCustomDataList(List<CustomDataBean> customDataList) {
-        this.customDataList = customDataList;
+    public void setCustomDataBeanList(List<CustomDataBean> customDataBeanList) {
+        this.customDataBeanList = customDataBeanList;
     }
 	
-    public PageSettingBean getPageSetting() {
-        return this.pageSetting;
+    public int getPageSettingId() {
+        return this.pageSettingId;
     }
 
-    public void setPageSetting(PageSettingBean pageSetting) {
-        this.pageSetting = pageSetting;
+    public void setPageSettingId(int pageSettingId) {
+        this.pageSettingId = pageSettingId;
     }
 }

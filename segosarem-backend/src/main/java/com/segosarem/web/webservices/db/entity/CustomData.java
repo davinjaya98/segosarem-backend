@@ -33,17 +33,20 @@ public class CustomData extends GeneralCreateModify implements Serializable {
     private Integer cdType;
     //This is for data presentation sequence
     private String cdSequence;
+
+    private String cdKey;
     private CustomDataGroup customDataGroup;
     
     public CustomData() {
     }
 
-    public CustomData(int cdId, String cdName, Set<CustomDataValue> cdValueList, Integer cdType, String cdSequence, CustomDataGroup customDataGroup) {
+    public CustomData(int cdId, String cdName, Set<CustomDataValue> cdValueList, Integer cdType, String cdSequence, String cdKey, CustomDataGroup customDataGroup) {
         this.cdId = cdId;
         this.cdName = cdName;
         this.cdValueList = cdValueList;
         this.cdType = cdType;
         this.cdSequence = cdSequence;
+        this.cdKey = cdKey;
         this.customDataGroup = customDataGroup;
     }
 
@@ -92,6 +95,15 @@ public class CustomData extends GeneralCreateModify implements Serializable {
 
     public void setCdSequence(String cdSequence) {
         this.cdSequence = cdSequence;
+    }
+
+	@Column(name = "cd_key")
+    public String getCdKey() {
+        return this.cdKey;
+    }
+
+    public void setCdKey(String cdKey) {
+        this.cdKey = cdKey;
     }
 	
 	@ManyToOne(fetch = FetchType.LAZY)

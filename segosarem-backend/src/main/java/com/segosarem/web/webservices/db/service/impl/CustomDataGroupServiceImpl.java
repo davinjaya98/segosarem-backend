@@ -94,17 +94,24 @@ public class CustomDataGroupServiceImpl implements CustomDataGroupService {
     @Override
     public GeneralWsResponseBean addCustomDataGroup(CustomDataGroupBean requestBean) {
         GeneralWsResponseBean responseBean = generateResponseBean();
-        try{
-            CustomDataGroup entity = new DozerBeanMapper().map(requestBean, CustomDataGroup.class);
-            entity.setCreateDt(new Date());
-            entity.setStatus(SystemConstant.ACTIVE);
+        // try{
+            //Get the page setting first
+            PageSetting pageSetting = pageSettingDAO.getPageSettingById(requestBean.getPageSettingId(), true);
 
-            customDataGroupDAO.save(entity);
+            if(pageSetting != null) {
+                CustomDataGroup entity = new DozerBeanMapper().map(requestBean, CustomDataGroup.class);
+                entity.setPageSetting(pageSetting);
 
-            responseBean = setResponseToSuccess(responseBean);
-        }catch(Exception e) {
-            responseBean.setResponseObject(e.getMessage());
-        }
+                entity.setCreateDt(new Date());
+                entity.setStatus(SystemConstant.ACTIVE);
+    
+                customDataGroupDAO.save(entity);
+    
+                responseBean = setResponseToSuccess(responseBean);
+            }
+        // }catch(Exception e) {
+        //     responseBean.setResponseObject(e.getMessage());
+        // }
         
         return responseBean;
     }
@@ -126,8 +133,8 @@ public class CustomDataGroupServiceImpl implements CustomDataGroupService {
                 customDataGroupDAO.update(entity);
 
                 // update custom data list of current custom data group
-                if(requestBean.getCustomDataList()!=null || !requestBean.getCustomDataList().isEmpty()){
-                    for (CustomDataBean CdBean : requestBean.getCustomDataList()){
+                if(requestBean.getCustomDataBeanList()!=null || !requestBean.getCustomDataBeanList().isEmpty()){
+                    for (CustomDataBean CdBean : requestBean.getCustomDataBeanList()){
                         CustomData CdEntity = customDataDAO.getCustomDataById(CdBean.getCdId(), false);
 
                         if (CdEntity!=null){
@@ -154,16 +161,14 @@ public class CustomDataGroupServiceImpl implements CustomDataGroupService {
                     }
                 }
 
-                // update page setting of current custom data group
-                PageSetting PsEntity = pageSettingDAO.getPageSettingById(requestBean.getPageSetting().getSettingId(), false);
-                PsEntity.setPageTitle(requestBean.getPageSetting().getPageTitle());
-                PsEntity.setPageSeoKeywords(requestBean.getPageSetting().getPageSeoKeywords());
-                PsEntity.setPageKey(requestBean.getPageSetting().getPageKey());
+                // update page setting of current custom data group // Should not be able to update page setting
+                // PageSetting PsEntity = pageSettingDAO.getPageSettingById(requestBean.getPageSettingId(), true);
+                // PsEntity.setPageTitle(requestBean.getPageSetting().getPageTitle());
+                // PsEntity.setPageSeoKeywords(requestBean.getPageSetting().getPageSeoKeywords());
+                // PsEntity.setPageKey(requestBean.getPageSetting().getPageKey());
 
-                pageSettingDAO.update(PsEntity);
+                // pageSettingDAO.update(PsEntity);
 
-                
-                
                 responseBean = setResponseToSuccess(responseBean);
             }
         }catch(Exception e) {

@@ -12,17 +12,19 @@ public class CustomDataBean {
     private List<CustomDataValueBean> cdValueList = new ArrayList<CustomDataValueBean>();
     private Integer cdType;
     private String cdSequence;
+    private String cdKey;
     private CustomDataGroupBean customDataGroup;
     
     public CustomDataBean() {
     }
 
-    public CustomDataBean(int cdId, String cdName, List<CustomDataValueBean> cdValueList, Integer cdType, String cdSequence, CustomDataGroupBean customDataGroup) {
+    public CustomDataBean(int cdId, String cdName, List<CustomDataValueBean> cdValueList, Integer cdType, String cdSequence, String cdKey, CustomDataGroupBean customDataGroup) {
         this.cdId = cdId;
         this.cdName = cdName;
         this.cdValueList = cdValueList;
         this.cdType = cdType;
         this.cdSequence = cdSequence;
+        this.cdKey = cdKey;
         this.customDataGroup = customDataGroup;
     }
 
@@ -64,6 +66,14 @@ public class CustomDataBean {
 
     public void setCdSequence(String cdSequence) {
         this.cdSequence = cdSequence;
+    }
+
+    public String getCdKey() {
+        return this.cdKey;
+    }
+
+    public void setCdKey(String cdKey) {
+        this.cdKey = cdKey;
     }
 
     public CustomDataGroupBean getCustomDataGroup() {

@@ -1,36 +1,29 @@
 package com.segosarem.web.webservices.bean.customdatavalue;
 
 import com.segosarem.web.webservices.bean.customdata.CustomDataBean;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.List;
+import java.util.ArrayList;
 
 public class CustomDataValueBean {
 
 	private int cdValueId;
-    //This is in byte[]
     private byte[] cdValue;
-    //0 - Multifield parent
-    //1 - Textfield / Path Field (For Images)
-    //2 - Boolean
     private Integer cdValueType;
     private Integer cdValueLevel;
-
-    //Usable for Array and Multifield only
-    //0 - no sequence
     private Integer cdValueSequence;
-
     private CustomDataBean customData;
-    
-    //Recursive for Multifield Type
     private CustomDataValueBean parentValue;
-    private Set<CustomDataValueBean> childValueList = new LinkedHashSet<CustomDataValueBean>();
+    private List<CustomDataValueBean> childValueList = new ArrayList<CustomDataValueBean>();
 
     public CustomDataValueBean() {
     }
 
-    public CustomDataValueBean(int cdValueId, byte[] cdValue, CustomDataBean customData) {
+    public CustomDataValueBean(int cdValueId, byte[] cdValue, Integer cdValueType, Integer cdValueLevel, Integer cdValueSequence, CustomDataBean customData) {
         this.cdValueId = cdValueId;
         this.cdValue = cdValue;
+        this.cdValueType = cdValueType;
+        this.cdValueLevel = cdValueLevel;
+        this.cdValueSequence = cdValueSequence;
         this.customData = customData;
     }
 
@@ -91,11 +84,11 @@ public class CustomDataValueBean {
         this.parentValue = parentValue;
     }
 
-	public Set<CustomDataValueBean> getChildValueList() {
+	public List<CustomDataValueBean> getChildValueList() {
         return this.childValueList;
     }
 
-    public void setChildValueList(Set<CustomDataValueBean> childValueList) {
+    public void setChildValueList(List<CustomDataValueBean> childValueList) {
         this.childValueList = childValueList;
     }
 }

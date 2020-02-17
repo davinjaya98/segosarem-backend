@@ -9,16 +9,16 @@ public class PageSettingBean {
 	private String pageSeoKeywords;
     private String pageKey;
     
-    private Character status;
+    //private Character status;
 
 	public PageSettingBean() {}
 
-	public PageSettingBean(Integer settingId, String pageTitle, String pageSeoKeywords, String pageKey, Character status) {
+	public PageSettingBean(Integer settingId, String pageTitle, String pageSeoKeywords, String pageKey/*, Character status*/) {
 		this.settingId = settingId;
 		this.pageTitle = pageTitle;
 		this.pageSeoKeywords = pageSeoKeywords;
         this.pageKey = pageKey;
-        this.status = status;
+        //this.status = status;
 	}
 
     public Integer getSettingId() {
@@ -53,11 +53,11 @@ public class PageSettingBean {
         this.pageKey = pageKey;
     }
 	
-    public Character getStatus() {
+    /* public Character getStatus() {
         return this.status;
     }
 
     public void setStatus(Character status) {
         this.status = status;
-    }
+    } */
 }

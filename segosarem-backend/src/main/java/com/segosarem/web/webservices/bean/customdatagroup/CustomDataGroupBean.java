@@ -2,21 +2,21 @@ package com.segosarem.web.webservices.bean.customdatagroup;
 
 import com.segosarem.web.webservices.bean.customdata.CustomDataBean;
 import com.segosarem.web.webservices.bean.pagesetting.PageSettingBean;
-import java.util.Set;
-import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.ArrayList;
 
 public class CustomDataGroupBean {
 
 	private int cdGroupId;
 	private String cdGroupName;
 	private String cdGroupDescription;
-    private Set<CustomDataBean> customDataList = new LinkedHashSet<CustomDataBean>();
+    private List<CustomDataBean> customDataList = new ArrayList<CustomDataBean>();
     private PageSettingBean pageSetting;
     
     public CustomDataGroupBean() {
     }
 
-    public CustomDataGroupBean(int cdGroupId, String cdGroupName, String cdGroupDescription, Set<CustomDataBean> customDataList, PageSettingBean pageSetting) {
+    public CustomDataGroupBean(int cdGroupId, String cdGroupName, String cdGroupDescription, List<CustomDataBean> customDataList, PageSettingBean pageSetting) {
         this.cdGroupId = cdGroupId;
         this.cdGroupName = cdGroupName;
         this.cdGroupDescription = cdGroupDescription;
@@ -48,11 +48,11 @@ public class CustomDataGroupBean {
         this.cdGroupDescription = cdGroupDescription;
     }
 
-    public Set<CustomDataBean> getCustomDataList() {
+    public List<CustomDataBean> getCustomDataList() {
         return this.customDataList;
     }
 
-    public void setCustomDataList(Set<CustomDataBean> customDataList) {
+    public void setCustomDataList(List<CustomDataBean> customDataList) {
         this.customDataList = customDataList;
     }
 	

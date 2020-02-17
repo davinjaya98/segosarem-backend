@@ -109,9 +109,9 @@ public class CustomDataValueServiceImpl implements CustomDataValueService {
                 entity.setCdValue(requestBean.getCdValue());
                 entity.setCdValueType(requestBean.getCdValueType());
                 entity.setCdValueSequence(requestBean.getCdValueSequence());
-                entity.setCustomData(requestBean.getCustomData());
-                entity.setParentValue(requestBean.getParentValue());
-                entity.setChildValueList(requestBean.getChildValueList());
+                //entity.setCustomData(requestBean.getCustomData());
+                //entity.setParentValue(requestBean.getParentValue());
+                //entity.setChildValueList(requestBean.getChildValueList());
                 entity.setModifyDt(new Date());
     
                 customDataValueDAO.update(entity);

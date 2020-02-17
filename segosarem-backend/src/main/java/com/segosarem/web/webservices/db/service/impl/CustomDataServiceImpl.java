@@ -19,7 +19,9 @@ import com.segosarem.web.constant.SystemConstant;
 
 //DB
 import com.segosarem.web.webservices.db.dao.CustomDataDAO;
+import com.segosarem.web.webservices.db.dao.CustomDataValueDAO;
 import com.segosarem.web.webservices.db.entity.CustomData;
+import com.segosarem.web.webservices.db.entity.CustomDataValue;
 import com.segosarem.web.webservices.db.service.CustomDataService;
 
 import com.segosarem.web.webservices.bean.DeleteEntityReqBean;
@@ -27,6 +29,7 @@ import com.segosarem.web.webservices.bean.DeleteEntityReqBean;
 //Bean
 import com.segosarem.web.webservices.bean.GeneralWsResponseBean;
 import com.segosarem.web.webservices.bean.customdata.CustomDataBean;
+import com.segosarem.web.webservices.bean.customdatavalue.CustomDataValueBean;
 
 @Transactional
 @Service("CustomDataService")
@@ -36,6 +39,7 @@ public class CustomDataServiceImpl implements CustomDataService {
 
     @Autowired
     private CustomDataDAO customDataDAO;
+    private CustomDataValueDAO customDataValueDAO;
 
     @Override
     public GeneralWsResponseBean getAllCustomData() {
@@ -109,14 +113,29 @@ public class CustomDataServiceImpl implements CustomDataService {
             if(entity != null) {
                 // entity = new DozerBeanMapper().map(requestBean, CustomData.class);
                 
+                //update custom data
                 entity.setCdName(requestBean.getCdName());
-                entity.setCdValueList(requestBean.getCdValueList());
                 entity.setCdType(requestBean.getCdType());
                 entity.setCdSequence(requestBean.getCdSequence());
-                entity.setCustomDataGroup(requestBean.getCustomDataGroup());
+                //entity.setCustomDataGroup(requestBean.getCustomDataGroup());
                 entity.setModifyDt(new Date());
-    
+
                 customDataDAO.update(entity);
+
+                // update custom data value list of current custom data
+                if(requestBean.getCdValueList()!=null || !requestBean.getCdValueList().isEmpty()){
+                    for(CustomDataValueBean CdvBean : requestBean.getCdValueList()){
+                        CustomDataValue CdvEntity = customDataValueDAO.getCustomDataValueById(CdvBean.getCdValueId(), false);
+
+                        if(CdvEntity!=null){
+                            CdvEntity.setCdValue(CdvBean.getCdValue());
+                            CdvEntity.setCdValueType(CdvBean.getCdValueType());
+                            CdvEntity.setCdValueLevel(CdvBean.getCdValueLevel());
+                            CdvEntity.setCdValueSequence(CdvBean.getCdValueSequence());
+                            CdvEntity.setModifyDt(new Date());
+                        }
+                    }
+                }
                 
                 responseBean = setResponseToSuccess(responseBean);
             }

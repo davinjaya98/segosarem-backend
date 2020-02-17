@@ -2,29 +2,22 @@ package com.segosarem.web.webservices.bean.customdata;
 
 import com.segosarem.web.webservices.bean.customdatavalue.CustomDataValueBean;
 import com.segosarem.web.webservices.bean.customdatagroup.CustomDataGroupBean;
-import java.util.Set;
-import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.ArrayList;
 
 public class CustomDataBean {
 
 	private int cdId;
     private String cdName;
-    //This is the list of value
-    private Set<CustomDataValueBean> cdValueList = new LinkedHashSet<CustomDataValueBean>();
-    //This is for type
-    //Can be implemented this way
-    //1 - Single
-    //2 - Array
-    //3 - Multifield
+    private List<CustomDataValueBean> cdValueList = new ArrayList<CustomDataValueBean>();
     private Integer cdType;
-    //This is for data presentation sequence
     private String cdSequence;
     private CustomDataGroupBean customDataGroup;
     
     public CustomDataBean() {
     }
 
-    public CustomDataBean(int cdId, String cdName, Set<CustomDataValueBean> cdValueList, Integer cdType, String cdSequence, CustomDataGroupBean customDataGroup) {
+    public CustomDataBean(int cdId, String cdName, List<CustomDataValueBean> cdValueList, Integer cdType, String cdSequence, CustomDataGroupBean customDataGroup) {
         this.cdId = cdId;
         this.cdName = cdName;
         this.cdValueList = cdValueList;
@@ -49,11 +42,11 @@ public class CustomDataBean {
         this.cdName = cdName;
     }
 
-    public Set<CustomDataValueBean> getCdValueList() {
+    public List<CustomDataValueBean> getCdValueList() {
         return this.cdValueList;
     }
 
-    public void setCdValueList(Set<CustomDataValueBean> cdValueList) {
+    public void setCdValueList(List<CustomDataValueBean> cdValueList) {
         this.cdValueList = cdValueList;
     }
 

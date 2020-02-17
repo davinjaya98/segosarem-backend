@@ -46,9 +46,12 @@ public class CustomDataValue extends GeneralCreateModify implements Serializable
     public CustomDataValue() {
     }
 
-    public CustomDataValue(int cdValueId, byte[] cdValue, CustomData customData) {
+    public CustomDataValue(int cdValueId, byte[] cdValue, Integer cdValueType, Integer cdValueLevel, Integer cdValueSequence, CustomData customData) {
         this.cdValueId = cdValueId;
         this.cdValue = cdValue;
+        this.cdValueType = cdValueType;
+        this.cdValueLevel = cdValueLevel;
+        this.cdValueSequence = cdValueSequence;
         this.customData = customData;
     }
 

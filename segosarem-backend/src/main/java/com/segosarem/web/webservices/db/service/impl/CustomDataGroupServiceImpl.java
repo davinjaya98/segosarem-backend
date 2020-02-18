@@ -42,8 +42,14 @@ public class CustomDataGroupServiceImpl implements CustomDataGroupService {
 
     @Autowired
     private CustomDataGroupDAO  customDataGroupDAO;
+
+    @Autowired
     private CustomDataDAO       customDataDAO;
+
+    @Autowired
     private CustomDataValueDAO  customDataValueDAO;
+    
+    @Autowired
     private PageSettingDAO      pageSettingDAO;
 
     @Override
@@ -94,24 +100,39 @@ public class CustomDataGroupServiceImpl implements CustomDataGroupService {
     @Override
     public GeneralWsResponseBean addCustomDataGroup(CustomDataGroupBean requestBean) {
         GeneralWsResponseBean responseBean = generateResponseBean();
-        // try{
+
+        try{
             //Get the page setting first
             PageSetting pageSetting = pageSettingDAO.getPageSettingById(requestBean.getPageSettingId(), true);
 
             if(pageSetting != null) {
-                CustomDataGroup entity = new DozerBeanMapper().map(requestBean, CustomDataGroup.class);
-                entity.setPageSetting(pageSetting);
+                CustomDataGroup newCustomDataGroupEntity = new DozerBeanMapper().map(requestBean, CustomDataGroup.class);
+                newCustomDataGroupEntity.setPageSetting(pageSetting);
 
-                entity.setCreateDt(new Date());
-                entity.setStatus(SystemConstant.ACTIVE);
+                newCustomDataGroupEntity.setCreateDt(new Date());
+                newCustomDataGroupEntity.setStatus(SystemConstant.ACTIVE);
     
-                customDataGroupDAO.save(entity);
+                //Add the new custom data group
+                customDataGroupDAO.save(newCustomDataGroupEntity);
     
+                //Now Add the new custom data
+                if(requestBean.getCustomDataBeanList() != null && !requestBean.getCustomDataBeanList().isEmpty()) {
+                    for(CustomDataBean customDataBean : requestBean.getCustomDataBeanList()) {
+                        CustomData newCustomDataEntity = new DozerBeanMapper().map(customDataBean, CustomData.class);
+                        newCustomDataEntity.setCustomDataGroup(newCustomDataGroupEntity);
+
+                        newCustomDataEntity.setCreateDt(new Date());
+                        newCustomDataEntity.setStatus(SystemConstant.ACTIVE);
+
+                        //Add the new custom data entity
+                        customDataDAO.save(newCustomDataEntity);
+                    }
+                }
                 responseBean = setResponseToSuccess(responseBean);
             }
-        // }catch(Exception e) {
-        //     responseBean.setResponseObject(e.getMessage());
-        // }
+        }catch(Exception e) {
+            responseBean.setResponseObject(e);
+        }
         
         return responseBean;
     }

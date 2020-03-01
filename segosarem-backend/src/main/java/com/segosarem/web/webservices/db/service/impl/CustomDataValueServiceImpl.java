@@ -19,6 +19,7 @@ import com.segosarem.web.constant.SystemConstant;
 //DB
 import com.segosarem.web.webservices.db.dao.CustomDataValueDAO;
 import com.segosarem.web.webservices.db.entity.CustomDataValue;
+import com.segosarem.web.webservices.db.service.CommonServiceUtils;
 import com.segosarem.web.webservices.db.service.CustomDataValueService;
 import com.segosarem.web.webservices.bean.DeleteEntityReqBean;
 //Bean
@@ -37,7 +38,7 @@ public class CustomDataValueServiceImpl implements CustomDataValueService {
 
     @Override
     public GeneralWsResponseBean getAllCustomDataValue() {
-        GeneralWsResponseBean responseBean = generateResponseBean();
+        GeneralWsResponseBean responseBean = CommonServiceUtils.generateResponseBean();
         try{
             List<CustomDataValue> entityList = customDataValueDAO.getAllCustomDataValue();
 
@@ -50,7 +51,7 @@ public class CustomDataValueServiceImpl implements CustomDataValueService {
                 }
 
                 responseBean.setResponseObject(beanList);
-                responseBean = setResponseToSuccess(responseBean);
+                responseBean = CommonServiceUtils.setResponseToSuccess(responseBean);
             }
 
         }catch(Exception e) {
@@ -62,7 +63,7 @@ public class CustomDataValueServiceImpl implements CustomDataValueService {
 
     @Override
     public GeneralWsResponseBean getCustomDataValueById(Integer id) {
-        GeneralWsResponseBean responseBean = generateResponseBean();
+        GeneralWsResponseBean responseBean = CommonServiceUtils.generateResponseBean();
         try{
             CustomDataValue entity = customDataValueDAO.getCustomDataValueById(id, true);
 
@@ -70,7 +71,7 @@ public class CustomDataValueServiceImpl implements CustomDataValueService {
                 CustomDataValueBean bean = new DozerBeanMapper().map(entity, CustomDataValueBean.class);
 
                 responseBean.setResponseObject(bean);
-                responseBean = setResponseToSuccess(responseBean);
+                responseBean = CommonServiceUtils.setResponseToSuccess(responseBean);
             }
 
         }catch(Exception e) {
@@ -82,7 +83,7 @@ public class CustomDataValueServiceImpl implements CustomDataValueService {
 
     @Override
     public GeneralWsResponseBean addCustomDataValue(CustomDataValueBean requestBean) {
-        GeneralWsResponseBean responseBean = generateResponseBean();
+        GeneralWsResponseBean responseBean = CommonServiceUtils.generateResponseBean();
         try{
             CustomDataValue entity = new DozerBeanMapper().map(requestBean, CustomDataValue.class);
             entity.setCreateDt(new Date());
@@ -90,7 +91,7 @@ public class CustomDataValueServiceImpl implements CustomDataValueService {
 
             customDataValueDAO.save(entity);
 
-            responseBean = setResponseToSuccess(responseBean);
+            responseBean = CommonServiceUtils.setResponseToSuccess(responseBean);
         }catch(Exception e) {
             responseBean.setResponseObject(e.getMessage());
         }
@@ -100,15 +101,13 @@ public class CustomDataValueServiceImpl implements CustomDataValueService {
 
     @Override
     public GeneralWsResponseBean updateCustomDataValue(CustomDataValueBean requestBean) {
-        GeneralWsResponseBean responseBean = generateResponseBean();
+        GeneralWsResponseBean responseBean = CommonServiceUtils.generateResponseBean();
         try{
             CustomDataValue entity = customDataValueDAO.getCustomDataValueById(requestBean.getCdValueId(), false);
 
             if(entity != null) {
                 // entity = new DozerBeanMapper().map(requestBean, CustomDataValue.class);
                 entity.setCdValue(requestBean.getCdValue());
-                entity.setCdValueType(requestBean.getCdValueType());
-                entity.setCdValueSequence(requestBean.getCdValueSequence());
                 //entity.setCustomData(requestBean.getCustomData());
                 //entity.setParentValue(requestBean.getParentValue());
                 //entity.setChildValueList(requestBean.getChildValueList());
@@ -116,7 +115,7 @@ public class CustomDataValueServiceImpl implements CustomDataValueService {
     
                 customDataValueDAO.update(entity);
                 
-                responseBean = setResponseToSuccess(responseBean);
+                responseBean = CommonServiceUtils.setResponseToSuccess(responseBean);
             }
         }catch(Exception e) {
             responseBean.setResponseObject(e.getMessage());
@@ -127,32 +126,19 @@ public class CustomDataValueServiceImpl implements CustomDataValueService {
 
     @Override
     public GeneralWsResponseBean deleteCustomDataValue(DeleteEntityReqBean requestBean) {
-        GeneralWsResponseBean responseBean = generateResponseBean();
+        GeneralWsResponseBean responseBean = CommonServiceUtils.generateResponseBean();
         try{
             CustomDataValue entity = customDataValueDAO.getCustomDataValueById(requestBean.getEntityId(), false);
 
             if(entity != null) {
                 customDataValueDAO.delete(entity);
                 
-                responseBean = setResponseToSuccess(responseBean);
+                responseBean = CommonServiceUtils.setResponseToSuccess(responseBean);
             }
         }catch(Exception e) {
             responseBean.setResponseObject(e.getMessage());
         }
         
-        return responseBean;
-    }
-
-    private GeneralWsResponseBean generateResponseBean() {
-        GeneralWsResponseBean obj = new GeneralWsResponseBean();
-        obj.setReturnCode(SystemConstant.FAILED);
-
-        return obj;
-    }
-
-    private GeneralWsResponseBean setResponseToSuccess(GeneralWsResponseBean responseBean) {
-        responseBean.setReturnCode(SystemConstant.SUCCESS);
-
         return responseBean;
     }
 }

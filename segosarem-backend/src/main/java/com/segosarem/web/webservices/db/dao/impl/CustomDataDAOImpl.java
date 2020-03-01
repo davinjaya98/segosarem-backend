@@ -53,7 +53,7 @@ public class CustomDataDAOImpl implements CustomDataDAO {
 
 	@Override
 	public CustomData getCustomDataById(Integer id, Boolean searchActive) {
-		String query = "from CustomData cdt where cdt.customDataId = " + id;
+		String query = "from CustomData cdt where cdt.cdId = " + id;
 
 		if(searchActive) {
 			query += " AND cdt.status='"+SystemConstant.ACTIVE+"'";

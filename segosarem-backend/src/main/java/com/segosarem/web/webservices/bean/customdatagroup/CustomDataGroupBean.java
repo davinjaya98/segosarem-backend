@@ -9,18 +9,16 @@ public class CustomDataGroupBean {
 	private Integer cdGroupId;
 	private String cdGroupName;
 	private String cdGroupDescription;
-    private List<CustomDataBean> customDataBeanList = new ArrayList<CustomDataBean>();
 
     private int pageSettingId;
     
     public CustomDataGroupBean() {
     }
 
-    public CustomDataGroupBean(Integer cdGroupId, String cdGroupName, String cdGroupDescription, List<CustomDataBean> customDataBeanList, int pageSettingId) {
+    public CustomDataGroupBean(Integer cdGroupId, String cdGroupName, String cdGroupDescription, int pageSettingId) {
         this.cdGroupId = cdGroupId;
         this.cdGroupName = cdGroupName;
         this.cdGroupDescription = cdGroupDescription;
-        this.customDataBeanList = customDataBeanList;
         this.pageSettingId = pageSettingId;
     }
 
@@ -46,14 +44,6 @@ public class CustomDataGroupBean {
 
     public void setCdGroupDescription(String cdGroupDescription) {
         this.cdGroupDescription = cdGroupDescription;
-    }
-
-    public List<CustomDataBean> getCustomDataBeanList() {
-        return this.customDataBeanList;
-    }
-
-    public void setCustomDataBeanList(List<CustomDataBean> customDataBeanList) {
-        this.customDataBeanList = customDataBeanList;
     }
 	
     public int getPageSettingId() {

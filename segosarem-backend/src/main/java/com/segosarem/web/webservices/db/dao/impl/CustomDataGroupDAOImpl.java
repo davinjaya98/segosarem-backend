@@ -53,7 +53,7 @@ public class CustomDataGroupDAOImpl implements CustomDataGroupDAO {
 
 	@Override
 	public CustomDataGroup getCustomDataGroupById(Integer id, Boolean searchActive) {
-		String query = "from CustomDataGroup cdg where cdg.customDataGroupId = " + id;
+		String query = "from CustomDataGroup cdg where cdg.cdGroupId = " + id;
 
 		if(searchActive) {
 			query += " AND cdg.status='"+SystemConstant.ACTIVE+"'";

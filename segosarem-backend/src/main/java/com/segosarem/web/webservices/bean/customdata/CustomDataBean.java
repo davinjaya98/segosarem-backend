@@ -1,38 +1,33 @@
 package com.segosarem.web.webservices.bean.customdata;
 
-import com.segosarem.web.webservices.bean.customdatavalue.CustomDataValueBean;
-import com.segosarem.web.webservices.bean.customdatagroup.CustomDataGroupBean;
-import java.util.List;
-import java.util.ArrayList;
-
 public class CustomDataBean {
 
-	private int cdId;
+    //For response
+	private Integer cdId;
     private String cdName;
-    private List<CustomDataValueBean> cdValueList = new ArrayList<CustomDataValueBean>();
     private Integer cdType;
     private String cdSequence;
     private String cdKey;
-    private CustomDataGroupBean customDataGroup;
-    
+
+    private Integer cdGroupId;
+
     public CustomDataBean() {
     }
 
-    public CustomDataBean(int cdId, String cdName, List<CustomDataValueBean> cdValueList, Integer cdType, String cdSequence, String cdKey, CustomDataGroupBean customDataGroup) {
+    public CustomDataBean(Integer cdId, String cdName, Integer cdType, String cdSequence, String cdKey, Integer cdGroupId) {
         this.cdId = cdId;
         this.cdName = cdName;
-        this.cdValueList = cdValueList;
         this.cdType = cdType;
         this.cdSequence = cdSequence;
         this.cdKey = cdKey;
-        this.customDataGroup = customDataGroup;
+        this.cdGroupId = cdGroupId;
     }
 
-    public int getCdId() {
+    public Integer getCdId() {
         return this.cdId;
     }
 
-    public void setCdId(int cdId) {
+    public void setCdId(Integer cdId) {
         this.cdId = cdId;
     }
 
@@ -42,14 +37,6 @@ public class CustomDataBean {
 
     public void setCdName(String cdName) {
         this.cdName = cdName;
-    }
-
-    public List<CustomDataValueBean> getCdValueList() {
-        return this.cdValueList;
-    }
-
-    public void setCdValueList(List<CustomDataValueBean> cdValueList) {
-        this.cdValueList = cdValueList;
     }
 
     public Integer getCdType() {
@@ -76,11 +63,11 @@ public class CustomDataBean {
         this.cdKey = cdKey;
     }
 
-    public CustomDataGroupBean getCustomDataGroup() {
-        return this.customDataGroup;
+    public Integer getCdGroupId() {
+        return this.cdGroupId;
     }
 
-    public void setCustomDataGroup(CustomDataGroupBean customDataGroup) {
-        this.customDataGroup = customDataGroup;
+    public void setCdGroupId(Integer cdGroupId) {
+        this.cdGroupId = cdGroupId;
     }
 }

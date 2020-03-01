@@ -19,6 +19,7 @@ import com.segosarem.web.constant.SystemConstant;
 //DB
 import com.segosarem.web.webservices.db.dao.PageSettingDAO;
 import com.segosarem.web.webservices.db.entity.PageSetting;
+import com.segosarem.web.webservices.db.service.CommonServiceUtils;
 import com.segosarem.web.webservices.db.service.PageSettingService;
 import com.segosarem.web.webservices.bean.DeleteEntityReqBean;
 //Bean
@@ -37,7 +38,7 @@ public class PageSettingServiceImpl implements PageSettingService {
 
     @Override
     public GeneralWsResponseBean getAllPageSetting() {
-        GeneralWsResponseBean responseBean = generateResponseBean();
+        GeneralWsResponseBean responseBean = CommonServiceUtils.generateResponseBean();
         try{
             List<PageSetting> entityList = pageSettingDAO.getAllPageSetting();
 
@@ -50,7 +51,7 @@ public class PageSettingServiceImpl implements PageSettingService {
                 }
 
                 responseBean.setResponseObject(beanList);
-                responseBean = setResponseToSuccess(responseBean);
+                responseBean = CommonServiceUtils.setResponseToSuccess(responseBean);
             }
 
         }catch(Exception e) {
@@ -62,7 +63,7 @@ public class PageSettingServiceImpl implements PageSettingService {
 
     @Override
     public GeneralWsResponseBean getPageSettingById(Integer id) {
-        GeneralWsResponseBean responseBean = generateResponseBean();
+        GeneralWsResponseBean responseBean = CommonServiceUtils.generateResponseBean();
         try{
             PageSetting entity = pageSettingDAO.getPageSettingById(id, true);
 
@@ -70,7 +71,7 @@ public class PageSettingServiceImpl implements PageSettingService {
                 PageSettingBean bean = new DozerBeanMapper().map(entity, PageSettingBean.class);
 
                 responseBean.setResponseObject(bean);
-                responseBean = setResponseToSuccess(responseBean);
+                responseBean = CommonServiceUtils.setResponseToSuccess(responseBean);
             }
 
         }catch(Exception e) {
@@ -82,7 +83,7 @@ public class PageSettingServiceImpl implements PageSettingService {
 
     @Override
     public GeneralWsResponseBean getPageSettingByKey(String key) {
-        GeneralWsResponseBean responseBean = generateResponseBean();
+        GeneralWsResponseBean responseBean = CommonServiceUtils.generateResponseBean();
         try{
             PageSetting entity = pageSettingDAO.getPageSettingByKey(key, true);
 
@@ -90,7 +91,7 @@ public class PageSettingServiceImpl implements PageSettingService {
                 PageSettingBean bean = new DozerBeanMapper().map(entity, PageSettingBean.class);
 
                 responseBean.setResponseObject(bean);
-                responseBean = setResponseToSuccess(responseBean);
+                responseBean = CommonServiceUtils.setResponseToSuccess(responseBean);
             }
 
         }catch(Exception e) {
@@ -102,7 +103,7 @@ public class PageSettingServiceImpl implements PageSettingService {
 
     @Override
     public GeneralWsResponseBean addPageSetting(PageSettingBean requestBean) {
-        GeneralWsResponseBean responseBean = generateResponseBean();
+        GeneralWsResponseBean responseBean = CommonServiceUtils.generateResponseBean();
         try{
             PageSetting entity = new DozerBeanMapper().map(requestBean, PageSetting.class);
             entity.setCreateDt(new Date());
@@ -110,7 +111,7 @@ public class PageSettingServiceImpl implements PageSettingService {
 
             pageSettingDAO.save(entity);
 
-            responseBean = setResponseToSuccess(responseBean);
+            responseBean = CommonServiceUtils.setResponseToSuccess(responseBean);
         }catch(Exception e) {
             responseBean.setResponseObject(e.getMessage());
         }
@@ -120,7 +121,7 @@ public class PageSettingServiceImpl implements PageSettingService {
 
     @Override
     public GeneralWsResponseBean updatePageSetting(PageSettingBean requestBean) {
-        GeneralWsResponseBean responseBean = generateResponseBean();
+        GeneralWsResponseBean responseBean = CommonServiceUtils.generateResponseBean();
         try{
             PageSetting entity = pageSettingDAO.getPageSettingById(requestBean.getSettingId(), false);
 
@@ -134,7 +135,7 @@ public class PageSettingServiceImpl implements PageSettingService {
     
                 pageSettingDAO.update(entity);
                 
-                responseBean = setResponseToSuccess(responseBean);
+                responseBean = CommonServiceUtils.setResponseToSuccess(responseBean);
             }
         }catch(Exception e) {
             responseBean.setResponseObject(e.getMessage());
@@ -145,32 +146,19 @@ public class PageSettingServiceImpl implements PageSettingService {
 
     @Override
     public GeneralWsResponseBean deletePageSetting(DeleteEntityReqBean requestBean) {
-        GeneralWsResponseBean responseBean = generateResponseBean();
+        GeneralWsResponseBean responseBean = CommonServiceUtils.generateResponseBean();
         try{
             PageSetting entity = pageSettingDAO.getPageSettingById(requestBean.getEntityId(), false);
 
             if(entity != null) {
                 pageSettingDAO.delete(entity);
                 
-                responseBean = setResponseToSuccess(responseBean);
+                responseBean = CommonServiceUtils.setResponseToSuccess(responseBean);
             }
         }catch(Exception e) {
             responseBean.setResponseObject(e.getMessage());
         }
         
-        return responseBean;
-    }
-
-    private GeneralWsResponseBean generateResponseBean() {
-        GeneralWsResponseBean obj = new GeneralWsResponseBean();
-        obj.setReturnCode(SystemConstant.FAILED);
-
-        return obj;
-    }
-
-    private GeneralWsResponseBean setResponseToSuccess(GeneralWsResponseBean responseBean) {
-        responseBean.setReturnCode(SystemConstant.SUCCESS);
-
         return responseBean;
     }
 }

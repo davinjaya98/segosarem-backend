@@ -28,14 +28,7 @@ public class CustomDataValue extends GeneralCreateModify implements Serializable
     //This is in byte[]
     private byte[] cdValue;
     //0 - Multifield parent
-    //1 - Textfield / Path Field (For Images)
-    //2 - Boolean
-    private Integer cdValueType;
     private Integer cdValueLevel;
-
-    //Usable for Array and Multifield only
-    //0 - no sequence
-    private Integer cdValueSequence;
 
     private CustomData customData;
     
@@ -43,15 +36,15 @@ public class CustomDataValue extends GeneralCreateModify implements Serializable
     private CustomDataValue parentValue;
     private Set<CustomDataValue> childValueList = new LinkedHashSet<CustomDataValue>();
 
+    private CustomDataSetting customDataSetting;
+
     public CustomDataValue() {
     }
 
-    public CustomDataValue(int cdValueId, byte[] cdValue, Integer cdValueType, Integer cdValueLevel, Integer cdValueSequence, CustomData customData) {
+    public CustomDataValue(int cdValueId, byte[] cdValue, Integer cdValueLevel, CustomData customData) {
         this.cdValueId = cdValueId;
         this.cdValue = cdValue;
-        this.cdValueType = cdValueType;
         this.cdValueLevel = cdValueLevel;
-        this.cdValueSequence = cdValueSequence;
         this.customData = customData;
     }
 
@@ -77,15 +70,6 @@ public class CustomDataValue extends GeneralCreateModify implements Serializable
         this.cdValue = cdValue;
     }
 
-	@Column(name = "cd_value_type")
-    public Integer getCdValueType() {
-        return this.cdValueType;
-    }
-
-    public void setCdValueType(Integer cdValueType) {
-        this.cdValueType = cdValueType;
-    }
-
 	@Column(name = "cd_value_level")
     public Integer getCdValueLevel() {
         return this.cdValueLevel;
@@ -93,15 +77,6 @@ public class CustomDataValue extends GeneralCreateModify implements Serializable
 
     public void setCdValueLevel(Integer cdValueLevel) {
         this.cdValueLevel = cdValueLevel;
-    }
-
-	@Column(name = "cd_value_sequence")
-    public Integer getCdValueSequence() {
-        return this.cdValueSequence;
-    }
-
-    public void setCdValueSequence(Integer cdValueSequence) {
-        this.cdValueSequence = cdValueSequence;
     }
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -132,5 +107,15 @@ public class CustomDataValue extends GeneralCreateModify implements Serializable
 
     public void setChildValueList(Set<CustomDataValue> childValueList) {
         this.childValueList = childValueList;
+    }
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "cds_id")
+    public CustomDataSetting getCustomDataSetting() {
+        return this.customDataSetting;
+    }
+
+    public void setCustomDataSetting(CustomDataSetting customDataSetting) {
+        this.customDataSetting = customDataSetting;
     }
 }

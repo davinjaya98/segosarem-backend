@@ -10,6 +10,7 @@ public interface CustomDataService {
     
     public GeneralWsResponseBean getAllCustomData();
     public GeneralWsResponseBean getCustomDataById(Integer id);
+    public GeneralWsResponseBean getCustomDataByKey(String key);
 
     public GeneralWsResponseBean addCustomData(CustomDataBean requestBean);
     //This can be used to update status to active, deactivated, or deleted

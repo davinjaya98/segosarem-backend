@@ -19,6 +19,7 @@ public class CustomDataSetting extends GeneralCreateModify implements Serializab
 
     private int cdsId;
     private String cdsName;
+    private String cdsKey;
     // This is for type
     // Can be implemented this way
     // 1 - Textfield / Path Field (For Images)
@@ -33,9 +34,10 @@ public class CustomDataSetting extends GeneralCreateModify implements Serializab
     public CustomDataSetting() {
     }
 
-    public CustomDataSetting(int cdsId, String cdsName, Integer cdsType, String cdsSequence, CustomData customData) {
+    public CustomDataSetting(int cdsId, String cdsName, String cdsKey, Integer cdsType, String cdsSequence, CustomData customData) {
         this.cdsId = cdsId;
         this.cdsName = cdsName;
+        this.cdsKey = cdsKey;
         this.cdsType = cdsType;
         this.cdsSequence = cdsSequence;
         this.customData = customData;
@@ -59,6 +61,15 @@ public class CustomDataSetting extends GeneralCreateModify implements Serializab
 
     public void setCdsName(String cdsName) {
         this.cdsName = cdsName;
+    }
+
+	@Column(name = "cds_key")
+    public String getCdsKey() {
+        return this.cdsKey;
+    }
+
+    public void setCdsKey(String cdsKey) {
+        this.cdsKey = cdsKey;
     }
 
 	@Column(name = "cds_type")

@@ -28,9 +28,15 @@ public class CustomDataValueDAOImpl implements CustomDataValueDAO {
 	}
 
 	@Override
-	public void save(CustomDataValue entity) {
+	public void persist(CustomDataValue entity) {
 
 		getHibernateTemplate().persist(entity);
+	}
+
+	@Override
+	public void save(CustomDataValue entity) {
+
+		getHibernateTemplate().save(entity);
 	}
 
 	@Override

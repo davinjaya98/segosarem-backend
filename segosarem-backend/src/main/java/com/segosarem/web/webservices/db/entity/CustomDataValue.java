@@ -7,6 +7,7 @@ import java.util.Set;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,9 +17,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 import javax.persistence.OneToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.Lob;
-
-import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name = "custom_data_value", catalog = "segosarem_db")
@@ -59,8 +57,6 @@ public class CustomDataValue extends GeneralCreateModify implements Serializable
         this.cdValueId = cdValueId;
     }
 
-    @Type(type = "org.hibernate.type.BlobType")
-    @Lob
     @Column(name = "cd_value")
     public byte[] getCdValue() {
         return this.cdValue;
@@ -90,7 +86,7 @@ public class CustomDataValue extends GeneralCreateModify implements Serializable
     }
 
     //Recursive for Multifield Type
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade={CascadeType.ALL})
 	@JoinColumn(name = "parent_id")
     public CustomDataValue getParentValue() {
         return this.parentValue;

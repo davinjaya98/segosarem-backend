@@ -1,9 +1,5 @@
 package com.segosarem.web.webservices.bean.customdatagroup;
 
-import com.segosarem.web.webservices.bean.customdata.CustomDataBean;
-import java.util.List;
-import java.util.ArrayList;
-
 public class CustomDataGroupBean {
 
 	private Integer cdGroupId;

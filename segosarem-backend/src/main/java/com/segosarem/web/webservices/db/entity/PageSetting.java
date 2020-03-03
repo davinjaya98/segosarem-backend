@@ -64,7 +64,7 @@ public class PageSetting extends GeneralCreateModify implements Serializable {
         this.pageSeoKeywords = pageSeoKeywords;
     }
 
-	@Column(name = "page_key")
+	@Column(name = "page_key", unique = true)
     public String getPageKey() {
         return this.pageKey;
     }

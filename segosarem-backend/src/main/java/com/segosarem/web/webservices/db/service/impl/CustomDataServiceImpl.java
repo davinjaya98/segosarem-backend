@@ -2,7 +2,9 @@ package com.segosarem.web.webservices.db.service.impl;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.transaction.Transactional;
 
@@ -52,12 +54,12 @@ public class CustomDataServiceImpl implements CustomDataService {
     @Override
     public GeneralWsResponseBean getAllCustomData() {
         GeneralWsResponseBean responseBean = CommonServiceUtils.generateResponseBean();
-        try{
+        try {
             List<CustomData> entityList = customDataDAO.getAllCustomData();
 
-            if(entityList != null && !entityList.isEmpty()) {
+            if (entityList != null && !entityList.isEmpty()) {
                 List<CustomDataBean> beanList = new ArrayList<CustomDataBean>();
-                for(CustomData entity : entityList) {
+                for (CustomData entity : entityList) {
                     CustomDataBean bean = new DozerBeanMapper().map(entity, CustomDataBean.class);
 
                     beanList.add(bean);
@@ -67,114 +69,155 @@ public class CustomDataServiceImpl implements CustomDataService {
                 responseBean = CommonServiceUtils.setResponseToSuccess(responseBean);
             }
 
-        }catch(Exception e) {
+        } catch (Exception e) {
             responseBean.setResponseObject(e.getMessage());
         }
-        
+
         return responseBean;
     }
 
     @Override
     public GeneralWsResponseBean getCustomDataById(Integer id) {
         GeneralWsResponseBean responseBean = CommonServiceUtils.generateResponseBean();
-        try{
+        try {
             CustomData entity = customDataDAO.getCustomDataById(id, true);
 
-            if(entity != null) {
+            if (entity != null) {
                 CustomDataBean bean = new DozerBeanMapper().map(entity, CustomDataBean.class);
 
                 responseBean.setResponseObject(bean);
                 responseBean = CommonServiceUtils.setResponseToSuccess(responseBean);
             }
 
-        }catch(Exception e) {
+        } catch (Exception e) {
             responseBean.setResponseObject(e.getMessage());
         }
-        
+
+        return responseBean;
+    }
+
+    @Override
+    public GeneralWsResponseBean getCustomDataByKey(String key) {
+        GeneralWsResponseBean responseBean = CommonServiceUtils.generateResponseBean();
+        try {
+            CustomData entity = customDataDAO.getCustomDataByKey(key, true);
+
+            if (entity != null) {
+                CustomDataBean bean = new DozerBeanMapper().map(entity, CustomDataBean.class);
+
+                if (entity.getCdValueList() != null && !entity.getCdValueList().isEmpty()) {
+                    // List<CustomDataValueKeyPairBean> cdValuePairs = new ArrayList<CustomDataValueKeyPairBean>();
+                    List<Map<String, Object>> cdValuePairs = new ArrayList<Map<String,Object>>();
+
+                    //Because only the parent 0 tagged into the CustomData Entity
+                    for(CustomDataValue parentValue : entity.getCdValueList()) {
+                        if(parentValue.getChildValueList() != null && !parentValue.getChildValueList().isEmpty()) {
+                            Map<String,Object> cdValuePair = new LinkedHashMap<String,Object>();
+                            for(CustomDataValue childValue : parentValue.getChildValueList()) {
+                                cdValuePair.put(childValue.getCustomDataSetting().getCdsKey(), CommonServiceUtils.parseValue(childValue.getCdValue(), childValue.getCustomDataSetting().getCdsType()));
+                            }
+                            cdValuePairs.add(cdValuePair);
+                        }
+                    }
+
+                    bean.setCdValuePair(cdValuePairs);
+                }
+
+                responseBean.setResponseObject(bean);
+                responseBean = CommonServiceUtils.setResponseToSuccess(responseBean);
+            }
+
+        } catch (Exception e) {
+            responseBean.setResponseObject(e.getMessage());
+        }
+
         return responseBean;
     }
 
     @Override
     public GeneralWsResponseBean addCustomData(CustomDataBean requestBean) {
         GeneralWsResponseBean responseBean = CommonServiceUtils.generateResponseBean();
-        try{
-            CustomDataGroup customDataGroup = customDataGroupDAO.getCustomDataGroupById(requestBean.getCdGroupId(), true);
+        try {
+            CustomDataGroup customDataGroup = customDataGroupDAO.getCustomDataGroupById(requestBean.getCdGroupId(),
+                    true);
 
-            if(customDataGroup != null) {
+            if (customDataGroup != null) {
                 CustomData entity = new DozerBeanMapper().map(requestBean, CustomData.class);
                 entity.setCustomDataGroup(customDataGroup);
-                
+
                 entity.setCreateDt(new Date());
                 entity.setStatus(SystemConstant.ACTIVE);
-    
+
                 customDataDAO.save(entity);
-    
+
                 responseBean = CommonServiceUtils.setResponseToSuccess(responseBean);
             }
-        }catch(Exception e) {
+        } catch (Exception e) {
             responseBean.setResponseObject(e.getMessage());
         }
-        
+
         return responseBean;
     }
 
     @Override
     public GeneralWsResponseBean updateCustomData(CustomDataBean requestBean) {
         GeneralWsResponseBean responseBean = CommonServiceUtils.generateResponseBean();
-        try{
+        try {
             CustomData entity = customDataDAO.getCustomDataById(requestBean.getCdId(), false);
 
-            if(entity != null) {
+            if (entity != null) {
                 // entity = new DozerBeanMapper().map(requestBean, CustomData.class);
-                
-                //update custom data
+
+                // update custom data
                 entity.setCdName(requestBean.getCdName());
                 entity.setCdType(requestBean.getCdType());
                 entity.setCdSequence(requestBean.getCdSequence());
-                //entity.setCustomDataGroup(requestBean.getCustomDataGroup());
+                // entity.setCustomDataGroup(requestBean.getCustomDataGroup());
                 entity.setModifyDt(new Date());
 
                 customDataDAO.update(entity);
 
                 // update custom data value list of current custom data
-                // if(requestBean.getCdValueList()!=null || !requestBean.getCdValueList().isEmpty()){
-                //     for(CustomDataValueBean CdvBean : requestBean.getCdValueList()){
-                //         CustomDataValue CdvEntity = customDataValueDAO.getCustomDataValueById(CdvBean.getCdValueId(), false);
+                // if(requestBean.getCdValueList()!=null ||
+                // !requestBean.getCdValueList().isEmpty()){
+                // for(CustomDataValueBean CdvBean : requestBean.getCdValueList()){
+                // CustomDataValue CdvEntity =
+                // customDataValueDAO.getCustomDataValueById(CdvBean.getCdValueId(), false);
 
-                //         if(CdvEntity!=null){
-                //             CdvEntity.setCdValue(CdvBean.getCdValue());
-                //             // CdvEntity.setCdValueType(CdvBean.getCdValueType());
-                //             CdvEntity.setCdValueLevel(CdvBean.getCdValueLevel());
-                //             // CdvEntity.setCdValueSequence(CdvBean.getCdValueSequence());
-                //             CdvEntity.setModifyDt(new Date());
-                //         }
-                //     }
+                // if(CdvEntity!=null){
+                // CdvEntity.setCdValue(CdvBean.getCdValue());
+                // // CdvEntity.setCdValueType(CdvBean.getCdValueType());
+                // CdvEntity.setCdValueLevel(CdvBean.getCdValueLevel());
+                // // CdvEntity.setCdValueSequence(CdvBean.getCdValueSequence());
+                // CdvEntity.setModifyDt(new Date());
                 // }
-                
+                // }
+                // }
+
                 responseBean = CommonServiceUtils.setResponseToSuccess(responseBean);
             }
-        }catch(Exception e) {
+        } catch (Exception e) {
             responseBean.setResponseObject(e.getMessage());
         }
-        
+
         return responseBean;
     }
 
     @Override
     public GeneralWsResponseBean deleteCustomData(DeleteEntityReqBean requestBean) {
         GeneralWsResponseBean responseBean = CommonServiceUtils.generateResponseBean();
-        try{
+        try {
             CustomData entity = customDataDAO.getCustomDataById(requestBean.getEntityId(), false);
 
-            if(entity != null) {
+            if (entity != null) {
                 customDataDAO.delete(entity);
-                
+
                 responseBean = CommonServiceUtils.setResponseToSuccess(responseBean);
             }
-        }catch(Exception e) {
+        } catch (Exception e) {
             responseBean.setResponseObject(e.getMessage());
         }
-        
+
         return responseBean;
     }
 }

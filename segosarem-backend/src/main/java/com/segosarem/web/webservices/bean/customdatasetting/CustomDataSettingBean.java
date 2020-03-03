@@ -1,16 +1,12 @@
 package com.segosarem.web.webservices.bean.customdatasetting;
 
-import com.segosarem.web.webservices.bean.customdatavalue.CustomDataValueBean;
-import com.segosarem.web.webservices.bean.customdatagroup.CustomDataGroupBean;
-import java.util.List;
-import java.util.ArrayList;
-
 public class CustomDataSettingBean {
 
     //For Response
     private Integer cdsId;
 
     private String cdsName;
+    private String cdsKey;
     private Integer cdsType;
     // This is for data presentation sequence
     private String cdsSequence;
@@ -20,9 +16,10 @@ public class CustomDataSettingBean {
     public CustomDataSettingBean() {
     }
 
-    public CustomDataSettingBean(Integer cdsId, String cdsName, Integer cdsType, String cdsSequence, Integer cdId) {
+    public CustomDataSettingBean(Integer cdsId, String cdsName, String cdsKey, Integer cdsType, String cdsSequence, Integer cdId) {
         this.cdsId = cdsId;
         this.cdsName = cdsName;
+        this.cdsKey = cdsKey;
         this.cdsType = cdsType;
         this.cdsSequence = cdsSequence;
         this.cdId = cdId;
@@ -42,6 +39,14 @@ public class CustomDataSettingBean {
 
     public void setCdsName(String cdsName) {
         this.cdsName = cdsName;
+    }
+
+    public String getCdsKey() {
+        return this.cdsKey;
+    }
+
+    public void setCdsKey(String cdsKey) {
+        this.cdsKey = cdsKey;
     }
 
     public Integer getCdsType() {

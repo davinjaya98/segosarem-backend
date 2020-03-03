@@ -14,4 +14,5 @@ public interface CustomDataDAO {
 
 	public List<CustomData> getAllCustomData();
 	public CustomData getCustomDataById(Integer id, Boolean searchActive);
+	public CustomData getCustomDataByKey(String key, Boolean searchActive);
 }

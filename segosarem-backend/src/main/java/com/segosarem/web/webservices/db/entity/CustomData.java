@@ -25,6 +25,8 @@ public class CustomData extends GeneralCreateModify implements Serializable {
     private String cdName;
     //This is the list of value
     private Set<CustomDataValue> cdValueList = new LinkedHashSet<CustomDataValue>();
+    //This is the list of setting for the custom data
+    private Set<CustomDataSetting> cdSettingList = new LinkedHashSet<CustomDataSetting>();
     //This is for type
     //Can be implemented this way
     //1 - Single
@@ -40,10 +42,11 @@ public class CustomData extends GeneralCreateModify implements Serializable {
     public CustomData() {
     }
 
-    public CustomData(int cdId, String cdName, Set<CustomDataValue> cdValueList, Integer cdType, String cdSequence, String cdKey, CustomDataGroup customDataGroup) {
+    public CustomData(int cdId, String cdName, Set<CustomDataValue> cdValueList, Set<CustomDataSetting> cdSettingList, Integer cdType, String cdSequence, String cdKey, CustomDataGroup customDataGroup) {
         this.cdId = cdId;
         this.cdName = cdName;
         this.cdValueList = cdValueList;
+        this.cdSettingList = cdSettingList;
         this.cdType = cdType;
         this.cdSequence = cdSequence;
         this.cdKey = cdKey;
@@ -79,6 +82,15 @@ public class CustomData extends GeneralCreateModify implements Serializable {
         this.cdValueList = cdValueList;
     }
 
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "customData")
+    public Set<CustomDataSetting> getCdSettingList() {
+        return this.cdSettingList;
+    }
+
+    public void setCdSettingList(Set<CustomDataSetting> cdSettingList) {
+        this.cdSettingList = cdSettingList;
+    }
+
 	@Column(name = "cd_type")
     public Integer getCdType() {
         return this.cdType;
@@ -97,7 +109,7 @@ public class CustomData extends GeneralCreateModify implements Serializable {
         this.cdSequence = cdSequence;
     }
 
-	@Column(name = "cd_key")
+	@Column(name = "cd_key", unique = true)
     public String getCdKey() {
         return this.cdKey;
     }

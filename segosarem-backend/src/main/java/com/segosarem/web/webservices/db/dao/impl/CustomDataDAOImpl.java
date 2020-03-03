@@ -67,4 +67,21 @@ public class CustomDataDAOImpl implements CustomDataDAO {
 
 		return null;
 	}
+
+	@Override
+	public CustomData getCustomDataByKey(String key, Boolean searchActive) {
+		String query = "from CustomData cdt where cdt.cdKey = '" + key + "'";
+
+		if(searchActive) {
+			query += " AND cdt.status='"+SystemConstant.ACTIVE+"'";
+		}
+
+		List<CustomData> entityList = getSession().createQuery(query).list();
+
+		if(entityList != null && !entityList.isEmpty()) {
+			return entityList.get(0);
+		}
+
+		return null;
+	}
 }

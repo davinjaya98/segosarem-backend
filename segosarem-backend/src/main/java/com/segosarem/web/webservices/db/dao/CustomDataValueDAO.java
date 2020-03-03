@@ -6,6 +6,7 @@ import com.segosarem.web.webservices.db.entity.CustomDataValue;
 
 public interface CustomDataValueDAO {
 	
+	public void persist(CustomDataValue entity);
 	public void save(CustomDataValue entity);
     //This can be used to update status to active, deactivated, or deleted
 	public void update(CustomDataValue entity);

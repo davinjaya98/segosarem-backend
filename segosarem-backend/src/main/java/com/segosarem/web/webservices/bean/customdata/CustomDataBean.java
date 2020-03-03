@@ -1,21 +1,28 @@
 package com.segosarem.web.webservices.bean.customdata;
 
+import java.util.List;
+import java.util.Map;
+
 public class CustomDataBean {
 
     //For response
-	private Integer cdId;
+    private Integer cdId;
+    private List<Map<String, Object>> cdValuePair;
+
     private String cdName;
     private Integer cdType;
     private String cdSequence;
     private String cdKey;
 
     private Integer cdGroupId;
+    
 
     public CustomDataBean() {
     }
 
-    public CustomDataBean(Integer cdId, String cdName, Integer cdType, String cdSequence, String cdKey, Integer cdGroupId) {
+    public CustomDataBean(Integer cdId, List<Map<String,Object>> cdValuePair, String cdName, Integer cdType, String cdSequence, String cdKey, Integer cdGroupId) {
         this.cdId = cdId;
+        this.cdValuePair = cdValuePair;
         this.cdName = cdName;
         this.cdType = cdType;
         this.cdSequence = cdSequence;
@@ -29,6 +36,14 @@ public class CustomDataBean {
 
     public void setCdId(Integer cdId) {
         this.cdId = cdId;
+    }
+
+    public List<Map<String,Object>> getCdValuePair() {
+        return this.cdValuePair;
+    }
+
+    public void setCdValuePair(List<Map<String,Object>> cdValuePair) {
+        this.cdValuePair = cdValuePair;
     }
 
     public String getCdName() {

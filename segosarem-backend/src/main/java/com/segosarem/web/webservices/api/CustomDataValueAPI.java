@@ -1,5 +1,6 @@
 package com.segosarem.web.webservices.api;
 
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,7 +20,7 @@ import com.segosarem.web.webservices.db.service.CustomDataValueService;
 
 //Beans
 import com.segosarem.web.webservices.bean.GeneralWsResponseBean;
-
+import com.segosarem.web.webservices.bean.customdatavalue.AddValueWrapperBean;
 import com.segosarem.web.webservices.bean.customdatavalue.CustomDataValueBean;
 
 import com.segosarem.web.webservices.bean.DeleteEntityReqBean;
@@ -85,7 +86,7 @@ public class CustomDataValueAPI {
 	@RequestMapping(method = RequestMethod.POST, value = "/addCustomDataValue", consumes = { "application/json" }, produces = {
 			"application/json" })
 	public GeneralWsResponseBean addCustomDataValue(HttpServletRequest request, HttpServletResponse response,
-			@RequestBody CustomDataValueBean requestBean) {
+			@RequestBody AddValueWrapperBean requestBean) {
 
 		return (GeneralWsResponseBean) customDataValueService.addCustomDataValue(requestBean);
 	}

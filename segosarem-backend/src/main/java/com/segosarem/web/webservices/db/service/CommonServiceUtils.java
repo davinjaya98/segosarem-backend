@@ -34,7 +34,7 @@ public class CommonServiceUtils {
                 parsedValue = new String(value);
                 break;
             case SystemConstant.CUSTOM_DATA_SETTING_BOOLEAN:
-                parsedValue = value;
+                parsedValue = new String(value);
                 break;
             case SystemConstant.CUSTOM_DATA_SETTING_BLOB:
                 parsedValue = value;

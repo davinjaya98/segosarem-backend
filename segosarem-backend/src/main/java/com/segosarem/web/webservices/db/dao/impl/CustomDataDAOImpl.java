@@ -48,20 +48,35 @@ public class CustomDataDAOImpl implements CustomDataDAO {
 	@Override
 	public List<CustomData> getAllCustomData() {
 
-		return (List<CustomData>) getSession().createQuery("from CustomData cdt where cdt.status= '"+SystemConstant.ACTIVE+"' ").list();
+		return (List<CustomData>) getSession()
+				.createQuery("from CustomData cdt where cdt.status= '" + SystemConstant.ACTIVE + "' ").list();
+	}
+
+	@Override
+	public List<CustomData> getCustomDataListByCdGroupId(Integer id) {
+		String query = "from CustomData cdt where cdt.customDataGroup.cdGroupId = " + id + " AND cdt.status='"
+				+ SystemConstant.ACTIVE + "'";
+
+		List<CustomData> entityList = getSession().createQuery(query).list();
+
+		if (entityList != null && !entityList.isEmpty()) {
+			return entityList;
+		}
+
+		return null;
 	}
 
 	@Override
 	public CustomData getCustomDataById(Integer id, Boolean searchActive) {
 		String query = "from CustomData cdt where cdt.cdId = " + id;
 
-		if(searchActive) {
-			query += " AND cdt.status='"+SystemConstant.ACTIVE+"'";
+		if (searchActive) {
+			query += " AND cdt.status='" + SystemConstant.ACTIVE + "'";
 		}
 
 		List<CustomData> entityList = getSession().createQuery(query).list();
 
-		if(entityList != null && !entityList.isEmpty()) {
+		if (entityList != null && !entityList.isEmpty()) {
 			return entityList.get(0);
 		}
 
@@ -72,13 +87,13 @@ public class CustomDataDAOImpl implements CustomDataDAO {
 	public CustomData getCustomDataByKey(String key, Boolean searchActive) {
 		String query = "from CustomData cdt where cdt.cdKey = '" + key + "'";
 
-		if(searchActive) {
-			query += " AND cdt.status='"+SystemConstant.ACTIVE+"'";
+		if (searchActive) {
+			query += " AND cdt.status='" + SystemConstant.ACTIVE + "'";
 		}
 
 		List<CustomData> entityList = getSession().createQuery(query).list();
 
-		if(entityList != null && !entityList.isEmpty()) {
+		if (entityList != null && !entityList.isEmpty()) {
 			return entityList.get(0);
 		}
 

@@ -77,6 +77,31 @@ public class CustomDataServiceImpl implements CustomDataService {
     }
 
     @Override
+    public GeneralWsResponseBean getCustomDataListByCdGroupId(Integer id) {
+        GeneralWsResponseBean responseBean = CommonServiceUtils.generateResponseBean();
+        try {
+            List<CustomData> entityList = customDataDAO.getCustomDataListByCdGroupId(id);
+
+            if (entityList != null && !entityList.isEmpty()) {
+                List<CustomDataBean> beanList = new ArrayList<CustomDataBean>();
+                for (CustomData entity : entityList) {
+                    CustomDataBean bean = new DozerBeanMapper().map(entity, CustomDataBean.class);
+                    bean.setCdGroupId(entity.getCustomDataGroup().getCdGroupId());
+                    beanList.add(bean);
+                }
+
+                responseBean.setResponseObject(beanList);
+                responseBean = CommonServiceUtils.setResponseToSuccess(responseBean);
+            }
+
+        } catch (Exception e) {
+            responseBean.setResponseObject(e.getMessage());
+        }
+
+        return responseBean;
+    }
+
+    @Override
     public GeneralWsResponseBean getCustomDataById(Integer id) {
         GeneralWsResponseBean responseBean = CommonServiceUtils.generateResponseBean();
         try {
@@ -106,15 +131,18 @@ public class CustomDataServiceImpl implements CustomDataService {
                 CustomDataBean bean = new DozerBeanMapper().map(entity, CustomDataBean.class);
 
                 if (entity.getCdValueList() != null && !entity.getCdValueList().isEmpty()) {
-                    // List<CustomDataValueKeyPairBean> cdValuePairs = new ArrayList<CustomDataValueKeyPairBean>();
-                    List<Map<String, Object>> cdValuePairs = new ArrayList<Map<String,Object>>();
+                    // List<CustomDataValueKeyPairBean> cdValuePairs = new
+                    // ArrayList<CustomDataValueKeyPairBean>();
+                    List<Map<String, Object>> cdValuePairs = new ArrayList<Map<String, Object>>();
 
-                    //Because only the parent 0 tagged into the CustomData Entity
-                    for(CustomDataValue parentValue : entity.getCdValueList()) {
-                        if(parentValue.getChildValueList() != null && !parentValue.getChildValueList().isEmpty()) {
-                            Map<String,Object> cdValuePair = new LinkedHashMap<String,Object>();
-                            for(CustomDataValue childValue : parentValue.getChildValueList()) {
-                                cdValuePair.put(childValue.getCustomDataSetting().getCdsKey(), CommonServiceUtils.parseValue(childValue.getCdValue(), childValue.getCustomDataSetting().getCdsType()));
+                    // Because only the parent 0 tagged into the CustomData Entity
+                    for (CustomDataValue parentValue : entity.getCdValueList()) {
+                        if (parentValue.getChildValueList() != null && !parentValue.getChildValueList().isEmpty()) {
+                            Map<String, Object> cdValuePair = new LinkedHashMap<String, Object>();
+                            for (CustomDataValue childValue : parentValue.getChildValueList()) {
+                                cdValuePair.put(childValue.getCustomDataSetting().getCdsKey(),
+                                        CommonServiceUtils.parseValue(childValue.getCdValue(),
+                                                childValue.getCustomDataSetting().getCdsType()));
                             }
                             cdValuePairs.add(cdValuePair);
                         }

@@ -48,20 +48,35 @@ public class CustomDataGroupDAOImpl implements CustomDataGroupDAO {
 	@Override
 	public List<CustomDataGroup> getAllCustomDataGroup() {
 
-		return (List<CustomDataGroup>) getSession().createQuery("from CustomDataGroup cdg where cdg.status= '"+SystemConstant.ACTIVE+"' ").list();
+		return (List<CustomDataGroup>) getSession()
+				.createQuery("from CustomDataGroup cdg where cdg.status= '" + SystemConstant.ACTIVE + "' ").list();
+	}
+
+	@Override
+	public List<CustomDataGroup> getCdGroupByPageStdId(Integer id) {
+		String query = "from CustomDataGroup cdg where cdg.pageSetting.settingId = " + id + " AND cdg.status='"
+				+ SystemConstant.ACTIVE + "'";
+
+		List<CustomDataGroup> entityList = getSession().createQuery(query).list();
+
+		if (entityList != null && !entityList.isEmpty()) {
+			return entityList;
+		}
+
+		return null;
 	}
 
 	@Override
 	public CustomDataGroup getCustomDataGroupById(Integer id, Boolean searchActive) {
 		String query = "from CustomDataGroup cdg where cdg.cdGroupId = " + id;
 
-		if(searchActive) {
-			query += " AND cdg.status='"+SystemConstant.ACTIVE+"'";
+		if (searchActive) {
+			query += " AND cdg.status='" + SystemConstant.ACTIVE + "'";
 		}
 
 		List<CustomDataGroup> entityList = getSession().createQuery(query).list();
 
-		if(entityList != null && !entityList.isEmpty()) {
+		if (entityList != null && !entityList.isEmpty()) {
 			return entityList.get(0);
 		}
 

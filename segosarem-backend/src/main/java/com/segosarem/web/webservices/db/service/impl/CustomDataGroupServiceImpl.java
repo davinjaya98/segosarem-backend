@@ -79,6 +79,30 @@ public class CustomDataGroupServiceImpl implements CustomDataGroupService {
     }
 
     @Override
+    public GeneralWsResponseBean getCdGroupByPageStgId(Integer id) {
+        GeneralWsResponseBean responseBean = CommonServiceUtils.generateResponseBean();
+        try {
+            List<CustomDataGroup> entityList = customDataGroupDAO.getCdGroupByPageStdId(id);
+
+            if (entityList != null && !entityList.isEmpty()) {
+                List<CustomDataGroupBean> beanList = new ArrayList<CustomDataGroupBean>();
+                for (CustomDataGroup entity : entityList) {
+                    CustomDataGroupBean bean = new DozerBeanMapper().map(entity, CustomDataGroupBean.class);
+                    bean.setPageSettingId(entity.getPageSetting().getSettingId());
+                    beanList.add(bean);
+                }
+
+                responseBean.setResponseObject(beanList);
+                responseBean = CommonServiceUtils.setResponseToSuccess(responseBean);
+            }
+        } catch (Exception e) {
+            responseBean.setResponseObject(e.getMessage());
+        }
+
+        return responseBean;
+    }
+
+    @Override
     public GeneralWsResponseBean getCustomDataGroupById(Integer id) {
         GeneralWsResponseBean responseBean = CommonServiceUtils.generateResponseBean();
         try {
@@ -118,17 +142,19 @@ public class CustomDataGroupServiceImpl implements CustomDataGroupService {
                 customDataGroupDAO.save(newCustomDataGroupEntity);
 
                 // Now Add the new custom data
-                // if (requestBean.getCustomDataBeanList() != null && !requestBean.getCustomDataBeanList().isEmpty()) {
-                //     for (CustomDataBean customDataBean : requestBean.getCustomDataBeanList()) {
-                //         CustomData newCustomDataEntity = new DozerBeanMapper().map(customDataBean, CustomData.class);
-                //         newCustomDataEntity.setCustomDataGroup(newCustomDataGroupEntity);
+                // if (requestBean.getCustomDataBeanList() != null &&
+                // !requestBean.getCustomDataBeanList().isEmpty()) {
+                // for (CustomDataBean customDataBean : requestBean.getCustomDataBeanList()) {
+                // CustomData newCustomDataEntity = new DozerBeanMapper().map(customDataBean,
+                // CustomData.class);
+                // newCustomDataEntity.setCustomDataGroup(newCustomDataGroupEntity);
 
-                //         newCustomDataEntity.setCreateDt(new Date());
-                //         newCustomDataEntity.setStatus(SystemConstant.ACTIVE);
+                // newCustomDataEntity.setCreateDt(new Date());
+                // newCustomDataEntity.setStatus(SystemConstant.ACTIVE);
 
-                //         // Add the new custom data entity
-                //         customDataDAO.save(newCustomDataEntity);
-                //     }
+                // // Add the new custom data entity
+                // customDataDAO.save(newCustomDataEntity);
+                // }
                 // }
                 responseBean = CommonServiceUtils.setResponseToSuccess(responseBean);
             }
@@ -156,33 +182,35 @@ public class CustomDataGroupServiceImpl implements CustomDataGroupService {
                 customDataGroupDAO.update(entity);
 
                 // update custom data list of current custom data group
-                // if (requestBean.getCustomDataBeanList() != null || !requestBean.getCustomDataBeanList().isEmpty()) {
-                //     for (CustomDataBean CdBean : requestBean.getCustomDataBeanList()) {
-                //         CustomData CdEntity = customDataDAO.getCustomDataById(CdBean.getCdId(), false);
+                // if (requestBean.getCustomDataBeanList() != null ||
+                // !requestBean.getCustomDataBeanList().isEmpty()) {
+                // for (CustomDataBean CdBean : requestBean.getCustomDataBeanList()) {
+                // CustomData CdEntity = customDataDAO.getCustomDataById(CdBean.getCdId(),
+                // false);
 
-                //         if (CdEntity != null) {
-                //             CdEntity.setCdName(CdBean.getCdName());
-                //             CdEntity.setCdType(CdBean.getCdType());
-                //             CdEntity.setCdSequence(CdBean.getCdSequence());
-                //             CdEntity.setModifyDt(new Date());
+                // if (CdEntity != null) {
+                // CdEntity.setCdName(CdBean.getCdName());
+                // CdEntity.setCdType(CdBean.getCdType());
+                // CdEntity.setCdSequence(CdBean.getCdSequence());
+                // CdEntity.setModifyDt(new Date());
 
-                //             // update custom data value list of current custom data
-                //             if (CdBean.getCdValueList() != null || !CdBean.getCdValueList().isEmpty()) {
-                //                 for (CustomDataValueBean CdvBean : CdBean.getCdValueList()) {
-                //                     CustomDataValue CdvEntity = customDataValueDAO
-                //                             .getCustomDataValueById(CdvBean.getCdValueId(), false);
+                // // update custom data value list of current custom data
+                // if (CdBean.getCdValueList() != null || !CdBean.getCdValueList().isEmpty()) {
+                // for (CustomDataValueBean CdvBean : CdBean.getCdValueList()) {
+                // CustomDataValue CdvEntity = customDataValueDAO
+                // .getCustomDataValueById(CdvBean.getCdValueId(), false);
 
-                //                     if (CdvEntity != null) {
-                //                         CdvEntity.setCdValue(CdvBean.getCdValue());
-                //                         // CdvEntity.setCdValueType(CdvBean.getCdValueType());
-                //                         CdvEntity.setCdValueLevel(CdvBean.getCdValueLevel());
-                //                         // CdvEntity.setCdValueSequence(CdvBean.getCdValueSequence());
-                //                         CdvEntity.setModifyDt(new Date());
-                //                     }
-                //                 }
-                //             }
-                //         }
-                //     }
+                // if (CdvEntity != null) {
+                // CdvEntity.setCdValue(CdvBean.getCdValue());
+                // // CdvEntity.setCdValueType(CdvBean.getCdValueType());
+                // CdvEntity.setCdValueLevel(CdvBean.getCdValueLevel());
+                // // CdvEntity.setCdValueSequence(CdvBean.getCdValueSequence());
+                // CdvEntity.setModifyDt(new Date());
+                // }
+                // }
+                // }
+                // }
+                // }
                 // }
 
                 // update page setting of current custom data group // Should not be able to

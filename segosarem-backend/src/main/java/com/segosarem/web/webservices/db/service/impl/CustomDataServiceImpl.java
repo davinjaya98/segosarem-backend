@@ -198,7 +198,9 @@ public class CustomDataServiceImpl implements CustomDataService {
 
                 // update custom data
                 entity.setCdName(requestBean.getCdName());
-                entity.setCdType(requestBean.getCdType());
+                if (requestBean.getCdType() != null) {
+                    entity.setCdType(requestBean.getCdType());
+                }
                 entity.setCdSequence(requestBean.getCdSequence());
                 // entity.setCustomDataGroup(requestBean.getCustomDataGroup());
                 entity.setModifyDt(new Date());

@@ -1,5 +1,9 @@
 package com.segosarem.web.webservices.bean.customdatagroup;
 
+import java.util.List;
+
+import com.segosarem.web.webservices.bean.customdata.CustomDataBean;
+
 public class CustomDataGroupBean {
 
 	private Integer cdGroupId;
@@ -7,15 +11,19 @@ public class CustomDataGroupBean {
 	private String cdGroupDescription;
 
     private int pageSettingId;
+
+	//For Response
+    private List<CustomDataBean> customDataList;
     
     public CustomDataGroupBean() {
     }
 
-    public CustomDataGroupBean(Integer cdGroupId, String cdGroupName, String cdGroupDescription, int pageSettingId) {
+    public CustomDataGroupBean(Integer cdGroupId, String cdGroupName, String cdGroupDescription, int pageSettingId, List<CustomDataBean> customDataList) {
         this.cdGroupId = cdGroupId;
         this.cdGroupName = cdGroupName;
         this.cdGroupDescription = cdGroupDescription;
         this.pageSettingId = pageSettingId;
+        this.customDataList = customDataList;
     }
 
     public Integer getCdGroupId() {
@@ -41,12 +49,20 @@ public class CustomDataGroupBean {
     public void setCdGroupDescription(String cdGroupDescription) {
         this.cdGroupDescription = cdGroupDescription;
     }
-	
+
     public int getPageSettingId() {
         return this.pageSettingId;
     }
 
     public void setPageSettingId(int pageSettingId) {
         this.pageSettingId = pageSettingId;
+    }
+
+    public List<CustomDataBean> getCustomDataList() {
+        return this.customDataList;
+    }
+
+    public void setCustomDataList(List<CustomDataBean> customDataList) {
+        this.customDataList = customDataList;
     }
 }

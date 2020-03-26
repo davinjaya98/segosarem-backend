@@ -3,11 +3,13 @@ package com.segosarem.web.webservices.bean.customdata;
 import java.util.List;
 import java.util.Map;
 
+import com.segosarem.web.webservices.bean.customdatasetting.CustomDataSettingBean;
+
 public class CustomDataBean {
 
     //For response
     private Integer cdId;
-    private List<Map<String, Object>> cdValuePair;
+    private List<Map<String, Map<String, Object>>> cdValuePair;
 
     private String cdName;
     private Integer cdType;
@@ -15,12 +17,14 @@ public class CustomDataBean {
     private String cdKey;
 
     private Integer cdGroupId;
-    
+
+    private List<CustomDataSettingBean> cdSettingList;
+
 
     public CustomDataBean() {
     }
 
-    public CustomDataBean(Integer cdId, List<Map<String,Object>> cdValuePair, String cdName, Integer cdType, String cdSequence, String cdKey, Integer cdGroupId) {
+    public CustomDataBean(Integer cdId, List<Map<String,Map<String,Object>>> cdValuePair, String cdName, Integer cdType, String cdSequence, String cdKey, Integer cdGroupId, List<CustomDataSettingBean> cdSettingList) {
         this.cdId = cdId;
         this.cdValuePair = cdValuePair;
         this.cdName = cdName;
@@ -28,6 +32,7 @@ public class CustomDataBean {
         this.cdSequence = cdSequence;
         this.cdKey = cdKey;
         this.cdGroupId = cdGroupId;
+        this.cdSettingList = cdSettingList;
     }
 
     public Integer getCdId() {
@@ -38,11 +43,11 @@ public class CustomDataBean {
         this.cdId = cdId;
     }
 
-    public List<Map<String,Object>> getCdValuePair() {
+    public List<Map<String,Map<String,Object>>> getCdValuePair() {
         return this.cdValuePair;
     }
 
-    public void setCdValuePair(List<Map<String,Object>> cdValuePair) {
+    public void setCdValuePair(List<Map<String,Map<String,Object>>> cdValuePair) {
         this.cdValuePair = cdValuePair;
     }
 
@@ -84,5 +89,13 @@ public class CustomDataBean {
 
     public void setCdGroupId(Integer cdGroupId) {
         this.cdGroupId = cdGroupId;
+    }
+
+    public List<CustomDataSettingBean> getCdSettingList() {
+        return this.cdSettingList;
+    }
+
+    public void setCdSettingList(List<CustomDataSettingBean> cdSettingList) {
+        this.cdSettingList = cdSettingList;
     }
 }

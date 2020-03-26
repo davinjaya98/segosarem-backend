@@ -73,7 +73,7 @@ public class PageSettingAPI {
 		return (GeneralWsResponseBean) pageSettingService.getPageSettingById(requestBean.getSettingId());
 	}
 
-    @ApiOperation(value = "Get page setting by key", response = GeneralWsResponseBean.class)
+    @ApiOperation(value = "Get page setting by key (Complete with the custom data group, data, setting, and value)", response = GeneralWsResponseBean.class)
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Successfully Get the details"),
         @ApiResponse(code = 401, message = "You are not authorized to view the resource"),

@@ -133,16 +133,18 @@ public class CustomDataServiceImpl implements CustomDataService {
                 if (entity.getCdValueList() != null && !entity.getCdValueList().isEmpty()) {
                     // List<CustomDataValueKeyPairBean> cdValuePairs = new
                     // ArrayList<CustomDataValueKeyPairBean>();
-                    List<Map<String, Object>> cdValuePairs = new ArrayList<Map<String, Object>>();
+                    List<Map<String, Map<String, Object>>> cdValuePairs = new ArrayList<Map<String, Map<String, Object>>>();
 
                     // Because only the parent 0 tagged into the CustomData Entity
                     for (CustomDataValue parentValue : entity.getCdValueList()) {
                         if (parentValue.getChildValueList() != null && !parentValue.getChildValueList().isEmpty()) {
-                            Map<String, Object> cdValuePair = new LinkedHashMap<String, Object>();
+                            Map<String, Map<String, Object>> cdValuePair = new LinkedHashMap<String, Map<String, Object>>();
                             for (CustomDataValue childValue : parentValue.getChildValueList()) {
-                                cdValuePair.put(childValue.getCustomDataSetting().getCdsKey(),
-                                        CommonServiceUtils.parseValue(childValue.getCdValue(),
-                                                childValue.getCustomDataSetting().getCdsType()));
+                                Map<String, Object> keyValuePair = new LinkedHashMap<String, Object>();
+                                keyValuePair.put("fieldType", childValue.getCustomDataSetting().getCdsType());
+                                keyValuePair.put("value", CommonServiceUtils.parseValue(childValue.getCdValue(), childValue.getCustomDataSetting().getCdsType()));
+
+                                cdValuePair.put(childValue.getCustomDataSetting().getCdsKey(), keyValuePair);
                             }
                             cdValuePairs.add(cdValuePair);
                         }

@@ -9,7 +9,7 @@ public class CustomDataBean {
 
     //For response
     private Integer cdId;
-    private List<Map<String, Map<String, Object>>> cdValuePair;
+    private List<Map<String, Object>> cdValuePair;
 
     private String cdName;
     private Integer cdType;
@@ -24,7 +24,7 @@ public class CustomDataBean {
     public CustomDataBean() {
     }
 
-    public CustomDataBean(Integer cdId, List<Map<String,Map<String,Object>>> cdValuePair, String cdName, Integer cdType, String cdSequence, String cdKey, Integer cdGroupId, List<CustomDataSettingBean> cdSettingList) {
+    public CustomDataBean(Integer cdId, List<Map<String,Object>> cdValuePair, String cdName, Integer cdType, String cdSequence, String cdKey, Integer cdGroupId, List<CustomDataSettingBean> cdSettingList) {
         this.cdId = cdId;
         this.cdValuePair = cdValuePair;
         this.cdName = cdName;
@@ -43,11 +43,11 @@ public class CustomDataBean {
         this.cdId = cdId;
     }
 
-    public List<Map<String,Map<String,Object>>> getCdValuePair() {
+    public List<Map<String,Object>> getCdValuePair() {
         return this.cdValuePair;
     }
 
-    public void setCdValuePair(List<Map<String,Map<String,Object>>> cdValuePair) {
+    public void setCdValuePair(List<Map<String,Object>> cdValuePair) {
         this.cdValuePair = cdValuePair;
     }
 

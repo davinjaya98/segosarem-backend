@@ -117,19 +117,24 @@ public class PageSettingServiceImpl implements PageSettingService {
 
                                 if (customDataEntity != null) {
                                     if (customDataEntity.getCdValueList() != null && !customDataEntity.getCdValueList().isEmpty()) {
-                                        List<Map<String, Map<String, Object>>> cdValuePairs = new ArrayList<Map<String, Map<String, Object>>>();
+                                        List<Map<String, Object>> cdValuePairs = new ArrayList<Map<String, Object>>();
                     
                                         // Because only the parent 0 tagged into the CustomData Entity
                                         for (CustomDataValue parentValue : customDataEntity.getCdValueList()) {
                                             if (parentValue.getChildValueList() != null && !parentValue.getChildValueList().isEmpty()) {
-                                                Map<String, Map<String, Object>> cdValuePair = new LinkedHashMap<String, Map<String, Object>>();
+                                                Map<String, Object> cdValuePair = new LinkedHashMap<String, Object>();
+                                                cdValuePair.put("parentId", parentValue.getCdValueId());
+                                                
+                                                Map<String, Object> cdValueChildPair = new LinkedHashMap<String, Object>();
                                                 for (CustomDataValue childValue : parentValue.getChildValueList()) {
                                                     Map<String, Object> keyValuePair = new LinkedHashMap<String, Object>();
                                                     keyValuePair.put("fieldType", childValue.getCustomDataSetting().getCdsType());
                                                     keyValuePair.put("value", CommonServiceUtils.parseValue(childValue.getCdValue(), childValue.getCustomDataSetting().getCdsType()));
                     
-                                                    cdValuePair.put(childValue.getCustomDataSetting().getCdsKey(), keyValuePair);
+                                                    cdValueChildPair.put(childValue.getCustomDataSetting().getCdsKey(), keyValuePair);
                                                 }
+                                                cdValuePair.put("value", cdValueChildPair);
+                                                
                                                 cdValuePairs.add(cdValuePair);
                                             }
                                         }

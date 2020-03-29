@@ -11,7 +11,7 @@ public interface CustomDataValueService {
     public GeneralWsResponseBean getAllCustomDataValue();
     public GeneralWsResponseBean getCustomDataValueById(Integer id);
 
-    public GeneralWsResponseBean addCustomDataValue(AddValueWrapperBean requestBean);
+    public GeneralWsResponseBean addOrUpdateCustomDataValue(AddValueWrapperBean requestBean);
     //This can be used to update status to active, deactivated, or deleted
     public GeneralWsResponseBean updateCustomDataValue(CustomDataValueBean requestBean);
     //This one effectively removed it from db

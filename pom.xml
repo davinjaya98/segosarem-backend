@@ -34,7 +34,7 @@
 					<version>${maven-war-plugin.version}</version>
 					<configuration>
 						<failOnMissingWebXml>false</failOnMissingWebXml>
-						<outputDirectory>/PAPARADAMINTERACTIVE/apache-tomcat-9.0.27/webapps</outputDirectory>
+						<outputDirectory>/Server/apache-tomcat-9.0.27/webapps</outputDirectory>
 					</configuration>
 				</plugin>
 

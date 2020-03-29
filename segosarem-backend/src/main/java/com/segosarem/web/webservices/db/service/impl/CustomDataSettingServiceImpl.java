@@ -77,7 +77,7 @@ public class CustomDataSettingServiceImpl implements CustomDataSettingService {
     @Override
     public GeneralWsResponseBean getCdSettingsListByCdId(Integer id) {
         GeneralWsResponseBean responseBean = CommonServiceUtils.generateResponseBean();
-        try {
+        // try {
             List<CustomDataSetting> entityList = customDataSettingDAO.getCdSettingsListByCdId(id);
 
             if (entityList != null && !entityList.isEmpty()) {
@@ -92,9 +92,9 @@ public class CustomDataSettingServiceImpl implements CustomDataSettingService {
                 responseBean = CommonServiceUtils.setResponseToSuccess(responseBean);
             }
 
-        } catch (Exception e) {
-            responseBean.setResponseObject(e.getMessage());
-        }
+        // } catch (Exception e) {
+        //     responseBean.setResponseObject(e.getMessage());
+        // }
 
         return responseBean;
     }

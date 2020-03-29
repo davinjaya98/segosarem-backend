@@ -91,8 +91,42 @@ public class CustomDataValueServiceImpl implements CustomDataValueService {
         return responseBean;
     }
 
+    private void addCustomDataValue(CustomDataValueBean valueBean, CustomDataValue firstLevelEntity) {
+        CustomDataSetting settingEntity = customDataSettingDAO.getCustomDataSettingById(valueBean.getCdsId(), true);
+        if (settingEntity != null) {
+            CustomDataValue secondLevelEntity = new CustomDataValue();
+            secondLevelEntity.setCdValueLevel(1);
+            secondLevelEntity.setParentValue(firstLevelEntity);
+            secondLevelEntity.setCustomDataSetting(settingEntity);
+            secondLevelEntity.setCdValue(
+                    CommonServiceUtils.parseIntoDbValue(valueBean.getCdValue(), settingEntity.getCdsType()));
+
+            secondLevelEntity.setCreateDt(new Date());
+            secondLevelEntity.setStatus(SystemConstant.ACTIVE);
+
+            customDataValueDAO.persist(secondLevelEntity);
+        }
+    }
+
+    private void updateCustomDataValue(CustomDataValueBean valueBean, CustomDataValue firstLevelEntity) {
+        for(CustomDataValue childEntity : firstLevelEntity.getChildValueList()) {
+            if(valueBean.getCdValueKey().equals(childEntity.getCustomDataSetting().getCdsKey())) {
+                CustomDataSetting settingEntity = childEntity.getCustomDataSetting();
+                if (settingEntity != null) {
+                    CustomDataValue secondLevelEntity = childEntity;
+                    secondLevelEntity.setCdValue(
+                            CommonServiceUtils.parseIntoDbValue(valueBean.getCdValue(), settingEntity.getCdsType()));
+        
+                    secondLevelEntity.setModifyDt(new Date());
+        
+                    customDataValueDAO.update(secondLevelEntity);
+                }
+            }
+        }
+    }
+
     @Override
-    public GeneralWsResponseBean addCustomDataValue(AddValueWrapperBean requestBean) {
+    public GeneralWsResponseBean addOrUpdateCustomDataValue(AddValueWrapperBean requestBean) {
         GeneralWsResponseBean responseBean = CommonServiceUtils.generateResponseBean();
         // try {
             CustomData dataEntity = customDataDAO.getCustomDataById(requestBean.getCdId(), true);
@@ -100,34 +134,54 @@ public class CustomDataValueServiceImpl implements CustomDataValueService {
             if (dataEntity != null) {
                 // CustomDataValue entity = new DozerBeanMapper().map(requestBean,
                 // CustomDataValue.class);
-                // Create the first level first
-                CustomDataValue firstLevelEntity = new CustomDataValue();
-                firstLevelEntity.setCdValueLevel(0);
-                firstLevelEntity.setCustomData(dataEntity);
+                CustomDataValue firstLevelEntity = null;
+                List<String> existingKeyList = new ArrayList<String>();
 
-                firstLevelEntity.setCreateDt(new Date());
-                firstLevelEntity.setStatus(SystemConstant.ACTIVE);
+                //Differentiate between add or update setting first
+                //Update setting will have the parentId of the custom value
+                if(requestBean.getParentId() != null && requestBean.getParentId() != 0) {
+                    //Try to get the first level
+                    if(dataEntity.getCdValueList() != null && !dataEntity.getCdValueList().isEmpty()) {
+                        for(CustomDataValue parentValue : dataEntity.getCdValueList()) {
+                            if(parentValue.getCdValueId() == requestBean.getParentId()) {
+                                firstLevelEntity = parentValue;
 
-                //Create the parent entity first
-                // customDataValueDAO.save(firstLevelEntity);
-
-                //Then create the child entity
-                for (CustomDataValueBean newValue : requestBean.getValueBeans()) {
-                    CustomDataSetting settingEntity = customDataSettingDAO.getCustomDataSettingById(newValue.getCdsId(), true);
-                    if (settingEntity != null) {
-                        CustomDataValue secondLevelEntity = new CustomDataValue();
-                        secondLevelEntity.setCdValueLevel(1);
-                        secondLevelEntity.setParentValue(firstLevelEntity);
-                        secondLevelEntity.setCustomDataSetting(settingEntity);
-                        secondLevelEntity.setCdValue(
-                                CommonServiceUtils.parseIntoDbValue(newValue.getCdValue(), settingEntity.getCdsType()));
-
-                        secondLevelEntity.setCreateDt(new Date());
-                        secondLevelEntity.setStatus(SystemConstant.ACTIVE);
-
-                        customDataValueDAO.persist(secondLevelEntity);
+                                for(CustomDataValue childValue : parentValue.getChildValueList()) {
+                                    existingKeyList.add(childValue.getCustomDataSetting().getCdsKey());
+                                }
+                            }
+                        }
                     }
                 }
+
+                if(firstLevelEntity == null) {
+                    //Add new 
+                    // Create the first level first
+                    firstLevelEntity = new CustomDataValue();
+                    firstLevelEntity.setCdValueLevel(0);
+                    firstLevelEntity.setCustomData(dataEntity);
+
+                    firstLevelEntity.setCreateDt(new Date());
+                    firstLevelEntity.setStatus(SystemConstant.ACTIVE);
+
+                    //Then create the child entity
+                    for (CustomDataValueBean newValue : requestBean.getValueBeans()) {
+                        addCustomDataValue(newValue, firstLevelEntity);
+                    }
+                }
+                else {
+                    //Try to update or create new value
+                    for (CustomDataValueBean newValue : requestBean.getValueBeans()) {
+                        if(existingKeyList.contains(newValue.getCdValueKey())) {
+                            //Update
+                            updateCustomDataValue(newValue, firstLevelEntity);
+                        }
+                        else {
+                            addCustomDataValue(newValue, firstLevelEntity);
+                        }
+                    }
+                }
+                
 
                 responseBean = CommonServiceUtils.setResponseToSuccess(responseBean);
             }

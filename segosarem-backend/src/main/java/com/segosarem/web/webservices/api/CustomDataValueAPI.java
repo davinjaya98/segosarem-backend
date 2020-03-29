@@ -83,12 +83,12 @@ public class CustomDataValueAPI {
         @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
     })
 	@ResponseBody
-	@RequestMapping(method = RequestMethod.POST, value = "/addCustomDataValue", consumes = { "application/json" }, produces = {
+	@RequestMapping(method = RequestMethod.POST, value = "/addOrUpdateCustomDataValue", consumes = { "application/json" }, produces = {
 			"application/json" })
-	public GeneralWsResponseBean addCustomDataValue(HttpServletRequest request, HttpServletResponse response,
+	public GeneralWsResponseBean addOrUpdateCustomDataValue(HttpServletRequest request, HttpServletResponse response,
 			@RequestBody AddValueWrapperBean requestBean) {
 
-		return (GeneralWsResponseBean) customDataValueService.addCustomDataValue(requestBean);
+		return (GeneralWsResponseBean) customDataValueService.addOrUpdateCustomDataValue(requestBean);
 	}
 
     @ApiOperation(value = "Update custom data value / Also can be used to update status to either active, deactive, or deleted", response = GeneralWsResponseBean.class)

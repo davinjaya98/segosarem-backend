@@ -29,14 +29,18 @@ public class CommonServiceUtils {
             case SystemConstant.CUSTOM_DATA_SETTING_TEXTFIELD:
                 parsedValue = new String(value);
                 break;
-            case SystemConstant.CUSTOM_DATA_SETTING_IMAGE:
-                //THIS IS ALREADY IN IMAGE PATH FORMAT
-                parsedValue = new String(value);
-                break;
             case SystemConstant.CUSTOM_DATA_SETTING_BOOLEAN:
                 parsedValue = new String(value);
                 break;
-            case SystemConstant.CUSTOM_DATA_SETTING_BLOB:
+            case SystemConstant.CUSTOM_DATA_SETTING_IMAGE_PATH:
+                //THIS IS ALREADY IN IMAGE PATH FORMAT
+                parsedValue = new String(value);
+                break;
+            case SystemConstant.CUSTOM_DATA_SETTING_TEXTAREA:
+                //THIS IS ALREADY IN IMAGE PATH FORMAT
+                parsedValue = new String(value);
+                break;
+            case SystemConstant.CUSTOM_DATA_SETTING_IMAGE_BLOB:
                 parsedValue = value;
                 break;
         }
@@ -52,14 +56,18 @@ public class CommonServiceUtils {
             case SystemConstant.CUSTOM_DATA_SETTING_TEXTFIELD:
                 parsedValue = value.getBytes();
                 break;
-            case SystemConstant.CUSTOM_DATA_SETTING_IMAGE:
-                //THIS SHOULD BE SAVING IMAGE INTO A FOLDER
-                parsedValue = value.getBytes();
-                break;
             case SystemConstant.CUSTOM_DATA_SETTING_BOOLEAN:
                 parsedValue = value.getBytes();
                 break;
-            case SystemConstant.CUSTOM_DATA_SETTING_BLOB:
+            case SystemConstant.CUSTOM_DATA_SETTING_IMAGE_PATH:
+                //THIS SHOULD BE SAVING IMAGE INTO A FOLDER
+                parsedValue = value.getBytes();
+                break;
+            case SystemConstant.CUSTOM_DATA_SETTING_TEXTAREA:
+                //THIS IS ALREADY IN IMAGE PATH FORMAT
+                parsedValue = value.getBytes();
+                break;
+            case SystemConstant.CUSTOM_DATA_SETTING_IMAGE_BLOB:
                 parsedValue = value.getBytes();
                 break;
         }

@@ -11,6 +11,7 @@ public interface PageSettingService {
     public GeneralWsResponseBean getAllPageSetting();
     public GeneralWsResponseBean getPageSettingById(Integer id);
     public GeneralWsResponseBean getPageSettingByKey(String key);
+    public GeneralWsResponseBean getAllValueByPageSettingKey(String key);
 
     public GeneralWsResponseBean addPageSetting(PageSettingBean requestBean);
     //This can be used to update status to active, deactivated, or deleted

@@ -89,6 +89,22 @@ public class PageSettingAPI {
 		return (GeneralWsResponseBean) pageSettingService.getPageSettingByKey(requestBean.getPageKey());
 	}
 
+    @ApiOperation(value = "Get all custom data value by page setting by key ", response = GeneralWsResponseBean.class)
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "Successfully Get the details"),
+        @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+        @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+        @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+    })
+	@ResponseBody
+	@RequestMapping(method = RequestMethod.POST, value = "/getAllValueByPageSettingKey", consumes = { "application/json" }, produces = {
+			"application/json" })
+	public GeneralWsResponseBean getAllValueByPageSettingKey(HttpServletRequest request, HttpServletResponse response,
+			@RequestBody PageSettingBean requestBean) {
+
+		return (GeneralWsResponseBean) pageSettingService.getAllValueByPageSettingKey(requestBean.getPageKey());
+	}
+
 	//Supposed to be for secure access only
     @ApiOperation(value = "Add page setting", response = GeneralWsResponseBean.class)
     @ApiResponses(value = {

@@ -59,7 +59,7 @@ public class CustomDataValueDAOImpl implements CustomDataValueDAO {
 
 	@Override
 	public CustomDataValue getCustomDataValueById(Integer id, Boolean searchActive) {
-		String query = "from CustomDataValue cdv where cdv.customDataValueId = " + id;
+		String query = "from CustomDataValue cdv where cdv.cdValueId = " + id;
 
 		if(searchActive) {
 			query += " AND cdv.status='"+SystemConstant.ACTIVE+"'";

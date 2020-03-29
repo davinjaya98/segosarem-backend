@@ -3,6 +3,7 @@ package com.segosarem.web.webservices.db.service.impl;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.transaction.Transactional;
 
@@ -224,6 +225,16 @@ public class CustomDataValueServiceImpl implements CustomDataValueService {
             CustomDataValue entity = customDataValueDAO.getCustomDataValueById(requestBean.getEntityId(), false);
 
             if (entity != null) {
+                Set<CustomDataValue> childValueList = entity.getChildValueList();
+
+                if(childValueList != null && !childValueList.isEmpty()) {
+                    //Delete children first
+                    for(CustomDataValue childValue : childValueList) {
+                        customDataValueDAO.delete(childValue);
+                    }
+                }
+
+                //Then delete own entity
                 customDataValueDAO.delete(entity);
 
                 responseBean = CommonServiceUtils.setResponseToSuccess(responseBean);

@@ -10,18 +10,20 @@ public class PageSettingBean {
 	private Integer settingId;
 
     private String pageTitle;
+    private String pageDescription;
 	private String pageSeoKeywords;
     private String pageKey;
 
 	//For Response
     private List<CustomDataGroupBean> customDataGroupList;
-    
+
     public PageSettingBean() {
     }
 
-    public PageSettingBean(Integer settingId, String pageTitle, String pageSeoKeywords, String pageKey, List<CustomDataGroupBean> customDataGroupList) {
+    public PageSettingBean(Integer settingId, String pageTitle, String pageDescription, String pageSeoKeywords, String pageKey, List<CustomDataGroupBean> customDataGroupList) {
         this.settingId = settingId;
         this.pageTitle = pageTitle;
+        this.pageDescription = pageDescription;
         this.pageSeoKeywords = pageSeoKeywords;
         this.pageKey = pageKey;
         this.customDataGroupList = customDataGroupList;
@@ -41,6 +43,14 @@ public class PageSettingBean {
 
     public void setPageTitle(String pageTitle) {
         this.pageTitle = pageTitle;
+    }
+
+    public String getPageDescription() {
+        return this.pageDescription;
+    }
+
+    public void setPageDescription(String pageDescription) {
+        this.pageDescription = pageDescription;
     }
 
     public String getPageSeoKeywords() {

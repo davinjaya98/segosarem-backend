@@ -21,6 +21,7 @@ public class PageSetting extends GeneralCreateModify implements Serializable {
 
 	private int settingId;
     private String pageTitle;
+    private String pageDescription;
 	private String pageSeoKeywords;
     private String pageKey; 
     private Set<CustomDataGroup> customDataGroupList = new LinkedHashSet<CustomDataGroup>();
@@ -53,6 +54,15 @@ public class PageSetting extends GeneralCreateModify implements Serializable {
 
     public void setPageTitle(String pageTitle) {
         this.pageTitle = pageTitle;
+    }
+
+	@Column(name = "page_description")
+    public String getPageDescription() {
+        return this.pageDescription;
+    }
+
+    public void setPageDescription(String pageDescription) {
+        this.pageDescription = pageDescription;
     }
 
 	@Column(name = "page_seo_keywords")

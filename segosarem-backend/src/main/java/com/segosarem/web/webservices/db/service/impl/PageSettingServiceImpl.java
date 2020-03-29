@@ -173,6 +173,7 @@ public class PageSettingServiceImpl implements PageSettingService {
                     //Set the page setting
                     Map<String,Object> pageSettingObject = new LinkedHashMap<String,Object>();
                     pageSettingObject.put("title", pageSettingEntity.getPageTitle());
+                    pageSettingObject.put("description", pageSettingEntity.getPageDescription());
                     pageSettingObject.put("seoKeywords", pageSettingEntity.getPageSeoKeywords());
     
                     responseObj.put("pageSetting", pageSettingObject);

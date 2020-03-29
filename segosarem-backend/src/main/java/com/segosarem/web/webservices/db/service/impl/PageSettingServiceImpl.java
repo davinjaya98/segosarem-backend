@@ -112,34 +112,42 @@ public class PageSettingServiceImpl implements PageSettingService {
                         List<CustomDataBean> customDataBeanList = customDataGroupBean.getCustomDataList();
 
                         if (customDataBeanList != null && !customDataBeanList.isEmpty()) {
-                            //Logic to update custom data bean with a key value pair data from setting and value
-                            for(CustomDataBean customDataBean : customDataBeanList) {
-                                CustomData customDataEntity = customDataDAO.getCustomDataByKey(customDataBean.getCdKey(), true);
+                            // Logic to update custom data bean with a key value pair data from setting and
+                            // value
+                            for (CustomDataBean customDataBean : customDataBeanList) {
+                                CustomData customDataEntity = customDataDAO
+                                        .getCustomDataByKey(customDataBean.getCdKey(), true);
 
                                 if (customDataEntity != null) {
-                                    if (customDataEntity.getCdValueList() != null && !customDataEntity.getCdValueList().isEmpty()) {
+                                    if (customDataEntity.getCdValueList() != null
+                                            && !customDataEntity.getCdValueList().isEmpty()) {
                                         List<Map<String, Object>> cdValuePairs = new ArrayList<Map<String, Object>>();
-                    
+
                                         // Because only the parent 0 tagged into the CustomData Entity
                                         for (CustomDataValue parentValue : customDataEntity.getCdValueList()) {
-                                            if (parentValue.getChildValueList() != null && !parentValue.getChildValueList().isEmpty()) {
+                                            if (parentValue.getChildValueList() != null
+                                                    && !parentValue.getChildValueList().isEmpty()) {
                                                 Map<String, Object> cdValuePair = new LinkedHashMap<String, Object>();
                                                 cdValuePair.put("parentId", parentValue.getCdValueId());
-                                                
+
                                                 Map<String, Object> cdValueChildPair = new LinkedHashMap<String, Object>();
                                                 for (CustomDataValue childValue : parentValue.getChildValueList()) {
                                                     Map<String, Object> keyValuePair = new LinkedHashMap<String, Object>();
-                                                    keyValuePair.put("fieldType", childValue.getCustomDataSetting().getCdsType());
-                                                    keyValuePair.put("value", CommonServiceUtils.parseValue(childValue.getCdValue(), childValue.getCustomDataSetting().getCdsType()));
-                    
-                                                    cdValueChildPair.put(childValue.getCustomDataSetting().getCdsKey(), keyValuePair);
+                                                    keyValuePair.put("fieldType",
+                                                            childValue.getCustomDataSetting().getCdsType());
+                                                    keyValuePair.put("value",
+                                                            CommonServiceUtils.parseValue(childValue.getCdValue(),
+                                                                    childValue.getCustomDataSetting().getCdsType()));
+
+                                                    cdValueChildPair.put(childValue.getCustomDataSetting().getCdsKey(),
+                                                            keyValuePair);
                                                 }
                                                 cdValuePair.put("value", cdValueChildPair);
-                                                
+
                                                 cdValuePairs.add(cdValuePair);
                                             }
                                         }
-                    
+
                                         customDataBean.setCdValuePair(cdValuePairs);
                                     }
                                 }
@@ -163,45 +171,47 @@ public class PageSettingServiceImpl implements PageSettingService {
     public GeneralWsResponseBean getAllValueByPageSettingKey(String key) {
         GeneralWsResponseBean responseBean = CommonServiceUtils.generateResponseBean();
         try {
-            Map<String,Object> responseObj = new LinkedHashMap<String,Object>();
+            Map<String, Object> responseObj = new LinkedHashMap<String, Object>();
             // Get page setting first - 1
             String[] keyList = key.split(",");
-            for(String splitKey : keyList) {
+            for (String splitKey : keyList) {
                 PageSetting pageSettingEntity = pageSettingDAO.getPageSettingByKey(splitKey, true);
 
                 if (pageSettingEntity != null) {
-                    //Set the page setting
-                    Map<String,Object> pageSettingObject = new LinkedHashMap<String,Object>();
+                    // Set the page setting
+                    Map<String, Object> pageSettingObject = new LinkedHashMap<String, Object>();
                     pageSettingObject.put("title", pageSettingEntity.getPageTitle());
                     pageSettingObject.put("description", pageSettingEntity.getPageDescription());
                     pageSettingObject.put("seoKeywords", pageSettingEntity.getPageSeoKeywords());
-    
+
                     responseObj.put("pageSetting", pageSettingObject);
 
-                    Map<String,Object> pageSettingValue = new LinkedHashMap<String,Object>();
+                    Map<String, Object> pageSettingValue = new LinkedHashMap<String, Object>();
 
                     // Get custom data group
                     Set<CustomDataGroup> customDataGroupList = pageSettingEntity.getCustomDataGroupList();
 
                     if (customDataGroupList != null && !customDataGroupList.isEmpty()) {
-                        for(CustomDataGroup customDataGroup : customDataGroupList) {
+                        for (CustomDataGroup customDataGroup : customDataGroupList) {
                             // Get custom data
                             Set<CustomData> customDataList = customDataGroup.getCustomDataList();
-                            
+
                             if (customDataList != null && !customDataList.isEmpty()) {
-                                for(CustomData customData : customDataList) {
+                                for (CustomData customData : customDataList) {
 
                                     Set<CustomDataValue> parentValueList = customData.getCdValueList();
 
-                                    List<Map<String,Object>> valueMap = new ArrayList<Map<String,Object>>();
+                                    List<Map<String, Object>> valueMap = new ArrayList<Map<String, Object>>();
 
                                     if (parentValueList != null && !parentValueList.isEmpty()) {
-                                        for(CustomDataValue parentValue: parentValueList) {
+                                        for (CustomDataValue parentValue : parentValueList) {
                                             Set<CustomDataValue> childValueList = parentValue.getChildValueList();
 
-                                            Map<String,Object> childMap = new LinkedHashMap<String,Object>();
-                                            for(CustomDataValue childValue : childValueList) {
-                                                childMap.put(childValue.getCustomDataSetting().getCdsKey(), CommonServiceUtils.parseValue(childValue.getCdValue(), childValue.getCustomDataSetting().getCdsType()));
+                                            Map<String, Object> childMap = new LinkedHashMap<String, Object>();
+                                            for (CustomDataValue childValue : childValueList) {
+                                                childMap.put(childValue.getCustomDataSetting().getCdsKey(),
+                                                        CommonServiceUtils.parseValue(childValue.getCdValue(),
+                                                                childValue.getCustomDataSetting().getCdsType()));
                                             }
                                             valueMap.add(childMap);
                                         }
@@ -252,8 +262,9 @@ public class PageSettingServiceImpl implements PageSettingService {
 
             if (entity != null) {
                 // entity = new DozerBeanMapper().map(requestBean, PageSetting.class);
-                entity.setPageKey(requestBean.getPageKey());
+                // entity.setPageKey(requestBean.getPageKey());
                 entity.setPageSeoKeywords(requestBean.getPageSeoKeywords());
+                entity.setPageDescription(requestBean.getPageDescription());
                 entity.setPageTitle(requestBean.getPageTitle());
                 // entity.setStatus(requestBean.getStatus());
                 entity.setModifyDt(new Date());

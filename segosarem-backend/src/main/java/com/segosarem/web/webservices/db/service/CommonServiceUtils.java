@@ -1,15 +1,28 @@
 package com.segosarem.web.webservices.db.service;
 
+import java.util.List;
+import java.util.ResourceBundle;
+
 import com.segosarem.web.constant.SystemConstant;
 import com.segosarem.web.webservices.bean.GeneralWsResponseBean;
+import com.segosarem.web.webservices.db.entity.LoginLog;
 
 //Common functions for services
 public class CommonServiceUtils {
+	private static ResourceBundle labels = ResourceBundle.getBundle("messages");
 
     // Generate initial response bean
     public static GeneralWsResponseBean generateResponseBean() {
         GeneralWsResponseBean obj = new GeneralWsResponseBean();
         obj.setReturnCode(SystemConstant.FAILED);
+
+        return obj;
+    }
+
+    // Generate initial response bean
+    public static GeneralWsResponseBean generateResponseBeanWithUnauthorizedStatus() {
+        GeneralWsResponseBean obj = new GeneralWsResponseBean();
+        obj.setReturnCode(SystemConstant.FAILED_AUTHENTICATION_FAILED);
 
         return obj;
     }
@@ -73,5 +86,28 @@ public class CommonServiceUtils {
         }
 
         return parsedValue;
+    }
+
+    public static Boolean checkAllowLogin(List<LoginLog> logsEntity) {
+        Integer maxAttempt = Integer.valueOf(labels.getString("authentication.maxattempt"));
+        
+        Integer failedCounter = 0;
+        Boolean allowLogin= true;
+        for(LoginLog log : logsEntity) {
+            if(log.getStatus().equals(SystemConstant.LOG_FAILED)) {
+                failedCounter++;
+            }
+            else {
+                //Stop if no failed login attempt
+                break;
+            }
+            if(failedCounter > maxAttempt) {
+                //Stop if more than login attempt
+                allowLogin = false;
+                break;
+            }
+        }
+
+        return allowLogin;
     }
 }

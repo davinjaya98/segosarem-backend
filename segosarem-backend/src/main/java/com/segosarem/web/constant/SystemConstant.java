@@ -4,8 +4,12 @@ public class SystemConstant {
 
     public static final String SUCCESS = "000000";
     public static final String FAILED = "111111";
+    public static final String FAILED_MAXIMUM_ATTEMPT = "222222";
+    public static final String FAILED_AUTHENTICATION_FAILED = "333333";
     public static final Character ACTIVE = 'A';
     public static final Character DEACTIVE = 'D';
+    public static final Character LOG_SUCCESS = 'S';
+    public static final Character LOG_FAILED = 'F';
 
     // Constant for custom data
     public static final int CUSTOM_DATA_SINGLE = 1;

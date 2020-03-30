@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.segosarem.web.webservices.db.service.AuthenticationService;
+import com.segosarem.web.webservices.db.service.CommonServiceUtils;
 //Services
 import com.segosarem.web.webservices.db.service.PageSettingService;
 
@@ -40,6 +42,9 @@ public class PageSettingAPI {
 	// Services
 	@Autowired
 	PageSettingService pageSettingService;
+
+	@Autowired
+	AuthenticationService authenticationService;
 	// Services
 
 	//Outlets
@@ -54,24 +59,34 @@ public class PageSettingAPI {
 	@RequestMapping(method = RequestMethod.POST, value = "/getPageList")
 	public GeneralWsResponseBean getPageSettingList(HttpServletRequest request, HttpServletResponse response) {
 		
-		return (GeneralWsResponseBean) pageSettingService.getAllPageSetting();
+		String token = request.getHeader("token");
+        String latestToken = authenticationService.getLatestToken();
+		Boolean allowContinue = CommonAPIUtils.checkToken(latestToken, token);
+		
+		if(allowContinue) {
+			return (GeneralWsResponseBean) pageSettingService.getAllPageSetting();
+		}
+		else {
+			return CommonServiceUtils.generateResponseBeanWithUnauthorizedStatus();
+		}
+		
 	}
 
-    @ApiOperation(value = "Get page setting by id", response = GeneralWsResponseBean.class)
-    @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "Successfully Get the details"),
-        @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
-        @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
-        @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
-    })
-	@ResponseBody
-	@RequestMapping(method = RequestMethod.POST, value = "/getPageSettingById", consumes = { "application/json" }, produces = {
-			"application/json" })
-	public GeneralWsResponseBean getPageSettingById(HttpServletRequest request, HttpServletResponse response,
-			@RequestBody PageSettingBean requestBean) {
+    // @ApiOperation(value = "Get page setting by id", response = GeneralWsResponseBean.class)
+    // @ApiResponses(value = {
+    //     @ApiResponse(code = 200, message = "Successfully Get the details"),
+    //     @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+    //     @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+    //     @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+    // })
+	// @ResponseBody
+	// @RequestMapping(method = RequestMethod.POST, value = "/getPageSettingById", consumes = { "application/json" }, produces = {
+	// 		"application/json" })
+	// public GeneralWsResponseBean getPageSettingById(HttpServletRequest request, HttpServletResponse response,
+	// 		@RequestBody PageSettingBean requestBean) {
 
-		return (GeneralWsResponseBean) pageSettingService.getPageSettingById(requestBean.getSettingId());
-	}
+	// 	return (GeneralWsResponseBean) pageSettingService.getPageSettingById(requestBean.getSettingId());
+	// }
 
     @ApiOperation(value = "Get page setting by key (Complete with the custom data group, data, setting, and value)", response = GeneralWsResponseBean.class)
     @ApiResponses(value = {
@@ -86,9 +101,19 @@ public class PageSettingAPI {
 	public GeneralWsResponseBean getPageSetting(HttpServletRequest request, HttpServletResponse response,
 			@RequestBody PageSettingBean requestBean) {
 
-		return (GeneralWsResponseBean) pageSettingService.getPageSettingByKey(requestBean.getPageKey());
+		String token = request.getHeader("token");
+		String latestToken = authenticationService.getLatestToken();
+		Boolean allowContinue = CommonAPIUtils.checkToken(latestToken, token);
+		
+		if(allowContinue) {
+			return (GeneralWsResponseBean) pageSettingService.getPageSettingByKey(requestBean.getPageKey());
+		}
+		else {
+			return CommonServiceUtils.generateResponseBeanWithUnauthorizedStatus();
+		}
 	}
 
+	//Public API NO NEED AUTHENTICATION
     @ApiOperation(value = "Get all custom data value by page setting by key ", response = GeneralWsResponseBean.class)
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Successfully Get the details"),
@@ -119,7 +144,16 @@ public class PageSettingAPI {
 	public GeneralWsResponseBean addPageSetting(HttpServletRequest request, HttpServletResponse response,
 			@RequestBody PageSettingBean requestBean) {
 
-		return (GeneralWsResponseBean) pageSettingService.addPageSetting(requestBean);
+		String token = request.getHeader("token");
+		String latestToken = authenticationService.getLatestToken();
+		Boolean allowContinue = CommonAPIUtils.checkToken(latestToken, token);
+		
+		if(allowContinue) {
+			return (GeneralWsResponseBean) pageSettingService.addPageSetting(requestBean);
+		}
+		else {
+			return CommonServiceUtils.generateResponseBeanWithUnauthorizedStatus();
+		}
 	}
 
     @ApiOperation(value = "Update page setting / Also can be used to update status to either active, deactive, or deleted", response = GeneralWsResponseBean.class)
@@ -135,7 +169,16 @@ public class PageSettingAPI {
 	public GeneralWsResponseBean updatePageSetting(HttpServletRequest request, HttpServletResponse response,
 			@RequestBody PageSettingBean requestBean) {
 
-		return (GeneralWsResponseBean) pageSettingService.updatePageSetting(requestBean);
+		String token = request.getHeader("token");
+		String latestToken = authenticationService.getLatestToken();
+		Boolean allowContinue = CommonAPIUtils.checkToken(latestToken, token);
+		
+		if(allowContinue) {
+			return (GeneralWsResponseBean) pageSettingService.updatePageSetting(requestBean);
+		}
+		else {
+			return CommonServiceUtils.generateResponseBeanWithUnauthorizedStatus();
+		}
 	}
 
     @ApiOperation(value = "Delete page setting / Effectively removed it from db", response = GeneralWsResponseBean.class)
@@ -151,6 +194,16 @@ public class PageSettingAPI {
 	public GeneralWsResponseBean deletePageSetting(HttpServletRequest request, HttpServletResponse response,
 			@RequestBody DeleteEntityReqBean requestBean) {
 
-		return (GeneralWsResponseBean) pageSettingService.deletePageSetting(requestBean);
+		String token = request.getHeader("token");
+		String latestToken = authenticationService.getLatestToken();
+		Boolean allowContinue = CommonAPIUtils.checkToken(latestToken, token);
+		
+		if(allowContinue) {
+			return (GeneralWsResponseBean) pageSettingService.deletePageSetting(requestBean);
+		}
+		else {
+			return CommonServiceUtils.generateResponseBeanWithUnauthorizedStatus();
+		}
+
 	}
 }

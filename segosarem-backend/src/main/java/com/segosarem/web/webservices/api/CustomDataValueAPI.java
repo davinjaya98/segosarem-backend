@@ -17,7 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 //Services
 import com.segosarem.web.webservices.db.service.CustomDataValueService;
-
+import com.segosarem.web.webservices.db.service.AuthenticationService;
+import com.segosarem.web.webservices.db.service.CommonServiceUtils;
 //Beans
 import com.segosarem.web.webservices.bean.GeneralWsResponseBean;
 import com.segosarem.web.webservices.bean.customdatavalue.AddValueWrapperBean;
@@ -41,41 +42,43 @@ public class CustomDataValueAPI {
 	// Services
 	@Autowired
 	CustomDataValueService customDataValueService;
+
+	@Autowired
+	AuthenticationService authenticationService;
 	// Services
 
-	//Outlets
-    @ApiOperation(value = "Get a list of custom data value", response = GeneralWsResponseBean.class)
-    @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "Successfully retrieved list"),
-        @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
-        @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
-        @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
-    })
-	@ResponseBody
-	@RequestMapping(method = RequestMethod.POST, value = "/getCustomDataValueList")
-	public GeneralWsResponseBean getCustomDataValueList(HttpServletRequest request, HttpServletResponse response) {
+    // @ApiOperation(value = "Get a list of custom data value", response = GeneralWsResponseBean.class)
+    // @ApiResponses(value = {
+    //     @ApiResponse(code = 200, message = "Successfully retrieved list"),
+    //     @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+    //     @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+    //     @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+    // })
+	// @ResponseBody
+	// @RequestMapping(method = RequestMethod.POST, value = "/getCustomDataValueList")
+	// public GeneralWsResponseBean getCustomDataValueList(HttpServletRequest request, HttpServletResponse response) {
 		
-		return (GeneralWsResponseBean) customDataValueService.getAllCustomDataValue();
-	}
+	// 	return (GeneralWsResponseBean) customDataValueService.getAllCustomDataValue();
+	// }
 
-    @ApiOperation(value = "Get custom data value by id", response = GeneralWsResponseBean.class)
-    @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "Successfully Get the details"),
-        @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
-        @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
-        @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
-    })
-	@ResponseBody
-	@RequestMapping(method = RequestMethod.POST, value = "/getCustomDataValueById", consumes = { "application/json" }, produces = {
-			"application/json" })
-	public GeneralWsResponseBean getCustomDataValueById(HttpServletRequest request, HttpServletResponse response,
-			@RequestBody CustomDataValueBean requestBean) {
+    // @ApiOperation(value = "Get custom data value by id", response = GeneralWsResponseBean.class)
+    // @ApiResponses(value = {
+    //     @ApiResponse(code = 200, message = "Successfully Get the details"),
+    //     @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+    //     @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+    //     @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+    // })
+	// @ResponseBody
+	// @RequestMapping(method = RequestMethod.POST, value = "/getCustomDataValueById", consumes = { "application/json" }, produces = {
+	// 		"application/json" })
+	// public GeneralWsResponseBean getCustomDataValueById(HttpServletRequest request, HttpServletResponse response,
+	// 		@RequestBody CustomDataValueBean requestBean) {
 
-		return (GeneralWsResponseBean) customDataValueService.getCustomDataValueById(requestBean.getCdValueId());
-	}
+	// 	return (GeneralWsResponseBean) customDataValueService.getCustomDataValueById(requestBean.getCdValueId());
+	// }
 
 	//Supposed to be for secure access only
-    @ApiOperation(value = "Add custom data value", response = GeneralWsResponseBean.class)
+    @ApiOperation(value = "Add or update custom data value", response = GeneralWsResponseBean.class)
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Successfully Added"),
         @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
@@ -87,25 +90,34 @@ public class CustomDataValueAPI {
 			"application/json" })
 	public GeneralWsResponseBean addOrUpdateCustomDataValue(HttpServletRequest request, HttpServletResponse response,
 			@RequestBody AddValueWrapperBean requestBean) {
-
-		return (GeneralWsResponseBean) customDataValueService.addOrUpdateCustomDataValue(requestBean);
+		
+		String token = request.getHeader("token");
+		String latestToken = authenticationService.getLatestToken();
+		Boolean allowContinue = CommonAPIUtils.checkToken(latestToken, token);
+		
+		if(allowContinue) {
+			return (GeneralWsResponseBean) customDataValueService.addOrUpdateCustomDataValue(requestBean);
+		}
+		else {
+			return CommonServiceUtils.generateResponseBeanWithUnauthorizedStatus();
+		}
 	}
 
-    @ApiOperation(value = "Update custom data value / Also can be used to update status to either active, deactive, or deleted", response = GeneralWsResponseBean.class)
-    @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "Successfully Updated"),
-        @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
-        @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
-        @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
-    })
-	@ResponseBody
-	@RequestMapping(method = RequestMethod.POST, value = "/updateCustomDataValue", consumes = { "application/json" }, produces = {
-			"application/json" })
-	public GeneralWsResponseBean updateCustomDataValue(HttpServletRequest request, HttpServletResponse response,
-			@RequestBody CustomDataValueBean requestBean) {
+    // @ApiOperation(value = "Update custom data value / Also can be used to update status to either active, deactive, or deleted", response = GeneralWsResponseBean.class)
+    // @ApiResponses(value = {
+    //     @ApiResponse(code = 200, message = "Successfully Updated"),
+    //     @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+    //     @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+    //     @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+    // })
+	// @ResponseBody
+	// @RequestMapping(method = RequestMethod.POST, value = "/updateCustomDataValue", consumes = { "application/json" }, produces = {
+	// 		"application/json" })
+	// public GeneralWsResponseBean updateCustomDataValue(HttpServletRequest request, HttpServletResponse response,
+	// 		@RequestBody CustomDataValueBean requestBean) {
 
-		return (GeneralWsResponseBean) customDataValueService.updateCustomDataValue(requestBean);
-	}
+	// 	return (GeneralWsResponseBean) customDataValueService.updateCustomDataValue(requestBean);
+	// }
 
     @ApiOperation(value = "Delete custom data value / Effectively removed it from db", response = GeneralWsResponseBean.class)
     @ApiResponses(value = {
@@ -119,7 +131,16 @@ public class CustomDataValueAPI {
 			"application/json" })
 	public GeneralWsResponseBean deleteCustomDataValue(HttpServletRequest request, HttpServletResponse response,
 			@RequestBody DeleteEntityReqBean requestBean) {
-
-		return (GeneralWsResponseBean) customDataValueService.deleteCustomDataValue(requestBean);
+		
+		String token = request.getHeader("token");
+		String latestToken = authenticationService.getLatestToken();
+		Boolean allowContinue = CommonAPIUtils.checkToken(latestToken, token);
+		
+		if(allowContinue) {
+			return (GeneralWsResponseBean) customDataValueService.deleteCustomDataValue(requestBean);
+		}
+		else {
+			return CommonServiceUtils.generateResponseBeanWithUnauthorizedStatus();
+		}
 	}
 }

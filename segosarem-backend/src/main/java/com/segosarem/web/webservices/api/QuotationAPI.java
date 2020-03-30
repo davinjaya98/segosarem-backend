@@ -16,7 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 //Services
 import com.segosarem.web.webservices.db.service.QuotationService;
-
+import com.segosarem.web.webservices.db.service.AuthenticationService;
+import com.segosarem.web.webservices.db.service.CommonServiceUtils;
 //Beans
 import com.segosarem.web.webservices.bean.GeneralWsResponseBean;
 
@@ -36,6 +37,9 @@ public class QuotationAPI {
     //services
     @Autowired
     QuotationService quotationService;
+
+	@Autowired
+	AuthenticationService authenticationService;
     //services
 
     @ApiOperation(value = "Get list of quotations", response = GeneralWsResponseBean.class)
@@ -48,24 +52,34 @@ public class QuotationAPI {
     @ResponseBody
 	@RequestMapping(method = RequestMethod.POST, value = "/getQuotationList")
     public GeneralWsResponseBean getQuotationList(HttpServletRequest request, HttpServletResponse response) {
-		return (GeneralWsResponseBean) quotationService.getAllQuotation();
+		
+		String token = request.getHeader("token");
+        String latestToken = authenticationService.getLatestToken();
+		Boolean allowContinue = CommonAPIUtils.checkToken(latestToken, token);
+		
+		if(allowContinue) {
+            return (GeneralWsResponseBean) quotationService.getAllQuotation();
+		}
+		else {
+			return CommonServiceUtils.generateResponseBeanWithUnauthorizedStatus();
+		}
 	}
 
-    @ApiOperation(value = "Get quotation by id", response = GeneralWsResponseBean.class)
-    @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "Successfully Get the details"),
-        @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
-        @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
-        @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
-    })
-	@ResponseBody
-	@RequestMapping(method = RequestMethod.POST, value = "/getQuotationById", consumes = { "application/json" }, produces = {
-			"application/json" })
-	public GeneralWsResponseBean getQuotationById(HttpServletRequest request, HttpServletResponse response,
-			@RequestBody QuotationBean requestBean) {
+    // @ApiOperation(value = "Get quotation by id", response = GeneralWsResponseBean.class)
+    // @ApiResponses(value = {
+    //     @ApiResponse(code = 200, message = "Successfully Get the details"),
+    //     @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+    //     @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+    //     @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+    // })
+	// @ResponseBody
+	// @RequestMapping(method = RequestMethod.POST, value = "/getQuotationById", consumes = { "application/json" }, produces = {
+	// 		"application/json" })
+	// public GeneralWsResponseBean getQuotationById(HttpServletRequest request, HttpServletResponse response,
+	// 		@RequestBody QuotationBean requestBean) {
 
-		return (GeneralWsResponseBean) quotationService.getQuotationById(requestBean.getQuotationId());
-	}
+	// 	return (GeneralWsResponseBean) quotationService.getQuotationById(requestBean.getQuotationId());
+	// }
 
     @ApiOperation(value = "Add new quotation", response = GeneralWsResponseBean.class)
     @ApiResponses(value = {

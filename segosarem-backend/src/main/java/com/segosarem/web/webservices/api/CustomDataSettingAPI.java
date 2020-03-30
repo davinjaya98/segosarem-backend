@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 //Services
 import com.segosarem.web.webservices.db.service.CustomDataSettingService;
-
+import com.segosarem.web.webservices.db.service.AuthenticationService;
+import com.segosarem.web.webservices.db.service.CommonServiceUtils;
 //Beans
 import com.segosarem.web.webservices.bean.GeneralWsResponseBean;
 import com.segosarem.web.webservices.bean.DeleteEntityReqBean;
@@ -36,6 +37,9 @@ public class CustomDataSettingAPI {
 	// Services
 	@Autowired
 	CustomDataSettingService customDataSettingService;
+
+	@Autowired
+	AuthenticationService authenticationService;
 	// Services
 
 	// Custom Data List
@@ -92,24 +96,34 @@ public class CustomDataSettingAPI {
 	@RequestMapping(method = RequestMethod.POST, value = "/getCdSettingsListByCdId", consumes = { "application/json" })
 	public GeneralWsResponseBean getCustomDataListByPsId(HttpServletRequest request, HttpServletResponse response,
 			@RequestBody CustomDataSettingBean requestBean) {
+		
+		String token = request.getHeader("token");
+		String latestToken = authenticationService.getLatestToken();
+		Boolean allowContinue = CommonAPIUtils.checkToken(latestToken, token);
+		
+		if(allowContinue) {
+			return (GeneralWsResponseBean) customDataSettingService.getCdSettingsListByCdId(requestBean.getCdId());
+		}
+		else {
+			return CommonServiceUtils.generateResponseBeanWithUnauthorizedStatus();
+		}
 
-		return (GeneralWsResponseBean) customDataSettingService.getCdSettingsListByCdId(requestBean.getCdId());
 	}
 
 	// get custom data setting by id
-	@ApiOperation(value = "Get custom data setting by id", response = GeneralWsResponseBean.class)
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully Get the details"),
-			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
-			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
-			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found") })
-	@ResponseBody
-	@RequestMapping(method = RequestMethod.POST, value = "/getCdSettingsById", consumes = {
-			"application/json" }, produces = { "application/json" })
-	public GeneralWsResponseBean getCdSettingsById(HttpServletRequest request, HttpServletResponse response,
-			@RequestBody CustomDataSettingBean requestBean) {
+	// @ApiOperation(value = "Get custom data setting by id", response = GeneralWsResponseBean.class)
+	// @ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully Get the details"),
+	// 		@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+	// 		@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+	// 		@ApiResponse(code = 404, message = "The resource you were trying to reach is not found") })
+	// @ResponseBody
+	// @RequestMapping(method = RequestMethod.POST, value = "/getCdSettingsById", consumes = {
+	// 		"application/json" }, produces = { "application/json" })
+	// public GeneralWsResponseBean getCdSettingsById(HttpServletRequest request, HttpServletResponse response,
+	// 		@RequestBody CustomDataSettingBean requestBean) {
 
-		return (GeneralWsResponseBean) customDataSettingService.getCdSettingsById(requestBean.getCdsId());
-	}
+	// 	return (GeneralWsResponseBean) customDataSettingService.getCdSettingsById(requestBean.getCdsId());
+	// }
 
 	// Supposed to be for secure access only
 	@ApiOperation(value = "Add new custom data setting", response = GeneralWsResponseBean.class)
@@ -122,8 +136,17 @@ public class CustomDataSettingAPI {
 			"application/json" }, produces = { "application/json" })
 	public GeneralWsResponseBean addCustomDataSetting(HttpServletRequest request, HttpServletResponse response,
 			@RequestBody CustomDataSettingBean requestBean) {
-
-		return (GeneralWsResponseBean) customDataSettingService.addCustomDataSetting(requestBean);
+		
+		String token = request.getHeader("token");
+		String latestToken = authenticationService.getLatestToken();
+		Boolean allowContinue = CommonAPIUtils.checkToken(latestToken, token);
+		
+		if(allowContinue) {
+			return (GeneralWsResponseBean) customDataSettingService.addCustomDataSetting(requestBean);
+		}
+		else {
+			return CommonServiceUtils.generateResponseBeanWithUnauthorizedStatus();
+		}
 	}
 
 	@ApiOperation(value = "Update custom data setting", response = GeneralWsResponseBean.class)
@@ -136,8 +159,17 @@ public class CustomDataSettingAPI {
 			"application/json" }, produces = { "application/json" })
 	public GeneralWsResponseBean updateCustomDataSetting(HttpServletRequest request, HttpServletResponse response,
 			@RequestBody CustomDataSettingBean requestBean) {
-
-		return (GeneralWsResponseBean) customDataSettingService.updateCustomDataSetting(requestBean);
+		
+		String token = request.getHeader("token");
+		String latestToken = authenticationService.getLatestToken();
+		Boolean allowContinue = CommonAPIUtils.checkToken(latestToken, token);
+		
+		if(allowContinue) {
+			return (GeneralWsResponseBean) customDataSettingService.updateCustomDataSetting(requestBean);
+		}
+		else {
+			return CommonServiceUtils.generateResponseBeanWithUnauthorizedStatus();
+		}
 	}
 
 	@ApiOperation(value = "Delete custom data / Effectively removed it from db", response = GeneralWsResponseBean.class)
@@ -151,7 +183,16 @@ public class CustomDataSettingAPI {
 			"application/json" }, produces = { "application/json" })
 	public GeneralWsResponseBean deleteCustomDataSetting(HttpServletRequest request, HttpServletResponse response,
 			@RequestBody DeleteEntityReqBean requestBean) {
-
-		return (GeneralWsResponseBean) customDataSettingService.deleteCustomDataSetting(requestBean);
+		
+		String token = request.getHeader("token");
+		String latestToken = authenticationService.getLatestToken();
+		Boolean allowContinue = CommonAPIUtils.checkToken(latestToken, token);
+		
+		if(allowContinue) {
+			return (GeneralWsResponseBean) customDataSettingService.deleteCustomDataSetting(requestBean);
+		}
+		else {
+			return CommonServiceUtils.generateResponseBeanWithUnauthorizedStatus();
+		}
 	}
 }

@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 //Services
 import com.segosarem.web.webservices.db.service.CustomDataService;
-
+import com.segosarem.web.webservices.db.service.AuthenticationService;
+import com.segosarem.web.webservices.db.service.CommonServiceUtils;
 //Beans
 import com.segosarem.web.webservices.bean.GeneralWsResponseBean;
 
@@ -38,20 +39,23 @@ public class CustomDataAPI {
 	// Services
 	@Autowired
 	CustomDataService customDataService;
+
+	@Autowired
+	AuthenticationService authenticationService;
 	// Services
 
 	// Custom Data List
-	@ApiOperation(value = "Get list of custom data", response = GeneralWsResponseBean.class)
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully retrieved list"),
-			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
-			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
-			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found") })
-	@ResponseBody
-	@RequestMapping(method = RequestMethod.POST, value = "/getCustomDataList")
-	public GeneralWsResponseBean getCustomDataList(HttpServletRequest request, HttpServletResponse response) {
+	// @ApiOperation(value = "Get list of custom data", response = GeneralWsResponseBean.class)
+	// @ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully retrieved list"),
+	// 		@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+	// 		@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+	// 		@ApiResponse(code = 404, message = "The resource you were trying to reach is not found") })
+	// @ResponseBody
+	// @RequestMapping(method = RequestMethod.POST, value = "/getCustomDataList")
+	// public GeneralWsResponseBean getCustomDataList(HttpServletRequest request, HttpServletResponse response) {
 
-		return (GeneralWsResponseBean) customDataService.getAllCustomData();
-	}
+	// 	return (GeneralWsResponseBean) customDataService.getAllCustomData();
+	// }
 
 	// get custom data list by custom data group id
 	@ApiOperation(value = "Get list of custom data by custom data group id", response = GeneralWsResponseBean.class)
@@ -64,40 +68,49 @@ public class CustomDataAPI {
 			"application/json" })
 	public GeneralWsResponseBean getCustomDataListByPsId(HttpServletRequest request, HttpServletResponse response,
 			@RequestBody CustomDataBean requestBean) {
-
-		return (GeneralWsResponseBean) customDataService.getCustomDataListByCdGroupId(requestBean.getCdGroupId());
+		
+		String token = request.getHeader("token");
+		String latestToken = authenticationService.getLatestToken();
+		Boolean allowContinue = CommonAPIUtils.checkToken(latestToken, token);
+		
+		if(allowContinue) {
+			return (GeneralWsResponseBean) customDataService.getCustomDataListByCdGroupId(requestBean.getCdGroupId());
+		}
+		else {
+			return CommonServiceUtils.generateResponseBeanWithUnauthorizedStatus();
+		}
 	}
 
 	// get custom data list by custom data group id
 
 	// get custom data by id
-	@ApiOperation(value = "Get custom data by id", response = GeneralWsResponseBean.class)
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully Get the details"),
-			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
-			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
-			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found") })
-	@ResponseBody
-	@RequestMapping(method = RequestMethod.POST, value = "/getCustomDataById", consumes = {
-			"application/json" }, produces = { "application/json" })
-	public GeneralWsResponseBean getCustomDataById(HttpServletRequest request, HttpServletResponse response,
-			@RequestBody CustomDataBean requestBean) {
+	// @ApiOperation(value = "Get custom data by id", response = GeneralWsResponseBean.class)
+	// @ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully Get the details"),
+	// 		@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+	// 		@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+	// 		@ApiResponse(code = 404, message = "The resource you were trying to reach is not found") })
+	// @ResponseBody
+	// @RequestMapping(method = RequestMethod.POST, value = "/getCustomDataById", consumes = {
+	// 		"application/json" }, produces = { "application/json" })
+	// public GeneralWsResponseBean getCustomDataById(HttpServletRequest request, HttpServletResponse response,
+	// 		@RequestBody CustomDataBean requestBean) {
 
-		return (GeneralWsResponseBean) customDataService.getCustomDataById(requestBean.getCdId());
-	}
+	// 	return (GeneralWsResponseBean) customDataService.getCustomDataById(requestBean.getCdId());
+	// }
 
-	@ApiOperation(value = "Get custom data by key", response = GeneralWsResponseBean.class)
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully Get the details"),
-			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
-			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
-			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found") })
-	@ResponseBody
-	@RequestMapping(method = RequestMethod.POST, value = "/getCustomDataByKey", consumes = {
-			"application/json" }, produces = { "application/json" })
-	public GeneralWsResponseBean getCustomDataByKey(HttpServletRequest request, HttpServletResponse response,
-			@RequestBody CustomDataBean requestBean) {
+	// @ApiOperation(value = "Get custom data by key", response = GeneralWsResponseBean.class)
+	// @ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully Get the details"),
+	// 		@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+	// 		@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+	// 		@ApiResponse(code = 404, message = "The resource you were trying to reach is not found") })
+	// @ResponseBody
+	// @RequestMapping(method = RequestMethod.POST, value = "/getCustomDataByKey", consumes = {
+	// 		"application/json" }, produces = { "application/json" })
+	// public GeneralWsResponseBean getCustomDataByKey(HttpServletRequest request, HttpServletResponse response,
+	// 		@RequestBody CustomDataBean requestBean) {
 
-		return (GeneralWsResponseBean) customDataService.getCustomDataByKey(requestBean.getCdKey());
-	}
+	// 	return (GeneralWsResponseBean) customDataService.getCustomDataByKey(requestBean.getCdKey());
+	// }
 
 	// Supposed to be for secure access only
 	@ApiOperation(value = "Add new custom data", response = GeneralWsResponseBean.class)
@@ -110,8 +123,17 @@ public class CustomDataAPI {
 			"application/json" }, produces = { "application/json" })
 	public GeneralWsResponseBean addCustomData(HttpServletRequest request, HttpServletResponse response,
 			@RequestBody CustomDataBean requestBean) {
-
-		return (GeneralWsResponseBean) customDataService.addCustomData(requestBean);
+		
+		String token = request.getHeader("token");
+		String latestToken = authenticationService.getLatestToken();
+		Boolean allowContinue = CommonAPIUtils.checkToken(latestToken, token);
+		
+		if(allowContinue) {
+			return (GeneralWsResponseBean) customDataService.addCustomData(requestBean);
+		}
+		else {
+			return CommonServiceUtils.generateResponseBeanWithUnauthorizedStatus();
+		}
 	}
 
 	@ApiOperation(value = "Update custom data", response = GeneralWsResponseBean.class)
@@ -124,8 +146,17 @@ public class CustomDataAPI {
 			"application/json" }, produces = { "application/json" })
 	public GeneralWsResponseBean updateCustomData(HttpServletRequest request, HttpServletResponse response,
 			@RequestBody CustomDataBean requestBean) {
-
-		return (GeneralWsResponseBean) customDataService.updateCustomData(requestBean);
+		
+		String token = request.getHeader("token");
+		String latestToken = authenticationService.getLatestToken();
+		Boolean allowContinue = CommonAPIUtils.checkToken(latestToken, token);
+		
+		if(allowContinue) {
+			return (GeneralWsResponseBean) customDataService.updateCustomData(requestBean);
+		}
+		else {
+			return CommonServiceUtils.generateResponseBeanWithUnauthorizedStatus();
+		}
 	}
 
 	@ApiOperation(value = "Delete custom data / Effectively removed it from db", response = GeneralWsResponseBean.class)
@@ -138,7 +169,16 @@ public class CustomDataAPI {
 			"application/json" }, produces = { "application/json" })
 	public GeneralWsResponseBean deleteCustomData(HttpServletRequest request, HttpServletResponse response,
 			@RequestBody DeleteEntityReqBean requestBean) {
-
-		return (GeneralWsResponseBean) customDataService.deleteCustomData(requestBean);
+		
+		String token = request.getHeader("token");
+		String latestToken = authenticationService.getLatestToken();
+		Boolean allowContinue = CommonAPIUtils.checkToken(latestToken, token);
+		
+		if(allowContinue) {
+			return (GeneralWsResponseBean) customDataService.deleteCustomData(requestBean);
+		}
+		else {
+			return CommonServiceUtils.generateResponseBeanWithUnauthorizedStatus();
+		}
 	}
 }

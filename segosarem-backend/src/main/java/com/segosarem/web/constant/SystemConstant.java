@@ -19,7 +19,8 @@ public class SystemConstant {
     // Constant for custom data setting
     public static final int CUSTOM_DATA_SETTING_TEXTFIELD = 1;
     public static final int CUSTOM_DATA_SETTING_BOOLEAN = 2;
-    public static final int CUSTOM_DATA_SETTING_IMAGE_PATH = 3;
+    public static final int CUSTOM_DATA_SETTING_URL_PATH = 3;
     public static final int CUSTOM_DATA_SETTING_TEXTAREA = 4;
     public static final int CUSTOM_DATA_SETTING_IMAGE_BLOB = 5;
+    public static final int CUSTOM_DATA_SETTING_RICH_TEXT_WYSWYG = 6;
 }

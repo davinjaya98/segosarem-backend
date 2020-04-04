@@ -2,8 +2,8 @@ package com.segosarem.web.webservices.db.entity;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import java.io.Serializable;
 
@@ -24,13 +24,13 @@ public class CustomDataGroup extends GeneralCreateModify implements Serializable
 	private int cdGroupId;
 	private String cdGroupName;
 	private String cdGroupDescription;
-    private Set<CustomData> customDataList = new LinkedHashSet<CustomData>();
+    private List<CustomData> customDataList = new ArrayList<CustomData>();
     private PageSetting pageSetting;
     
     public CustomDataGroup() {
     }
 
-    public CustomDataGroup(int cdGroupId, String cdGroupName, String cdGroupDescription, Set<CustomData> customDataList, PageSetting pageSetting) {
+    public CustomDataGroup(int cdGroupId, String cdGroupName, String cdGroupDescription, List<CustomData> customDataList, PageSetting pageSetting) {
         this.cdGroupId = cdGroupId;
         this.cdGroupName = cdGroupName;
         this.cdGroupDescription = cdGroupDescription;
@@ -68,11 +68,11 @@ public class CustomDataGroup extends GeneralCreateModify implements Serializable
     }
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "customDataGroup")
-    public Set<CustomData> getCustomDataList() {
+    public List<CustomData> getCustomDataList() {
         return this.customDataList;
     }
 
-    public void setCustomDataList(Set<CustomData> customDataList) {
+    public void setCustomDataList(List<CustomData> customDataList) {
         this.customDataList = customDataList;
     }
 	

@@ -225,7 +225,7 @@ public class CustomDataValueServiceImpl implements CustomDataValueService {
             CustomDataValue entity = customDataValueDAO.getCustomDataValueById(requestBean.getEntityId(), false);
 
             if (entity != null) {
-                Set<CustomDataValue> childValueList = entity.getChildValueList();
+                List<CustomDataValue> childValueList = entity.getChildValueList();
 
                 if(childValueList != null && !childValueList.isEmpty()) {
                     //Delete children first

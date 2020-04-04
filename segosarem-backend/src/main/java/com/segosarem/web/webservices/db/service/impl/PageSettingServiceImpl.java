@@ -22,12 +22,16 @@ import com.segosarem.web.constant.SystemConstant;
 //DB
 import com.segosarem.web.webservices.db.dao.PageSettingDAO;
 import com.segosarem.web.webservices.db.dao.CustomDataDAO;
+import com.segosarem.web.webservices.db.dao.CustomDataGroupDAO;
+
 import com.segosarem.web.webservices.db.entity.PageSetting;
 import com.segosarem.web.webservices.db.entity.CustomData;
 import com.segosarem.web.webservices.db.entity.CustomDataGroup;
 import com.segosarem.web.webservices.db.entity.CustomDataValue;
+
 import com.segosarem.web.webservices.db.service.CommonServiceUtils;
 import com.segosarem.web.webservices.db.service.PageSettingService;
+
 import com.segosarem.web.webservices.bean.DeleteEntityReqBean;
 //Bean
 import com.segosarem.web.webservices.bean.GeneralWsResponseBean;
@@ -46,6 +50,9 @@ public class PageSettingServiceImpl implements PageSettingService {
 
     @Autowired
     private CustomDataDAO customDataDAO;
+
+    @Autowired
+    private CustomDataGroupDAO customDataGroupDAO;
 
     @Override
     public GeneralWsResponseBean getAllPageSetting() {
@@ -189,23 +196,23 @@ public class PageSettingServiceImpl implements PageSettingService {
                     Map<String, Object> pageSettingValue = new LinkedHashMap<String, Object>();
 
                     // Get custom data group
-                    Set<CustomDataGroup> customDataGroupList = pageSettingEntity.getCustomDataGroupList();
+                    List<CustomDataGroup> customDataGroupList = pageSettingEntity.getCustomDataGroupList();
 
                     if (customDataGroupList != null && !customDataGroupList.isEmpty()) {
                         for (CustomDataGroup customDataGroup : customDataGroupList) {
                             // Get custom data
-                            Set<CustomData> customDataList = customDataGroup.getCustomDataList();
+                            List<CustomData> customDataList = customDataGroup.getCustomDataList();
 
                             if (customDataList != null && !customDataList.isEmpty()) {
                                 for (CustomData customData : customDataList) {
 
-                                    Set<CustomDataValue> parentValueList = customData.getCdValueList();
+                                    List<CustomDataValue> parentValueList = customData.getCdValueList();
 
                                     List<Map<String, Object>> valueMap = new ArrayList<Map<String, Object>>();
 
                                     if (parentValueList != null && !parentValueList.isEmpty()) {
                                         for (CustomDataValue parentValue : parentValueList) {
-                                            Set<CustomDataValue> childValueList = parentValue.getChildValueList();
+                                            List<CustomDataValue> childValueList = parentValue.getChildValueList();
 
                                             Map<String, Object> childMap = new LinkedHashMap<String, Object>();
                                             for (CustomDataValue childValue : childValueList) {

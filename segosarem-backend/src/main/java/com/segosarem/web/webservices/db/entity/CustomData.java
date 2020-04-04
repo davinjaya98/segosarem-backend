@@ -2,8 +2,8 @@ package com.segosarem.web.webservices.db.entity;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.List;
+import java.util.ArrayList;
 
 import java.io.Serializable;
 
@@ -24,9 +24,9 @@ public class CustomData extends GeneralCreateModify implements Serializable {
 	private int cdId;
     private String cdName;
     //This is the list of value
-    private Set<CustomDataValue> cdValueList = new LinkedHashSet<CustomDataValue>();
+    private List<CustomDataValue> cdValueList = new ArrayList<CustomDataValue> ();
     //This is the list of setting for the custom data
-    private Set<CustomDataSetting> cdSettingList = new LinkedHashSet<CustomDataSetting>();
+    private List<CustomDataSetting> cdSettingList = new ArrayList<CustomDataSetting> ();
     //This is for type
     //Can be implemented this way
     //1 - Single
@@ -42,7 +42,7 @@ public class CustomData extends GeneralCreateModify implements Serializable {
     public CustomData() {
     }
 
-    public CustomData(int cdId, String cdName, Set<CustomDataValue> cdValueList, Set<CustomDataSetting> cdSettingList, Integer cdType, String cdSequence, String cdKey, CustomDataGroup customDataGroup) {
+    public CustomData(int cdId, String cdName, List<CustomDataValue> cdValueList, List<CustomDataSetting> cdSettingList, Integer cdType, String cdSequence, String cdKey, CustomDataGroup customDataGroup) {
         this.cdId = cdId;
         this.cdName = cdName;
         this.cdValueList = cdValueList;
@@ -74,20 +74,20 @@ public class CustomData extends GeneralCreateModify implements Serializable {
     }
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "customData")
-    public Set<CustomDataValue> getCdValueList() {
+    public List<CustomDataValue> getCdValueList() {
         return this.cdValueList;
     }
 
-    public void setCdValueList(Set<CustomDataValue> cdValueList) {
+    public void setCdValueList(List<CustomDataValue> cdValueList) {
         this.cdValueList = cdValueList;
     }
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "customData")
-    public Set<CustomDataSetting> getCdSettingList() {
+    public List<CustomDataSetting> getCdSettingList() {
         return this.cdSettingList;
     }
 
-    public void setCdSettingList(Set<CustomDataSetting> cdSettingList) {
+    public void setCdSettingList(List<CustomDataSetting> cdSettingList) {
         this.cdSettingList = cdSettingList;
     }
 

@@ -2,8 +2,8 @@ package com.segosarem.web.webservices.db.entity;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import java.io.Serializable;
 
@@ -24,7 +24,7 @@ public class PageSetting extends GeneralCreateModify implements Serializable {
     private String pageDescription;
 	private String pageSeoKeywords;
     private String pageKey; 
-    private Set<CustomDataGroup> customDataGroupList = new LinkedHashSet<CustomDataGroup>();
+    private List<CustomDataGroup> customDataGroupList = new ArrayList<CustomDataGroup>();
 
     public PageSetting() {
     }
@@ -84,11 +84,11 @@ public class PageSetting extends GeneralCreateModify implements Serializable {
     }
 
 	 @OneToMany(fetch = FetchType.LAZY, mappedBy = "pageSetting")
-    public Set<CustomDataGroup> getCustomDataGroupList() {
+    public List<CustomDataGroup> getCustomDataGroupList() {
         return this.customDataGroupList;
     }
 
-    public void setCustomDataGroupList(Set<CustomDataGroup> customDataGroupList) {
+    public void setCustomDataGroupList(List<CustomDataGroup> customDataGroupList) {
         this.customDataGroupList = customDataGroupList;
     }
 

@@ -2,8 +2,8 @@ package com.segosarem.web.webservices.db.entity;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import java.io.Serializable;
 
@@ -32,7 +32,7 @@ public class CustomDataValue extends GeneralCreateModify implements Serializable
     
     //Recursive for Multifield Type
     private CustomDataValue parentValue;
-    private Set<CustomDataValue> childValueList = new LinkedHashSet<CustomDataValue>();
+    private List<CustomDataValue> childValueList = new ArrayList<CustomDataValue>();
 
     private CustomDataSetting customDataSetting;
 
@@ -97,11 +97,11 @@ public class CustomDataValue extends GeneralCreateModify implements Serializable
     }
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "parentValue")
-    public Set<CustomDataValue> getChildValueList() {
+    public List<CustomDataValue> getChildValueList() {
         return this.childValueList;
     }
 
-    public void setChildValueList(Set<CustomDataValue> childValueList) {
+    public void setChildValueList(List<CustomDataValue> childValueList) {
         this.childValueList = childValueList;
     }
 	

@@ -111,7 +111,7 @@ public class CustomDataValueServiceImpl implements CustomDataValueService {
 
     private void updateCustomDataValue(CustomDataValueBean valueBean, CustomDataValue firstLevelEntity) {
         for(CustomDataValue childEntity : firstLevelEntity.getChildValueList()) {
-            if(valueBean.getCdValueKey().equals(childEntity.getCustomDataSetting().getCdsKey())) {
+            if(valueBean.getCdsId() == childEntity.getCustomDataSetting().getCdsId()) {
                 CustomDataSetting settingEntity = childEntity.getCustomDataSetting();
                 if (settingEntity != null) {
                     CustomDataValue secondLevelEntity = childEntity;

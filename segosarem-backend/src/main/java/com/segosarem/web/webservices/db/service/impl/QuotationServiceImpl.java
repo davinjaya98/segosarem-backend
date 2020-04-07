@@ -45,7 +45,8 @@ public class QuotationServiceImpl implements QuotationService {
                 List<QuotationBean> beanList = new ArrayList<QuotationBean>();
                 for(Quotation entity : entityList) {
                     QuotationBean bean = new DozerBeanMapper().map(entity, QuotationBean.class);
-
+                    bean.setQuotationDate(entity.getCreateDt().getTime());
+                    
                     beanList.add(bean);
                 }
 

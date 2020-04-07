@@ -19,26 +19,28 @@ import javax.persistence.OneToMany;
 @Table(name = "page_setting", catalog = "segosarem_db")
 public class PageSetting extends GeneralCreateModify implements Serializable {
 
-	private int settingId;
+    private int settingId;
     private String pageTitle;
     private String pageDescription;
-	private String pageSeoKeywords;
-    private String pageKey; 
+    private String pageSeoKeywords;
+    private String pageKey;
+    private String pageSequence;
     private List<CustomDataGroup> customDataGroupList = new ArrayList<CustomDataGroup>();
 
     public PageSetting() {
     }
 
-    public PageSetting(int settingId, String pageTitle, String pageSeoKeywords, String pageKey) {
+    public PageSetting(int settingId, String pageTitle, String pageSeoKeywords, String pageKey, String pageSequence) {
         this.settingId = settingId;
         this.pageTitle = pageTitle;
         this.pageSeoKeywords = pageSeoKeywords;
         this.pageKey = pageKey;
+        this.pageSequence = pageSequence;
     }
 
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "setting_id", unique = true, nullable = false)
+    @Id
+    @GeneratedValue(strategy = IDENTITY)
+    @Column(name = "setting_id", unique = true, nullable = false)
     public int getSettingId() {
         return this.settingId;
     }
@@ -47,7 +49,7 @@ public class PageSetting extends GeneralCreateModify implements Serializable {
         this.settingId = settingId;
     }
 
-	@Column(name = "page_title")
+    @Column(name = "page_title")
     public String getPageTitle() {
         return this.pageTitle;
     }
@@ -56,7 +58,7 @@ public class PageSetting extends GeneralCreateModify implements Serializable {
         this.pageTitle = pageTitle;
     }
 
-	@Column(name = "page_description")
+    @Column(name = "page_description")
     public String getPageDescription() {
         return this.pageDescription;
     }
@@ -65,7 +67,7 @@ public class PageSetting extends GeneralCreateModify implements Serializable {
         this.pageDescription = pageDescription;
     }
 
-	@Column(name = "page_seo_keywords")
+    @Column(name = "page_seo_keywords")
     public String getPageSeoKeywords() {
         return this.pageSeoKeywords;
     }
@@ -74,7 +76,7 @@ public class PageSetting extends GeneralCreateModify implements Serializable {
         this.pageSeoKeywords = pageSeoKeywords;
     }
 
-	@Column(name = "page_key", unique = true)
+    @Column(name = "page_key", unique = true)
     public String getPageKey() {
         return this.pageKey;
     }
@@ -83,7 +85,7 @@ public class PageSetting extends GeneralCreateModify implements Serializable {
         this.pageKey = pageKey;
     }
 
-	 @OneToMany(fetch = FetchType.LAZY, mappedBy = "pageSetting")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pageSetting")
     public List<CustomDataGroup> getCustomDataGroupList() {
         return this.customDataGroupList;
     }
@@ -92,4 +94,12 @@ public class PageSetting extends GeneralCreateModify implements Serializable {
         this.customDataGroupList = customDataGroupList;
     }
 
+    @Column(name = "page_sequence")
+    public String getPageSequence() {
+        return this.pageSequence;
+    }
+
+    public void setPageSequence(String pageSequence) {
+        this.pageSequence = pageSequence;
+    }
 }

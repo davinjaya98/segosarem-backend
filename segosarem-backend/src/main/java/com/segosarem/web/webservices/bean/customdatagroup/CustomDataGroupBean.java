@@ -6,24 +6,27 @@ import com.segosarem.web.webservices.bean.customdata.CustomDataBean;
 
 public class CustomDataGroupBean {
 
-	private Integer cdGroupId;
-	private String cdGroupName;
-	private String cdGroupDescription;
+    private Integer cdGroupId;
+    private String cdGroupName;
+    private String cdGroupDescription;
 
     private int pageSettingId;
+    private String cdGroupSequence;
 
-	//For Response
+    // For Response
     private List<CustomDataBean> customDataList;
-    
+
     public CustomDataGroupBean() {
     }
 
-    public CustomDataGroupBean(Integer cdGroupId, String cdGroupName, String cdGroupDescription, int pageSettingId, List<CustomDataBean> customDataList) {
+    public CustomDataGroupBean(Integer cdGroupId, String cdGroupName, String cdGroupDescription, int pageSettingId,
+            List<CustomDataBean> customDataList, String cdGroupSequence) {
         this.cdGroupId = cdGroupId;
         this.cdGroupName = cdGroupName;
         this.cdGroupDescription = cdGroupDescription;
         this.pageSettingId = pageSettingId;
         this.customDataList = customDataList;
+        this.cdGroupSequence = cdGroupSequence;
     }
 
     public Integer getCdGroupId() {
@@ -64,5 +67,13 @@ public class CustomDataGroupBean {
 
     public void setCustomDataList(List<CustomDataBean> customDataList) {
         this.customDataList = customDataList;
+    }
+
+    public String getCdGroupSequence() {
+        return this.cdGroupSequence;
+    }
+
+    public void setCdGroupSequence(String cdGroupSequence) {
+        this.cdGroupSequence = cdGroupSequence;
     }
 }

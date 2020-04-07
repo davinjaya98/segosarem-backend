@@ -273,6 +273,7 @@ public class PageSettingServiceImpl implements PageSettingService {
                 entity.setPageSeoKeywords(requestBean.getPageSeoKeywords());
                 entity.setPageDescription(requestBean.getPageDescription());
                 entity.setPageTitle(requestBean.getPageTitle());
+                entity.setPageSequence(requestBean.getPageSequence());
                 // entity.setStatus(requestBean.getStatus());
                 entity.setModifyDt(new Date());
 

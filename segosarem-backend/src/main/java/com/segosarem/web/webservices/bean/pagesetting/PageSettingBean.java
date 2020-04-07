@@ -5,28 +5,31 @@ import java.util.List;
 import com.segosarem.web.webservices.bean.customdatagroup.CustomDataGroupBean;
 
 public class PageSettingBean {
-    
-	//For Response
-	private Integer settingId;
+
+    // For Response
+    private Integer settingId;
 
     private String pageTitle;
     private String pageDescription;
-	private String pageSeoKeywords;
+    private String pageSeoKeywords;
     private String pageKey;
+    private String pageSequence;
 
-	//For Response
+    // For Response
     private List<CustomDataGroupBean> customDataGroupList;
 
     public PageSettingBean() {
     }
 
-    public PageSettingBean(Integer settingId, String pageTitle, String pageDescription, String pageSeoKeywords, String pageKey, List<CustomDataGroupBean> customDataGroupList) {
+    public PageSettingBean(Integer settingId, String pageTitle, String pageDescription, String pageSeoKeywords,
+            String pageKey, List<CustomDataGroupBean> customDataGroupList, String pageSequence) {
         this.settingId = settingId;
         this.pageTitle = pageTitle;
         this.pageDescription = pageDescription;
         this.pageSeoKeywords = pageSeoKeywords;
         this.pageKey = pageKey;
         this.customDataGroupList = customDataGroupList;
+        this.pageSequence = pageSequence;
     }
 
     public Integer getSettingId() {
@@ -75,5 +78,13 @@ public class PageSettingBean {
 
     public void setCustomDataGroupList(List<CustomDataGroupBean> customDataGroupList) {
         this.customDataGroupList = customDataGroupList;
+    }
+
+    public String getPageSequence() {
+        return this.pageSequence;
+    }
+
+    public void setPageSequence(String pageSequence) {
+        this.pageSequence = pageSequence;
     }
 }

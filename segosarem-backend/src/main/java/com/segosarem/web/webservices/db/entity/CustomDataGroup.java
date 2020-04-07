@@ -21,26 +21,29 @@ import javax.persistence.ManyToOne;
 @Table(name = "custom_data_group", catalog = "segosarem_db")
 public class CustomDataGroup extends GeneralCreateModify implements Serializable {
 
-	private int cdGroupId;
-	private String cdGroupName;
-	private String cdGroupDescription;
+    private int cdGroupId;
+    private String cdGroupName;
+    private String cdGroupDescription;
     private List<CustomData> customDataList = new ArrayList<CustomData>();
     private PageSetting pageSetting;
-    
+    private String cdGroupSequence;
+
     public CustomDataGroup() {
     }
 
-    public CustomDataGroup(int cdGroupId, String cdGroupName, String cdGroupDescription, List<CustomData> customDataList, PageSetting pageSetting) {
+    public CustomDataGroup(int cdGroupId, String cdGroupName, String cdGroupDescription,
+            List<CustomData> customDataList, PageSetting pageSetting, String cdGroupSequence) {
         this.cdGroupId = cdGroupId;
         this.cdGroupName = cdGroupName;
         this.cdGroupDescription = cdGroupDescription;
         this.customDataList = customDataList;
         this.pageSetting = pageSetting;
+        this.cdGroupSequence = cdGroupSequence;
     }
 
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "cd_group_id", unique = true, nullable = false)
+    @Id
+    @GeneratedValue(strategy = IDENTITY)
+    @Column(name = "cd_group_id", unique = true, nullable = false)
     public int getCdGroupId() {
         return this.cdGroupId;
     }
@@ -49,7 +52,7 @@ public class CustomDataGroup extends GeneralCreateModify implements Serializable
         this.cdGroupId = cdGroupId;
     }
 
-	@Column(name = "cd_group_name")
+    @Column(name = "cd_group_name")
     public String getCdGroupName() {
         return this.cdGroupName;
     }
@@ -58,7 +61,7 @@ public class CustomDataGroup extends GeneralCreateModify implements Serializable
         this.cdGroupName = cdGroupName;
     }
 
-	@Column(name = "cd_group_description")
+    @Column(name = "cd_group_description")
     public String getCdGroupDescription() {
         return this.cdGroupDescription;
     }
@@ -67,7 +70,7 @@ public class CustomDataGroup extends GeneralCreateModify implements Serializable
         this.cdGroupDescription = cdGroupDescription;
     }
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "customDataGroup")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customDataGroup")
     public List<CustomData> getCustomDataList() {
         return this.customDataList;
     }
@@ -75,14 +78,23 @@ public class CustomDataGroup extends GeneralCreateModify implements Serializable
     public void setCustomDataList(List<CustomData> customDataList) {
         this.customDataList = customDataList;
     }
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "setting_id")
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "setting_id")
     public PageSetting getPageSetting() {
         return this.pageSetting;
     }
 
     public void setPageSetting(PageSetting pageSetting) {
         this.pageSetting = pageSetting;
+    }
+
+    @Column(name = "cd_group_sequence")
+    public String getCdGroupSequence() {
+        return this.cdGroupSequence;
+    }
+
+    public void setCdGroupSequence(String cdGroupSequence) {
+        this.cdGroupSequence = cdGroupSequence;
     }
 }
